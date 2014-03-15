@@ -15,7 +15,7 @@
 
 .popup {
   background: #fff;
-  padding: 3%;
+  padding: 5% 3% 1%;
   display: block;
   width: 60%;
   height: auto;
@@ -31,7 +31,7 @@
   float: right;
   padding: 10px;
   position: absolute;
-  top: 15px;
+  top: 10px;
   right: 15px; }
 
 .popup h3 {
@@ -120,3 +120,27 @@
       padding-left: 5%; }
     .popup .footer p a.emph {
       font-size: 1.1em; }
+
+.popup .alert {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  padding: 1% 5% 0;
+  min-height: 50px;
+  font-size: 0.75em;
+  background: #8b2525;
+  color: #fff;
+  border-radius: 0px;
+  z-index: 200; }
+  .popup .alert h4 {
+    display: inline-block;
+    width: 13%;
+    vertical-align: top;
+    font-size: 2em; }
+  .popup .alert p {
+    display: inline-block;
+    width: 50%;
+    vertical-align: top; }
+  .popup .alert a {
+    color: #fff; }
