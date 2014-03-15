@@ -20,7 +20,7 @@
           <a href="#" class="close"><img src="/Plone/++resource++plone.login/img/btn-close.png" /></a>
           <div class="alert">
             <h4>Uh oh!</h4>
-            <p>Looks like your username or password was incorrect. <br />Please try again or <a href="#">get some help remembering here</a>.</p>
+            <p>Looks like your username or password was incorrect. <br />Please try again or <a href="@@login-help">get some help remembering here</a>.</p>
           </div>
           <h3>Log in</h3>
           <p>Long time no see.</p>
