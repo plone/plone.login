@@ -23,7 +23,7 @@
       </p>
 
       <form>
-      [[ Request Access ]]
+         <input type="submit" value="Request Access" />
       </form>
 </metal:main>
 </html>
