@@ -14,12 +14,10 @@
   <metal:main fill-slot="main">
     <div id="login">
 
-      <h1 class="documentFirstHeading" i18n:translate="login_form_title">Login</h1>
-
       <div class="overlay">
         <div class="screen">&nbsp;</div>
         <div class="popup" id="login">
-          <a href="#" class="close"><img src="img/btn-close.png" /></a>
+          <a href="#" class="close"><img src="/Plone/++resource++plone.login/img/btn-close.png" /></a>
           <h3>Log in</h3>
           <p>Long time no see.</p>
           <div class="meat">
@@ -43,19 +41,6 @@
             <p class="trouble">Trouble logging in? <a href="@@login-help">Get help.</a></p>
             <p class="signup">Need an account? <a href="#">Sign up here &raquo;</a></p>
           </div>
-        </div>
-      </div>
-
-      <div id="login-helpers">
-        <div>
-          <a id="forgot-password"
-             tal:attributes="href string:${portal_url}/password_resetter"
-             i18n:translate="prompt_password_forgotten_link">Forgot your password?</a>
-        </div>
-        <div>
-          <a id="join"
-             tal:attributes="href string:${portal_url}/registrator"
-             i18n:translate="prompt_not_registered_link">Not registered yet?</a>
         </div>
       </div>
 
