@@ -15,15 +15,6 @@
         />
 
     <browser:page
-        name="forgot-password"
-        for="plone.app.layout.navigation.interfaces.INavigationRoot"
-        permission="zope.Public"
-        class=".login.ForgotPasswordView"
-        template="templates/forgot_password.pt"
-        layer="plone.login.interfaces.IPloneLoginLayer"
-        />
-
-    <browser:page
         name="reset-password"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="cmf.MailForgottonPassword"
