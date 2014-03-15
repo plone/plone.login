@@ -26,7 +26,7 @@ class InsufficientPrivilegesView(BrowserView):
     pass
 
 
-class ForgotPasswordView(BrowserView):
+class ResetPasswordView(BrowserView):
     pass
 
 
