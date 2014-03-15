@@ -35,3 +35,7 @@ class ResetPasswordView(BrowserView):
 
 class ForgotPasswordView(BrowserView):
     pass
+
+
+class RegisterView(BrowserView):
+    pass

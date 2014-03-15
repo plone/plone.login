@@ -2,7 +2,13 @@
 from zope.interface import Interface
 from zope import schema
 
+from plone.theme.interfaces import IDefaultPloneLayer
+
 from plone.login import MessageFactory as _
+
+
+class IPloneLoginLayer(IDefaultPloneLayer):
+    """ Marker interface for plone.login views. """
 
 
 class ILogin(Interface):
@@ -11,4 +17,26 @@ class ILogin(Interface):
     )
     password = schema.TextLine(
         title=_('Password'),
+    )
+
+
+class ICompleteProfile(Interface):
+    """ Temporary schema used in the complete-profile view """
+
+    first_name = schema.TextLine(
+        title=_(u'First Name'),
+        description=_(u'Please provide your first name.'),
+        required=True,
+    )
+
+    last_name = schema.TextLine(
+        title=_(u'Last Name'),
+        description=_(u'Please provide your last name.'),
+        required=True,
+    )
+
+    bio = schema.Text(
+        title=_(u'Bio'),
+        description=_(u'Please provide a bio of yourself.'),
+        required=False,
     )

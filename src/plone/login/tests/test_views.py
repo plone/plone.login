@@ -20,3 +20,8 @@ class TestViews(unittest.TestCase):
         view = view.__of__(self.portal)
         self.failUnless(view())
 
+    def test_forgotpassword_view(self):
+        view = getMultiAdapter((self.portal, self.request),
+                               name="forgot-password")
+        view = view.__of__(self.portal)
+        self.failUnless(view())

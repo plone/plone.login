@@ -8,32 +8,44 @@
 
     <browser:page
         name="insufficient-privileges"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
         template="templates/insufficient_privileges.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
     <browser:page
         name="forgot-password"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
         class=".login.ForgotPasswordView"
         template="templates/forgot_password.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
     <browser:page
         name="reset-password"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
         class=".login.ResetPasswordView"
         template="templates/reset_password.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
     <browser:page
         name="register"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-        permission="zope.Public"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        permission="cmf.AddPortalMember"
         class=".login.RegisterView"
         template="templates/register.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
         />
+
+    <browser:page
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        name="complete-profile"
+        class=".profile.CompleteProfileFormView"
+        permission="cmf.SetOwnProperties"
+        />
+
 </configure>
