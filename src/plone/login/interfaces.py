@@ -5,7 +5,7 @@ from zope import schema
 from plone.login import MessageFactory as _
 
 
-class LoginForm(Interface):
+class ILogin(Interface):
     login = schema.TextLine(
         title=_('Login'),
     )
