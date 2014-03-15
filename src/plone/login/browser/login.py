@@ -19,3 +19,7 @@ class ResetPasswordView(BrowserView):
 
 class ForgotPasswordView(BrowserView):
     pass
+
+
+class SendEmailView(BrowserView):
+    pass

@@ -33,6 +33,15 @@
         />
 
     <browser:page
+        name="send-email"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        permission="cmf.MailForgottonPassword"
+        class=".login.SendEmailView"
+        template="templates/send_email.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
+        />
+
+    <browser:page
         name="register"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="cmf.AddPortalMember"
