@@ -26,7 +26,7 @@
           <p>Long time no see.</p>
           <div class="meat">
             <div class="native half">
-              <form action="@@login" enctype="multipart/form-data" method="post">
+              <form action="@@complete-profile" enctype="multipart/form-data" method="post">
                 <fieldset>
                   <input type="text" name="username" placeholder="Username or email" autocapitalize="off" class="stretch" tabindex="1">
                 </fieldset>
