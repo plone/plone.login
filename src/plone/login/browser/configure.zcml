@@ -40,7 +40,7 @@
     <browser:page
         name="register"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
-        permission="cmf.AddPortalMember"
+        permission="zope.Public"
         class=".login.RegisterView"
         template="templates/register.pt"
         layer="plone.login.interfaces.IPloneLoginLayer"
