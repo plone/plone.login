@@ -7,6 +7,7 @@
 
   <includeDependencies package="." />
 
+<<<<<<< Updated upstream
   <include package=".browser" />
 
   <genericsetup:registerProfile
@@ -16,5 +17,9 @@
       description="z3c-based login and registration flow for Plone"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
+=======
+  <!-- -*- extra stuff goes here -*- -->
+  <include package=".browser" />
+>>>>>>> Stashed changes
 
 </configure>
