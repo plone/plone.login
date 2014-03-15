@@ -25,14 +25,18 @@
   left: 20%;
   right: 20%;
   font-size: 1.1em;
-  box-shadow: rgba(28, 37, 48, 0.15) 1px 1px, rgba(28, 37, 48, 0.15) 2px 2px, rgba(28, 37, 48, 0.15) 3px 3px, rgba(28, 37, 48, 0.15) 4px 4px, rgba(28, 37, 48, 0.15) 5px 5px, rgba(28, 37, 48, 0.15) 6px 6px, rgba(28, 37, 48, 0.15) 7px 7px, rgba(28, 37, 48, 0.15) 8px 8px; }
+  box-shadow: rgba(28, 37, 48, 0.15) 1px 1px, rgba(28, 37, 48, 0.15) 2px 2px, rgba(28, 37, 48, 0.15) 3px 3px, rgba(28, 37, 48, 0.15) 4px 4px, rgba(28, 37, 48, 0.15) 5px 5px, rgba(28, 37, 48, 0.15) 6px 6px, rgba(28, 37, 48, 0.15) 7px 7px, rgba(28, 37, 48, 0.15) 8px 8px; 
+  z-index: 200;
+}
 
 .popup a.close {
   float: right;
   padding: 10px;
   position: absolute;
   top: 10px;
-  right: 15px; }
+  right: 15px; 
+  z-index: 500;
+}
 
 .popup h3 {
   color: #3887be;
