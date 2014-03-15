@@ -13,7 +13,7 @@
     Send Email link to login
   </h1>
 
-  <a href="@@login">Login To Your Plone Site</a>
+  <a href="@@reset-password">Login To Your Plone Site</a>
 
 </metal:main>
 </html>
