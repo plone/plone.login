@@ -1,0 +1,122 @@
+/* CSS for the login thingies */
+.overlay {
+  position: relative; }
+
+.screen {
+  position: fixed;
+  z-index: 5000;
+  display: block;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(33, 33, 33, 0.5);
+  margin: 0 auto; }
+
+.popup {
+  background: #fff;
+  padding: 3%;
+  display: block;
+  width: 60%;
+  height: auto;
+  position: fixed;
+  z-index: 5000;
+  top: 20%;
+  left: 20%;
+  right: 20%;
+  font-size: 1.1em;
+  box-shadow: rgba(28, 37, 48, 0.15) 1px 1px, rgba(28, 37, 48, 0.15) 2px 2px, rgba(28, 37, 48, 0.15) 3px 3px, rgba(28, 37, 48, 0.15) 4px 4px, rgba(28, 37, 48, 0.15) 5px 5px, rgba(28, 37, 48, 0.15) 6px 6px, rgba(28, 37, 48, 0.15) 7px 7px, rgba(28, 37, 48, 0.15) 8px 8px; }
+
+.popup a.close {
+  float: right;
+  padding: 10px;
+  position: absolute;
+  top: 15px;
+  right: 15px; }
+
+.popup h3 {
+  color: #3887be;
+  font-size: 2em; }
+
+.popup a {
+  color: #3887be;
+  font-weight: bold; }
+
+.popup .meat {
+  margin-top: 2em;
+  background: url(../img/or-div.png) center center no-repeat; }
+
+.popup .half {
+  width: 49.5%;
+  display: inline-block;
+  vertical-align: top; }
+  .popup .half.native {
+    padding-right: 5%; }
+  .popup .half.external {
+    padding-left: 5%; }
+
+.popup .pwd-strength {
+  margin-bottom: 0.75em;
+  width: 100%; }
+
+.popup label {
+  font-size: 0.9em; }
+
+.popup input {
+  border-radius: 0px;
+  border: 2px solid #e5e5e5;
+  height: 36px;
+  margin-bottom: 0.75em;
+  font-size: 0.9em; }
+  .popup input.submit {
+    background: #3887be;
+    color: #fff;
+    width: 100%;
+    border: 0px;
+    border-radius: 2px; }
+  .popup input.facebook {
+    background: #3b5998 url(../img/btn-facebook.png) left center no-repeat;
+    text-align: left;
+    padding-left: 50px;
+    border-radius: 0px; }
+  .popup input.google {
+    background: #df4a32 url(../img/btn-google.png) left center no-repeat;
+    text-align: left;
+    padding-left: 50px;
+    border-radius: 0px; }
+
+::-webkit-input-placeholder {
+  font-style: italic;
+  color: #989898;
+  font-size: 0.9em; }
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  font-style: italic;
+  color: #989898;
+  font-size: 0.9em; }
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  font-style: italic;
+  color: #989898;
+  font-size: 0.9em; }
+
+:-ms-input-placeholder {
+  font-style: italic;
+  color: #989898;
+  font-size: 0.9em; }
+
+.popup .footer {
+  clear: both;
+  margin-top: 4em;
+  font-size: 0.9em; }
+  .popup .footer p {
+    width: 49.5%;
+    display: inline-block;
+    vertical-align: top;
+    color: #3a3a3a; }
+    .popup .footer p.right {
+      padding-left: 5%; }
+    .popup .footer p a.emph {
+      font-size: 1.1em; }
