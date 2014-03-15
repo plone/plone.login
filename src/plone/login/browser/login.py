@@ -6,10 +6,6 @@ from z3c.form import form
 from z3c.form import field
 
 
-class InsufficientPrivilegesView(BrowserView):
-    pass
-
-
 class LoginForm(form.Form):
     field = field.Fields(ILogin)
     ignoreContext = True

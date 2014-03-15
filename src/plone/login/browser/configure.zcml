@@ -10,7 +10,6 @@
         name="insufficient-privileges"
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
         permission="zope.Public"
-        class=".login.InsufficientPrivilegesView"
         template="templates/insufficient_privileges.pt"
         />
 
