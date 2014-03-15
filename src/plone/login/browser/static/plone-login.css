@@ -47,7 +47,8 @@
   font-weight: bold; }
 
 .popup .meat {
-  margin-top: 2em;
+  margin-top: 2em; }
+.popup .meat.federated {
   background: url(img/or-div.png) center center no-repeat; }
 
 .popup .half {

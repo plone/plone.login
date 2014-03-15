@@ -24,7 +24,8 @@
           </div>
           <h3>Log in</h3>
           <p>Long time no see.</p>
-          <div class="meat">
+          <!-- to switch to non-federated, remove the federated class below, and the .half class below that -->
+          <div class="meat federated">
             <div class="native half">
               <form action="@@complete-profile" enctype="multipart/form-data" method="post">
                 <fieldset>
