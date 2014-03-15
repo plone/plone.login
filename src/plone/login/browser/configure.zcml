@@ -32,7 +32,7 @@
     <browser:page
         name="register"
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-        permission="zope.Public"
+        permission="cmf.AddPortalMember"
         class=".login.RegisterView"
         template="templates/register.pt"
         />
