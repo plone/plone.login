@@ -13,7 +13,7 @@
     Send Email link to reset password
   </h1>
 
-  <a href="@@reset-password">Login To Your Plone Site</a>
+  <a href="@@reset-password">Reset your password</a>
 
 </metal:main>
 </html>
