@@ -22,6 +22,9 @@ class LoginView(BrowserView):
         self.login_form.updateWidgets()
 
 
+class RegisterView(BrowserView):
+    pass
+
 class InsufficientPrivilegesView(BrowserView):
     pass
 
