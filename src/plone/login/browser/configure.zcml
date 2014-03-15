@@ -29,4 +29,11 @@
         template="templates/reset_password.pt"
         />
 
+    <browser:page
+        name="register"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        permission="zope.Public"
+        class=".login.RegisterView"
+        template="templates/register.pt"
+        />
 </configure>
