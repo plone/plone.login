@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1-dev'
+version = '1.0a1-dev0'
 
 long_description = (
     open('README.txt').read()
@@ -45,7 +45,7 @@ setup(name='plone.login',
       ],
       extras_require={'test': ['plone.app.testing[robot]>=4.2.2']},
       entry_points="""
-      # -*- Entry points: -*- 
+      # -*- Entry points: -*-
       [z3c.autoinclude.plugin]
       target = plone
       """
