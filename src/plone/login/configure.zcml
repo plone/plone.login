@@ -7,7 +7,6 @@
 
   <includeDependencies package="." />
 
-  <!-- -*- extra stuff goes here -*- -->
-  <include package=".browser">
+  <include package=".browser" />
 
 </configure>
