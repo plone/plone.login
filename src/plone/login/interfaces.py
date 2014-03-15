@@ -2,7 +2,13 @@
 from zope.interface import Interface
 from zope import schema
 
+from plone.theme.interfaces import IDefaultPloneLayer
+
 from plone.login import MessageFactory as _
+
+
+class IPloneLoginLayer(IDefaultPloneLayer):
+    """ Marker interface for plone.login views. """
 
 
 class ILogin(Interface):
@@ -12,3 +18,5 @@ class ILogin(Interface):
     password = schema.TextLine(
         title=_('Password'),
     )
+
+

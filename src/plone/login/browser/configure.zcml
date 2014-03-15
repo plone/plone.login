@@ -11,6 +11,7 @@
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
         template="templates/insufficient_privileges.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
     <browser:page
@@ -19,6 +20,7 @@
         permission="zope.Public"
         class=".login.ForgotPasswordView"
         template="templates/forgot_password.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
     <browser:page
@@ -27,6 +29,7 @@
         permission="zope.Public"
         class=".login.ResetPasswordView"
         template="templates/reset_password.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
     <browser:page
@@ -35,5 +38,6 @@
         permission="cmf.AddPortalMember"
         class=".login.RegisterView"
         template="templates/register.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 </configure>
