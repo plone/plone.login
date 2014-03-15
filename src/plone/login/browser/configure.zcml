@@ -13,5 +13,20 @@
         template="templates/insufficient_privileges.pt"
         />
 
+    <browser:page
+        name="forgot-password"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        permission="zope.Public"
+        class=".login.ForgotPasswordView"
+        template="templates/forgot_password.pt"
+        />
+
+    <browser:page
+        name="reset-password"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        permission="zope.Public"
+        class=".login.ResetPasswordView"
+        template="templates/reset_password.pt"
+        />
 
 </configure>

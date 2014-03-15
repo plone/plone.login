@@ -21,3 +21,14 @@ class LoginView(BrowserView):
         self.login_form = LoginForm(context, request)
         self.login_form.updateWidgets()
 
+
+class InsufficientPrivilegesView(BrowserView):
+    pass
+
+
+class ForgotPasswordView(BrowserView):
+    pass
+
+
+class ForgotPasswordView(BrowserView):
+    pass
