@@ -12,7 +12,54 @@
   </metal:block>
 
   <metal:main fill-slot="main">
-  foo
+    <div id="login">
+
+      <h1 class="documentFirstHeading" i18n:translate="login_form_title">Login</h1>
+
+      <div class="overlay">
+        <div class="screen">&nbsp;</div>
+        <div class="popup" id="login">
+          <a href="#" class="close"><img src="img/btn-close.png" /></a>
+          <h3>Log in</h3>
+          <p>Long time no see.</p>
+          <div class="meat">
+            <div class="native half">
+              <form>   
+                <fieldset>
+                  <input type="text" name="username" placeholder="Username or email" autocapitalize="off" class="stretch" tabindex="1">
+                </fieldset>
+                <fieldset>
+                  <input type="password" name="password" placeholder="Super secure password" class="stretch" tabindex="2">
+                </fieldset>
+                <input class="submit" type="submit" value="Log in">
+              </form>
+            </div>
+            <div class="external half">
+              <input class="submit facebook" type="submit" value="Log in with Facebook">
+              <input class="submit google" type="submit" value="Log in with Google">
+            </div>
+          </div>
+          <div class="footer">
+            <p class="trouble">Trouble logging in? <a href="#">Get help.</a></p>
+            <p class="signup">Need an account? <a href="#">Sign up here &raquo;</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div id="login-helpers">
+        <div>
+          <a id="forgot-password"
+             tal:attributes="href string:${portal_url}/password_resetter"
+             i18n:translate="prompt_password_forgotten_link">Forgot your password?</a>
+        </div>
+        <div>
+          <a id="join"
+             tal:attributes="href string:${portal_url}/registrator"
+             i18n:translate="prompt_not_registered_link">Not registered yet?</a>
+        </div>
+      </div>
+
+    </div>
   </metal:main>
 
 </html>

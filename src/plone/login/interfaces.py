@@ -15,7 +15,7 @@ class ILogin(Interface):
     login = schema.TextLine(
         title=_('Login'),
     )
-    password = schema.TextLine(
+    password = schema.Password(
         title=_('Password'),
     )
 

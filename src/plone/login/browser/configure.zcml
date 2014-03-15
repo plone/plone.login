@@ -49,4 +49,13 @@
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
+    <browser:page
+        name="new-login"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        permission="zope.Public"
+        class=".login.LoginView"
+        template="templates/login.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
+        />
+
 </configure>
