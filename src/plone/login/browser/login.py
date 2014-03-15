@@ -19,3 +19,12 @@ class ResetPasswordView(BrowserView):
 
 class SendEmailView(BrowserView):
     pass
+
+
+class LoginHelpView(BrowserView):
+
+    def can_reset_password(self):
+        return True
+
+    def can_retrieve_username(self):
+        return True

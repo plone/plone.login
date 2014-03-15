@@ -55,11 +55,21 @@
         />
 
     <browser:page
-        name="new-login"
+        name="login"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
         class=".login.LoginView"
         template="templates/login.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
+        />
+
+
+    <browser:page
+        name="login-help"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        permission="zope.Public"
+        class=".login.LoginHelpView"
+        template="templates/login_help.pt"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
 

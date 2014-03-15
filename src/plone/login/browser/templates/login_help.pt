@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+
+<metal:main fill-slot="main">
+
+    <div class="popup" id="trouble">
+    <a href="#" class="close"><img src="img/btn-close.png" /></a>
+    <h3>Need help?</h3>
+    <p>Don't worry, I forget my password all the time.</p>
+    <div class="meat">
+      <div class="native half" tal:condition="view/can_reset_password">
+        <form action="@@send-email" enctype="multipart/form-data" method="post">
+          <fieldset>
+            <label>Enter your username or email and we’ll send you a password reset link.</label>
+          </fieldset>
+          <fieldset>
+            <input type="text" name="username" placeholder="Username or email" autocapitalize="off" class="stretch" tabindex="1">
+          </fieldset>
+          <input class="submit context" type="submit" value="Reset your password">
+        </form>
+
+      </div>
+      <div class="external half" tal:condition="view/can_retrieve_username">
+        <form action="@@send-email" enctype="multipart/form-data" method="post">
+          <fieldset>
+            <label>Enter your email and we’ll send you your username.</label>
+          </fieldset>
+          <fieldset>
+            <input type="text" name="email" placeholder="Email address" autocapitalize="off" class="stretch" tabindex="1">
+          </fieldset>
+          <input class="submit context" type="submit" value="Get your username">
+        </form>
+      </div>
+    </div>
+    <div class="footer">
+      <p class="trouble">Still no dice? <a href="contact-info">Contact an admin.</a></p>
+      <p class="login right">Eureka!? <a href="@@login" class="emph">Log in here &raquo;</a></p>
+    </div>
+  </div>
+
+</metal:main>
+</html>

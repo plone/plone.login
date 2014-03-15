@@ -24,7 +24,7 @@
           <p>Long time no see.</p>
           <div class="meat">
             <div class="native half">
-              <form>   
+              <form>
                 <fieldset>
                   <input type="text" name="username" placeholder="Username or email" autocapitalize="off" class="stretch" tabindex="1">
                 </fieldset>
@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="footer">
-            <p class="trouble">Trouble logging in? <a href="#">Get help.</a></p>
+            <p class="trouble">Trouble logging in? <a href="@@login-help">Get help.</a></p>
             <p class="signup">Need an account? <a href="#">Sign up here &raquo;</a></p>
           </div>
         </div>
