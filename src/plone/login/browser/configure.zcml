@@ -40,4 +40,12 @@
         template="templates/register.pt"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
+
+    <browser:page
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        name="complete-profile"
+        class=".profile.CompleteProfileFormView"
+        permission="cmf.SetOwnProperties"
+        />
+
 </configure>
