@@ -8,14 +8,14 @@
 
     <browser:page
         name="insufficient-privileges"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
         template="templates/insufficient_privileges.pt"
         />
 
     <browser:page
         name="forgot-password"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
         class=".login.ForgotPasswordView"
         template="templates/forgot_password.pt"
@@ -23,7 +23,7 @@
 
     <browser:page
         name="reset-password"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
         class=".login.ResetPasswordView"
         template="templates/reset_password.pt"
@@ -31,7 +31,7 @@
 
     <browser:page
         name="register"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="cmf.AddPortalMember"
         class=".login.RegisterView"
         template="templates/register.pt"
