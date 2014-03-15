@@ -13,9 +13,7 @@
 
 <body>
     <metal:body fill-slot="body">
-
         <div id="content">
-            <tal:mailhost tal:condition="view/showForm">
             <h1 class="documentFirstHeading"
                 tal:content="string:Site Registration" />
             <div id="content-core">
@@ -39,24 +37,7 @@
                 <input type="submit" value="Fuck Yeah!">
               </form>
             </div>
-            </tal:mailhost>
-
-            <tal:nomailhost tal:condition="not:view/showForm">
-
-                <h1 class="documentFirstHeading"
-                    i18n:translate=""
-                    tal:content="view/label" />
-
-                <div id="content-core">
-                  <div class="documentDescription">
-                      This site doesn't have a valid email setup, so you
-                      cannot register at this time.
-                  </div>
-                </div>
-
-            </tal:nomailhost>
         </div>
-
     </metal:body>
 </body>
 </html>
