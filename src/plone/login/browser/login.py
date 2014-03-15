@@ -25,6 +25,7 @@ class LoginView(BrowserView):
 class RegisterView(BrowserView):
     pass
 
+
 class InsufficientPrivilegesView(BrowserView):
     pass
 
@@ -34,8 +35,4 @@ class ResetPasswordView(BrowserView):
 
 
 class ForgotPasswordView(BrowserView):
-    pass
-
-
-class RegisterView(BrowserView):
     pass
