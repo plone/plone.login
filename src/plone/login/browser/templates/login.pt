@@ -18,7 +18,7 @@
         <div class="screen">&nbsp;</div>
         <div class="popup" id="login">
           <a href="#" class="close"><img src="/Plone/++resource++plone.login/img/btn-close.png" /></a>
-          <div class="alert">
+          <div class="alert" tal:condition="python:request.form.get('error', False)">
             <h4>Uh oh!</h4>
             <p>Looks like your username or password was incorrect. <br />Please try again or <a href="@@login-help">get some help remembering here</a>.</p>
           </div>
