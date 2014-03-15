@@ -17,25 +17,9 @@
             <h1 class="documentFirstHeading"
                 tal:content="string:Confirmation Sent" />
             <div id="content-core">
-              <form>
-                <input type="text"
-                  name="username"
-                  size="20"
-                  tal:attributes="value request/username | string:username" />
-                <input type="text"
-                  name="email"
-                  size="20"
-                  tal:attributes="value request/email | string:email" />
-                <input type="text"
-                  name="password"
-                  size="20"
-                  tal:attributes="value request/password | string:password" />
-                <input type="text"
-                  name="confirm"
-                  size="20"
-                  tal:attributes="value request/confirm | string:confirm password" />
-                <input type="submit" value="Fuck Yeah!">
-              </form>
+              <p>An email has been sent to you for you to confirm your email address.
+                 When you click on the link in the email, your registration will be complete.
+              </p>
             </div>
         </div>
     </metal:body>
