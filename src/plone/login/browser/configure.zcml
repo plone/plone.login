@@ -42,10 +42,11 @@
         />
 
     <browser:page
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
         name="complete-profile"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
         class=".profile.CompleteProfileFormView"
         permission="cmf.SetOwnProperties"
+        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
 </configure>
