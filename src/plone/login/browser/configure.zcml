@@ -47,6 +47,15 @@
         />
 
     <browser:page
+        name="confirmation-sent"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        permission="zope.Public"
+        class=".login.ConfirmationSentView"
+        template="templates/confirmation-sent.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
+        />
+
+    <browser:page
         name="complete-profile"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         class=".profile.CompleteProfileFormView"

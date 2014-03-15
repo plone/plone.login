@@ -15,9 +15,9 @@
     <metal:body fill-slot="body">
         <div id="content">
             <h1 class="documentFirstHeading"
-                tal:content="string:Site Registration" />
+                tal:content="string:Confirmation Sent" />
             <div id="content-core">
-              <form name="registration" action="confirmation-sent" method="post">
+              <form>
                 <input type="text"
                   name="username"
                   size="20"
