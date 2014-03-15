@@ -10,7 +10,7 @@
 
   <h1 class="documentFirstHeading"
     i18n:translate="sent_email">
-    Send Email link to login
+    Send Email link to reset password
   </h1>
 
   <a href="@@reset-password">Login To Your Plone Site</a>
