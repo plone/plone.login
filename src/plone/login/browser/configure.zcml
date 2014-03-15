@@ -37,6 +37,7 @@
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
+    <!-- XXX: Fix permission or DIE -->
     <browser:page
         name="register"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
@@ -46,6 +47,7 @@
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
+    <!-- XXX: Fix permission or DIE -->
     <browser:page
         name="confirmation-sent"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
