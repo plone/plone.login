@@ -15,7 +15,16 @@
         name="insufficient-privileges"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
+        class=".login.InsufficientPrivilegesView"
         template="templates/insufficient_privileges.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
+        />
+
+    <browser:page
+        name="request-access"
+        for="*"
+        permission="plone.RequestAccess"
+        class=".login.RequestAccessView"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
 

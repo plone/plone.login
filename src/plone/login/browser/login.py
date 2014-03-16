@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from AccessControl import getSecurityManager
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
@@ -109,3 +110,22 @@ class RequireLoginView(BrowserView):
             return portal.restrictedTraverse('login')()
         else:
             return portal.restrictedTraverse('insufficient-privileges')()
+
+
+class InsufficientPrivilegesView(BrowserView):
+
+    def canRequestAccess(self):
+        return getSecurityManager().checkPermission('Plone: Request Access to Content', self.context)
+
+    def portal_url(self):
+        portal_state = getMultiAdapter((self.context, self.request),
+                                       name='plone_portal_state')
+        return portal_state.portal_url
+
+class RequestAccessView(BrowserView):
+
+    def __call__(self):
+        import pdb; pdb.set_trace( )
+
+
+
