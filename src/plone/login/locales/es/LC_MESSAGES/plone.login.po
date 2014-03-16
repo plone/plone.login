@@ -1,0 +1,173 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2014-03-16 20:22+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+
+#: plone/login/browser/login_help.py:29
+msgid "An email has been sent with instructions on how to reset your password."
+msgstr ""
+
+#: plone/login/browser/login_help.py:49
+msgid "An email has been sent with your username."
+msgstr ""
+
+#: plone/login/interfaces.py:39
+msgid "Bio"
+msgstr ""
+
+#: plone/login/interfaces.py:59
+msgid "Came From"
+msgstr ""
+
+#: plone/login/browser/profile.py:35
+msgid "Cancel"
+msgstr ""
+
+#: plone/login/browser/profile.py:32
+msgid "Changes saved"
+msgstr ""
+
+#: plone/login/browser/profile.py:16
+msgid "Complete your profile"
+msgstr ""
+
+#: plone/login/interfaces.py:83
+msgid "Confirm password"
+msgstr ""
+
+#: plone/login/browser/login_help.py:60
+msgid "Don't worry, I forget my password all the time."
+msgstr ""
+
+#: plone/login/browser/profile.py:37
+msgid "Edit cancelled"
+msgstr ""
+
+#: plone/login/interfaces.py:73
+msgid "Email"
+msgstr ""
+
+#: plone/login/interfaces.py:100
+msgid "Enter your email and we’ll send you your username."
+msgstr ""
+
+#: plone/login/interfaces.py:93
+msgid "Enter your username or email and we’ll send you a password reset link."
+msgstr ""
+
+#: plone/login/interfaces.py:27
+msgid "First Name"
+msgstr ""
+
+#: plone/login/browser/login_help.py:45
+msgid "Get your username"
+msgstr ""
+
+#: plone/login/browser/register.py:23
+msgid "Join the club."
+msgstr ""
+
+#: plone/login/interfaces.py:33
+msgid "Last Name"
+msgstr ""
+
+#: plone/login/browser/login.py:23
+msgid "Log in"
+msgstr ""
+
+#: plone/login/interfaces.py:16
+msgid "Login"
+msgstr ""
+
+#: plone/login/interfaces.py:49
+msgid "Login Name"
+msgstr ""
+
+#: plone/login/browser/login.py:63
+#: plone/login/browser/register.py:48
+msgid "Login failed. Both email address and password are case sensitive, check that caps lock is not enabled."
+msgstr ""
+
+#: plone/login/browser/login.py:68
+#: plone/login/browser/register.py:53
+msgid "Login failed. Both login name and password are case sensitive, check that caps lock is not enabled."
+msgstr ""
+
+#: plone/login/browser/login.py:24
+msgid "Long time no see."
+msgstr ""
+
+#: plone/login/browser/login_help.py:59
+msgid "Need Help?"
+msgstr ""
+
+#: plone/login/interfaces.py:19
+msgid "Password"
+msgstr ""
+
+#: plone/login/interfaces.py:40
+msgid "Please provide a bio of yourself."
+msgstr ""
+
+#: plone/login/browser/profile.py:17
+msgid "Please provide additional information about yourself."
+msgstr ""
+
+#: plone/login/interfaces.py:28
+msgid "Please provide your first name."
+msgstr ""
+
+#: plone/login/interfaces.py:34
+msgid "Please provide your last name."
+msgstr ""
+
+#: plone/login/browser/register.py:35
+msgid "Register"
+msgstr ""
+
+#: plone/login/browser/login_help.py:25
+msgid "Reset your password"
+msgstr ""
+
+#: plone/login/browser/profile.py:25
+msgid "Save"
+msgstr ""
+
+#: plone/login/browser/register.py:22
+msgid "Sign up"
+msgstr ""
+
+#: plone/login/interfaces.py:68
+msgid "Username"
+msgstr ""
+
+#: plone/login/browser/login.py:89
+#: plone/login/browser/register.py:75
+msgid "You are now logged in."
+msgstr ""
+
+#: plone/login/browser/logout.py:49
+msgid "You have been logged out."
+msgstr ""
+
+#. Default: "Reset Password"
+#: plone/login/browser/templates/reset_password.pt:11
+msgid "heading_reset_password"
+msgstr ""
+
+#. Default: "Send Email link to reset password"
+#: plone/login/browser/templates/send_email.pt:11
+msgid "sent_email"
+msgstr ""
+
