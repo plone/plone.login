@@ -70,9 +70,9 @@
                 </div>
               </div>
             </tal:widgets>
-            <span tal:replace="structure context/@@authenticator/authenticator"/>
             <img src="++resource++plone.login/img/pwd-strength.png" class="pwd-strength" alt="Password strength placeholder — someone make it happen" />
 
+            <span tal:replace="structure context/@@authenticator/authenticator"/>
             <div class="action" tal:repeat="action view/actions/values|nothing">
               <input type="submit" tal:replace="structure action/render" />
             </div>
