@@ -2,6 +2,8 @@
     xmlns="http://namespaces.zope.org/zope"
     i18n_domain="plone">
 
+  <include package="Products.CMFCore" file="permissions.zcml" />
+
   <permission
       id="plone.RequestAccess"
       title="Plone: Request Access to Content"
