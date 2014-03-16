@@ -1,3 +1,11 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="plone"
+      tal:omit-tag="">
+<body tal:omit-tag="">
 
 <div id="login">
   <div id="login-warnings">
@@ -79,3 +87,6 @@
         <p class="signup right">Need an account? <a href="@@register" class="emph">Sign up here &raquo;</a></p>
       </div>
       </div>
+
+</body>
+</html>
