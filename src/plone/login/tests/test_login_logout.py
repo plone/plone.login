@@ -2,11 +2,10 @@
 import unittest
 
 import transaction
-from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
 from plone.testing.z2 import Browser
-from zope.component import getMultiAdapter
+
 from zope.interface import alsoProvides
 
 from plone.login.interfaces import IPloneLoginLayer

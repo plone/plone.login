@@ -37,6 +37,7 @@ class CompleteProfileForm(form.EditForm):
         IStatusMessage(self.request).addStatusMessage(_(u"Edit cancelled"),
                                                       "info")
 
+
 class CompleteProfileFormView(layout.FormWrapper):
     form = CompleteProfileForm
 

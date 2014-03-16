@@ -91,7 +91,7 @@ class ILoginHelpForm(Interface):
     reset_password = schema.TextLine(
         title=_(u'Username'),
         description=_(u'Enter your username or email and we’ll send you a '
-                       'password reset link.'),
+                      u'password reset link.'),
         required=False,
     )
 

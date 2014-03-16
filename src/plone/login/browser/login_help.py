@@ -1,13 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from DateTime import DateTime
-
-from Products.CMFCore.utils import getToolByName
-from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
-from zope.component import getMultiAdapter
-
 
 from plone.login import MessageFactory as _
 from plone.login.interfaces import ILoginHelpForm
@@ -17,7 +11,6 @@ from plone.z3cform import layout
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
-from z3c.form import group
 
 
 class RequestResetPassword(form.Form):
@@ -34,8 +27,8 @@ class RequestResetPassword(form.Form):
         # TODO: Send Email with password reset url
         IStatusMessage(self.request).addStatusMessage(
             _(u'An email has been sent with instructions on how to reset your '
-               'password.'),
-              'info')
+              u'password.'),
+            'info')
 
 
 class RequestUsername(form.Form):
@@ -54,7 +47,7 @@ class RequestUsername(form.Form):
         # TODO: Send Email with username
         IStatusMessage(self.request).addStatusMessage(
             _(u'An email has been sent with your username.'),
-              'info')
+            'info')
 
 
 class LoginHelpForm(form.EditForm):

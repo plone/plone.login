@@ -57,16 +57,16 @@ class LoginForm(form.EditForm):
         if membership_tool.isAnonymousUser():
             self.request.response.expireCookie('__ac', path='/')
             email_login = getToolByName(self.context, 'portal_properties') \
-                            .site_properties.getProperty('use_email_as_login')
+                .site_properties.getProperty('use_email_as_login')
             if email_login:
                 IStatusMessage(self.request).addStatusMessage(
                     _(u'Login failed. Both email address and password are case '
-                    u'sensitive, check that caps lock is not enabled.'),
+                      u'sensitive, check that caps lock is not enabled.'),
                     'error')
             else:
                 IStatusMessage(self.request).addStatusMessage(
                     _(u'Login failed. Both login name and password are case '
-                    u'sensitive, check that caps lock is not enabled.'),
+                      u'sensitive, check that caps lock is not enabled.'),
                     'error')
             return
         member = membership_tool.getAuthenticatedMember()
@@ -86,9 +86,8 @@ class LoginForm(form.EditForm):
 
         membership_tool.loginUser(self.request)
 
-
         IStatusMessage(self.request).addStatusMessage(_(u"You are now logged in."),
-                                                    "info")
+                                                      "info")
         if data['came_from']:
             came_from = data['came_from']
         else:

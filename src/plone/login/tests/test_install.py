@@ -37,6 +37,3 @@ class TestInstall(unittest.TestCase):
         layers = [l.getName() for l in registered_layers()]
         self.assertTrue('IPloneLoginLayer' in layers,
                         'add-on layer was not installed')
-
-
-

@@ -1,21 +1,18 @@
 # -*- coding: utf-8 -*-
 import unittest
-import re
+
 from zope.interface import alsoProvides
 from zope.component import getMultiAdapter
 from Products.CMFCore.utils import getToolByName
 from plone.app.z3cform.interfaces import IPloneFormLayer
 from plone.login.interfaces import IPloneLoginLayer
-from plone.app.testing import login
-from plone.app.testing import logout
-from plone.app.testing import TEST_USER_ID
-from plone.app.testing import TEST_USER_NAME
-from plone.app.testing import TEST_USER_PASSWORD
+
 #from plone import api
 from plone.login.testing import \
     PLONE_LOGIN_INTEGRATION_TESTING
 
 FORM_ID = 'register'
+
 
 class TestRegisterForm(unittest.TestCase):
 
