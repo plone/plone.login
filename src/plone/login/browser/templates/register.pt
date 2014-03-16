@@ -10,8 +10,7 @@
     <div id="login">
       <div id="login-warnings">
         <div class="alert" tal:condition="python:request.form.get('error', False)">
-          <h4>Uh oh!</h4>
-          <p>Looks like your password and confirmation don't match.<br />Please try again.</p>
+          <p>An error has occurred.</p>
         </div>
       </div>
 
