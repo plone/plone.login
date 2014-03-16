@@ -12,7 +12,7 @@
     <element value="View"/>
    </property>
    <property name="visible">True</property>
-   <property name="modal" type="text">{"prependContent": ".alert"}</property>
+   <property name="modal" type="text">{"prependContent": ".login-warnings"}</property>
   </object>
  </object>
 </object>
