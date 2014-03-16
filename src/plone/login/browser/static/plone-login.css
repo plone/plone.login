@@ -57,7 +57,7 @@
   background: url(img/or-div.png) center center no-repeat; }
 
 #login .half {
-  width: 49.5%;
+  width: 44%;
   display: inline-block;
   vertical-align: top; }
   #login .half.native {
@@ -66,10 +66,9 @@
     padding-left: 5%; }
 
 #trouble .half {
-  width: 49.5%;
+  width: 44%;
   display: inline-block;
   vertical-align: top;
-  padding-right: 5%;
   padding-left: 5%; }
 
 #login .pwd-strength {
@@ -129,7 +128,7 @@
   margin-top: 4em;
   font-size: 0.9em; }
   #login .footer p {
-    width: 49.5%;
+    width: 44%;
     display: inline-block;
     vertical-align: top;
     color: #3a3a3a; }
