@@ -13,43 +13,36 @@
 
   <metal:main fill-slot="main">
     <div id="login">
-
-      <div class="overlay">
-        <div class="screen">&nbsp;</div>
-        <div class="popup" id="login">
-          <a href="#" class="close"><img src="/Plone/++resource++plone.login/img/btn-close.png" /></a>
-          <div class="alert" tal:condition="python:request.form.get('error', False)">
-            <h4>Uh oh!</h4>
-            <p>Looks like your username or password was incorrect. <br />Please try again or <a href="@@login-help">get some help remembering here</a>.</p>
-          </div>
-          <h3>Log in</h3>
-          <p>Long time no see.</p>
-          <!-- to switch to non-federated, remove the federated class below, and the .half class below that -->
-          <div class="meat federated">
-            <div class="native half">
-              <form action="@@complete-profile" enctype="multipart/form-data" method="post">
-                <fieldset>
-                  <input type="text" name="username" placeholder="Username or email" autocapitalize="off" class="stretch" tabindex="1">
-                </fieldset>
-                <fieldset>
-                  <input type="password" name="password" placeholder="Super secure password" class="stretch" tabindex="2">
-                </fieldset>
-                <input class="submit" type="submit" value="Log in">
-              </form>
-            </div>
-            <div class="external half">
-              <input class="submit facebook" type="submit" value="Log in with Facebook">
-              <input class="submit google" type="submit" value="Log in with Google">
-            </div>
-          </div>
-          <div class="footer">
-            <p class="trouble">Trouble logging in? <a href="@@login-help">Get help.</a></p>
-            <p class="signup right">Need an account? <a href="@@register" class="emph">Sign up here &raquo;</a></p>
-          </div>
+     <div id="login-warnings">
+      <div class="alert" tal:condition="python:request.form.get('error', False)">
+        <h4>Uh oh!</h4>
+        <p>Looks like your username or password was incorrect. <br />Please try again or <a href="@@login-help">get some help remembering here</a>.</p>
+      </div>
+     </div>
+      <h1>Log in</h1>
+      <p>Long time no see.</p>
+      <!-- to switch to non-federated, remove the federated class below, and the .half class below that -->
+      <div class="meat federated">
+        <div class="native half">
+          <form action="@@complete-profile" enctype="multipart/form-data" method="post">
+            <fieldset>
+              <input type="text" name="username" placeholder="Username or email" autocapitalize="off" class="stretch" tabindex="1">
+            </fieldset>
+            <fieldset>
+              <input type="password" name="password" placeholder="Super secure password" class="stretch" tabindex="2">
+            </fieldset>
+            <input class="submit" type="submit" value="Log in">
+          </form>
+        </div>
+        <div class="external half">
+          <input class="submit facebook" type="submit" value="Log in with Facebook">
+          <input class="submit google" type="submit" value="Log in with Google">
         </div>
       </div>
-
-    </div>
+      <div class="footer">
+        <p class="trouble">Trouble logging in? <a href="@@login-help">Get help.</a></p>
+        <p class="signup right">Need an account? <a href="@@register" class="emph">Sign up here &raquo;</a></p>
+      </div>
   </metal:main>
 
 </html>

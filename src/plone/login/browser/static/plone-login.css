@@ -1,5 +1,5 @@
 /* CSS for the login thingies */
-.overlay {
+/*.overlay {
   position: relative; }
 
 .screen {
@@ -11,25 +11,25 @@
   height: 100%;
   width: 100%;
   background: rgba(33, 33, 33, 0.5);
-  margin: 0 auto; }
+  margin: 0 auto; }*/
 
-.popup {
+#login {
   background: #fff;
-  padding: 5% 3% 1%;
+  padding: 1% 3% 1%;
   display: block;
-  width: 60%;
+  /*width: 60%;*/
   height: auto;
-  position: fixed;
+  /*position: fixed;*/
   z-index: 5000;
   top: 20%;
   left: 20%;
   right: 20%;
   font-size: 1.1em;
-  box-shadow: rgba(28, 37, 48, 0.15) 1px 1px, rgba(28, 37, 48, 0.15) 2px 2px, rgba(28, 37, 48, 0.15) 3px 3px, rgba(28, 37, 48, 0.15) 4px 4px, rgba(28, 37, 48, 0.15) 5px 5px, rgba(28, 37, 48, 0.15) 6px 6px, rgba(28, 37, 48, 0.15) 7px 7px, rgba(28, 37, 48, 0.15) 8px 8px; 
+  /*box-shadow: rgba(28, 37, 48, 0.15) 1px 1px, rgba(28, 37, 48, 0.15) 2px 2px, rgba(28, 37, 48, 0.15) 3px 3px, rgba(28, 37, 48, 0.15) 4px 4px, rgba(28, 37, 48, 0.15) 5px 5px, rgba(28, 37, 48, 0.15) 6px 6px, rgba(28, 37, 48, 0.15) 7px 7px, rgba(28, 37, 48, 0.15) 8px 8px; */
   z-index: 200;
 }
 
-.popup a.close {
+#login a.close {
   float: right;
   padding: 10px;
   position: absolute;
@@ -38,53 +38,54 @@
   z-index: 500;
 }
 
-.popup h3 {
+.modal-header h3,
+#login h1 {
   color: #3887be;
   font-size: 2em; }
 
-.popup a {
+#login a {
   color: #3887be;
   font-weight: bold; }
 
-.popup .meat {
+#login .meat {
   margin-top: 2em; }
-.popup .meat.federated {
+#login .meat.federated {
   background: url(img/or-div.png) center center no-repeat; }
 
-.popup .half {
+#login .half {
   width: 49.5%;
   display: inline-block;
   vertical-align: top; }
-  .popup .half.native {
+  #login .half.native {
     padding-right: 5%; }
-  .popup .half.external {
+  #login .half.external {
     padding-left: 5%; }
 
-.popup .pwd-strength {
+#login .pwd-strength {
   margin-bottom: 0.75em;
   width: 100%; }
 
-.popup label {
+#login label {
   font-size: 0.9em; }
 
-.popup input {
+#login input {
   border-radius: 0px;
   border: 2px solid #e5e5e5;
   height: 36px;
   margin-bottom: 0.75em;
   font-size: 0.9em; }
-  .popup input.submit {
+  #login input.submit {
     background: #3887be;
     color: #fff;
     width: 100%;
     border: 0px;
     border-radius: 2px; }
-  .popup input.facebook {
+  #login input.facebook {
     background: #3b5998 url(img/btn-facebook.png) left center no-repeat;
     text-align: left;
     padding-left: 50px;
     border-radius: 0px; }
-  .popup input.google {
+  #login input.google {
     background: #df4a32 url(img/btn-google.png) left center no-repeat;
     text-align: left;
     padding-left: 50px;
@@ -112,21 +113,21 @@
   color: #989898;
   font-size: 0.9em; }
 
-.popup .footer {
+#login .footer {
   clear: both;
   margin-top: 4em;
   font-size: 0.9em; }
-  .popup .footer p {
+  #login .footer p {
     width: 49.5%;
     display: inline-block;
     vertical-align: top;
     color: #3a3a3a; }
-    .popup .footer p.right {
+    #login .footer p.right {
       padding-left: 5%; }
-    .popup .footer p a.emph {
+    #login .footer p a.emph {
       font-size: 1.1em; }
 
-.popup .alert {
+#login .alert {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -138,14 +139,14 @@
   color: #fff;
   border-radius: 0px;
   z-index: 200; }
-  .popup .alert h4 {
+  #login .alert h4 {
     display: inline-block;
     width: 13%;
     vertical-align: top;
     font-size: 2em; }
-  .popup .alert p {
+  #login .alert p {
     display: inline-block;
     width: 50%;
     vertical-align: top; }
-  .popup .alert a {
+  #login .alert a {
     color: #fff; }
