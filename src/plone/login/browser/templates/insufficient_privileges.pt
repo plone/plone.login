@@ -29,8 +29,12 @@
       request access from the owner.
       </p>
 
-      <form>
-         <input type="submit" value="Request Access" />
-      </form>
 </metal:main>
+         <form method="post"
+               tal:attributes="action string:${view/portal_url}/@@request-access">
+            <input type="hidden"
+                   name="came_from"
+                   tal:attributes="value context/@@plone_context_state/current_page_url" />
+            <input type="submit" value="Request Access" />
+         </form>
 </html>
