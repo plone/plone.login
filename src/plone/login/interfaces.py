@@ -45,12 +45,12 @@ class ICompleteProfile(Interface):
 class ILoginForm(Interface):
     """ Login form schema """
 
-    __ac_name = schema.TextLine(
+    ac_name = schema.TextLine(
         title=_(u'Login Name'),
         required=True,
     )
 
-    __ac_password = schema.Password(
+    ac_password = schema.Password(
         title=_(u'Password'),
         required=True,
     )
