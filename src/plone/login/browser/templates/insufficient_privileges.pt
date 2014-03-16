@@ -28,6 +28,11 @@
       If you believe you are receiving this message in error, you can
       request access from the owner.
       </p>
+      <tal:canrequestaccess tal:condition="view/canRequestAccess">
+         <p>
+         If you believe you are receiving this message in error, you can
+         request access from the owner.
+         </p>
 
 </metal:main>
          <form method="post"
