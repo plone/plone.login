@@ -23,7 +23,7 @@
         name="reset-password"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="cmf.MailForgottonPassword"
-        class=".login.ResetPasswordView"
+        class=".stubs.ResetPasswordView"
         template="templates/reset_password.pt"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
@@ -32,7 +32,7 @@
         name="send-email"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="cmf.MailForgottonPassword"
-        class=".login.SendEmailView"
+        class=".stubs.SendEmailView"
         template="templates/send_email.pt"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
@@ -42,7 +42,7 @@
         name="register"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
-        class=".login.RegisterView"
+        class=".stubs.RegisterView"
         template="templates/register.pt"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
@@ -52,7 +52,7 @@
         name="confirmation-sent"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
-        class=".login.ConfirmationSentView"
+        class=".stubs.ConfirmationSentView"
         template="templates/confirmation-sent.pt"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
@@ -69,7 +69,7 @@
         name="login"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
-        class=".login.LoginView"
+        class=".stubs.LoginView"
         template="templates/login.pt"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
@@ -87,7 +87,7 @@
         name="login-help"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
-        class=".login.LoginHelpView"
+        class=".stubs.LoginHelpView"
         template="templates/login_help.pt"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
