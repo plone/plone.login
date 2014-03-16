@@ -30,8 +30,6 @@ class LogoutView(BrowserView):
         if external_logout_url:
             target_url = "%s?next=%s" % (external_logout_url, target_url)
 
-        # Double '$' to avoid injection into TALES
-        target_url = target_url.replace('$', '$$')
         self.request.response.redirect(target_url)
 
 
