@@ -34,4 +34,4 @@ class TestRegisterForm(unittest.TestCase):
         view = getMultiAdapter((self.portal, self.request),
                                name="register")
         view = view.__of__(self.portal)
-        self.failUnless(view())
+        self.assertTrue(view())
