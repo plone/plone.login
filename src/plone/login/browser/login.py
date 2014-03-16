@@ -3,8 +3,11 @@
 from DateTime import DateTime
 
 from Products.CMFCore.utils import getToolByName
+from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
+from zope.component import getMultiAdapter
+
 
 from plone.login import MessageFactory as _
 from plone.login.interfaces import ILoginForm
@@ -102,3 +105,15 @@ class LoginForm(form.EditForm):
 
 class LoginFormView(layout.FormWrapper):
     form = LoginForm
+
+
+class RequireLoginView(BrowserView):
+
+    def __call__(self):
+        portal_state = getMultiAdapter((self.context, self.request),
+                                       name='plone_portal_state')
+        portal = portal_state.portal()
+        if portal_state.anonymous():
+            return portal.restrictedTraverse('login')()
+        else:
+            return portal.restrictedTraverse('insufficient_privileges')()

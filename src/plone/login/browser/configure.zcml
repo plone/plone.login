@@ -92,4 +92,12 @@
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
+    <browser:page
+        name="require_login"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        permission="zope.Public"
+        class=".login.RequireLoginView"
+        layer="plone.login.interfaces.IPloneLoginLayer"
+        />
+
 </configure>
