@@ -109,4 +109,4 @@ class RequireLoginView(BrowserView):
         if portal_state.anonymous():
             return portal.restrictedTraverse('login')()
         else:
-            return portal.restrictedTraverse('insufficient_privileges')()
+            return portal.restrictedTraverse('insufficient-privileges')()
