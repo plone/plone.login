@@ -20,8 +20,8 @@ class RegisterForm(form.EditForm):
     fields = field.Fields(IRegisterForm)
 
     id = "RegisterForm"
-    label = _(u"Register")
-    description = _(u"We want you")
+    label = _(u"Sign up")
+    description = _(u"Join the club.")
 
     ignoreContext = True
 
