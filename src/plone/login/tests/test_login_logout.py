@@ -72,3 +72,17 @@ class TestLoginLogout(unittest.TestCase):
         self.browser.getControl('Password').value = 'secret'
         self.browser.getControl('Log in').click()
         self.assertIn('You are now logged in', self.browser.contents)
+
+    def test_not_logged_in_and_not_authorized_shows_login_form(self):
+        self.browser.open('http://nohost/plone/@@overview-controlpanel')
+        self.assertTrue(self.browser.getControl('Login Name'))
+
+    def test_insufficient_privileges_returned_when_logged_in_but_not_authorized(self):
+        self.browser.open('http://nohost/plone/login')
+        self.browser.getControl('Login Name').value = TEST_USER_NAME
+        self.browser.getControl('Password').value = TEST_USER_PASSWORD
+        self.browser.getControl('Log in').click()
+        self.assertIn('You are now logged in', self.browser.contents)
+
+        self.browser.open('http://nohost/plone/@@overview-controlpanel')
+        self.assertIn('Insufficient Privileges', self.browser.contents)
