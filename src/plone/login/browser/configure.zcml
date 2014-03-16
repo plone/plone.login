@@ -78,7 +78,7 @@
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
         template="templates/logged_out.pt"
-        class=".loggedout.LoggedOutView"
+        class=".logout.LoggedOutView"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
