@@ -41,6 +41,7 @@ setup(name='plone.login',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'plone.app.z3cform',
           # -*- Extra requirements: -*-
       ],
       extras_require={'test': ['plone.app.testing']},
