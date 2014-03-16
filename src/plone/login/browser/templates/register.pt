@@ -1,5 +1,5 @@
-<div id="register">
-  <div id="register-warnings">
+<div id="login">
+  <div id="login-warnings">
     <div class="alert" tal:condition="python:request.form.get('error', False)">
       <h4>Uh oh!</h4>
       <p>There's trouble, but we can help. <br />Please try again or <a href="@@login-help">get some help remembering here</a>.</p>
@@ -14,8 +14,8 @@
      tal:content="structure view/description">Form description</p>
 
       <!-- to switch to non-federated, remove the federated class below, and the .half class below that -->
-      <!--<div class="meat federated">-->
-        <!--<div class="native half">-->
+      <div class="meat federated">
+        <div class="native half">
 
         <form action="." method="post"
             tal:attributes="action view/action; enctype view/enctype">
@@ -68,10 +68,16 @@
             </div>
         </form>
         </div>
+        <div class="external half">
+          <input class="submit facebook" type="submit" value="Log in with Facebook" />
+          <input class="submit google" type="submit" value="Log in with Google" />
+        </div>
+      </div>
       <div class="footer">
         <p class="trouble">Trouble logging in? <a href="@@login-help">Get help.</a></p>
-        <!--<p class="signup right">Need an account? <a href="@@register" class="emph">Sign up here &raquo;</a></p>-->
+        <p class="signup right">Need an account? <a href="@@register" class="emph">Sign up here &raquo;</a></p>
       </div>
+    </div>
 <!--<html xmlns="http://www.w3.org/1999/xhtml"-->
       <!--xmlns:metal="http://xml.zope.org/namespaces/metal"-->
       <!--xmlns:tal="http://xml.zope.org/namespaces/tal"-->
