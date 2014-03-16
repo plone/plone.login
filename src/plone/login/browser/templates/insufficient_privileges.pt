@@ -14,9 +14,7 @@
 </head>
 
 <body>
-
-<metal:main fill-slot="main">
-
+   <metal:content fill-slot="content">
       <h1 class="documentFirstHeading"
           i18n:translate="heading_no_privileges">Insufficient Privileges</h1>
 
@@ -24,17 +22,12 @@
       You are logged in, but do not have sufficient privileges to view this page.
       </p>
 
-      <p>
-      If you believe you are receiving this message in error, you can
-      request access from the owner.
-      </p>
       <tal:canrequestaccess tal:condition="view/canRequestAccess">
          <p>
          If you believe you are receiving this message in error, you can
          request access from the owner.
          </p>
 
-</metal:main>
          <form method="post"
                tal:attributes="action string:${view/portal_url}/@@request-access">
             <input type="hidden"
@@ -42,4 +35,6 @@
                    tal:attributes="value context/@@plone_context_state/current_page_url" />
             <input type="submit" value="Request Access" />
          </form>
+      </tal:canrequestaccess>
+   </metal:content>
 </html>
