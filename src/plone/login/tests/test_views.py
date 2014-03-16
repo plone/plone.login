@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import unittest2 as unittest
+import unittest
 from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
 from plone.login.interfaces import IPloneLoginLayer

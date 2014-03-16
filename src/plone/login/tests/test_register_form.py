@@ -1,4 +1,4 @@
-import unittest2 as unittest
+import unittest
 import re
 from zope.interface import alsoProvides
 from zope.component import getMultiAdapter

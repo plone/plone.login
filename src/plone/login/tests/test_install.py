@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import unittest2 as unittest
+import unittest
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
