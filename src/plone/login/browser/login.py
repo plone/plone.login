@@ -115,7 +115,12 @@ class RequireLoginView(BrowserView):
 class InsufficientPrivilegesView(BrowserView):
 
     def canRequestAccess(self):
-        return getSecurityManager().checkPermission('Plone: Request Access to Content', self.context)
+        # 1) Does the user have permissions to request access?
+        has_permission = getSecurityManager().checkPermission('Plone: Request Access to Content', self.context)
+        # 2) Is the site's email set up properly
+        controlpanel = getMultiAdapter((self.context, self.request),
+                                       name='overview-controlpanel')
+        return has_permission and controlpanel.mailhost_warning
 
     def portal_url(self):
         portal_state = getMultiAdapter((self.context, self.request),
