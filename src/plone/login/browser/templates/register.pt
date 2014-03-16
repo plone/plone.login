@@ -1,43 +1,117 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      metal:use-macro="context/main_template/macros/master"
-      i18n:domain="plone">
-<head>
-    <metal:block fill-slot="top_slot"
-                 tal:define="dummy python:request.set('disable_border',1);
-                             disable_column_one python:request.set('disable_plone.leftcolumn',1);
-                             disable_column_two python:request.set('disable_plone.rightcolumn',1);" />
-</head>
+<div id="register">
+  <div id="register-warnings">
+    <div class="alert" tal:condition="python:request.form.get('error', False)">
+      <h4>Uh oh!</h4>
+      <p>There's trouble, but we can help. <br />Please try again or <a href="@@login-help">get some help remembering here</a>.</p>
+    </div>
+  </div>
 
-<body>
-    <metal:body fill-slot="body">
-        <div id="content">
-            <h1 class="documentFirstHeading"
-                tal:content="string:Site Registration" />
-            <div id="content-core">
-              <form name="registration" action="confirmation-sent" method="post">
-                <input type="text"
-                  name="username"
-                  size="20"
-                  tal:attributes="value request/username | string:username" />
-                <input type="text"
-                  name="email"
-                  size="20"
-                  tal:attributes="value request/email | string:email" />
-                <input type="text"
-                  name="password"
-                  size="20"
-                  tal:attributes="value request/password | string:password" />
-                <input type="text"
-                  name="confirm"
-                  size="20"
-                  tal:attributes="value request/confirm | string:confirm password" />
-                <input type="submit" value="Fuck Yeah!">
-              </form>
+  <h1 tal:condition="view/label | nothing">
+    <span tal:replace="view/label">Form title</span>:
+  </h1>
+
+  <p tal:condition="view/description | nothing"
+     tal:content="structure view/description">Form description</p>
+
+      <!-- to switch to non-federated, remove the federated class below, and the .half class below that -->
+      <!--<div class="meat federated">-->
+        <!--<div class="native half">-->
+
+        <form action="." method="post"
+            tal:attributes="action view/action; enctype view/enctype">
+
+            <tal:widgets repeat="widget view/widgets/values">
+                <div class="row"
+                     tal:define="hidden python:widget.mode == 'hidden'"
+                     tal:omit-tag="hidden">
+
+                      <div class="field"
+                           tal:define="error widget/error;
+                                       hidden python:widget.mode == 'hidden';"
+                           tal:attributes="class python:'field' + (error and ' error' or '')">
+                        <label for=""
+                               tal:attributes="for widget/id"
+                               tal:condition="not:hidden">
+                          <span i18n:translate=""
+                                tal:content="widget/label">label</span>
+                        </label>
+
+                        <span class="fieldRequired" title="Required"
+                              tal:condition="python:widget.required and not hidden"
+                              i18n:translate="label_required"
+                              i18n:attributes="title title_required;">
+                          (Required)
+                        </span>
+
+                        <div class="formHelp"
+                             tal:define="description widget/field/description"
+                             i18n:translate=""
+                             tal:content="description"
+                             tal:condition="python:description and not hidden"
+                             >field description</div>
+
+                        <div tal:condition="error"
+                             tal:content="structure error/render">
+                          Error
+                        </div>
+
+                        <div class="widget">
+                          <input type="text" tal:replace="structure widget/render" />
+                        </div>
+                      </div>
+                </div>
+            </tal:widgets>
+            <span tal:replace="structure context/@@authenticator/authenticator"/>
+
+            <div class="action" tal:repeat="action view/actions/values|nothing">
+              <input type="submit" tal:replace="structure action/render" />
             </div>
+        </form>
         </div>
-    </metal:body>
-</body>
-</html>
+      <div class="footer">
+        <p class="trouble">Trouble logging in? <a href="@@login-help">Get help.</a></p>
+        <!--<p class="signup right">Need an account? <a href="@@register" class="emph">Sign up here &raquo;</a></p>-->
+      </div>
+<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
+      <!--xmlns:metal="http://xml.zope.org/namespaces/metal"-->
+      <!--xmlns:tal="http://xml.zope.org/namespaces/tal"-->
+      <!--xmlns:i18n="http://xml.zope.org/namespaces/i18n"-->
+      <!--metal:use-macro="context/main_template/macros/master"-->
+      <!--i18n:domain="plone">-->
+<!--<head>-->
+    <!--<metal:block fill-slot="top_slot"-->
+                 <!--tal:define="dummy python:request.set('disable_border',1);-->
+                             <!--disable_column_one python:request.set('disable_plone.leftcolumn',1);-->
+                             <!--disable_column_two python:request.set('disable_plone.rightcolumn',1);" />-->
+<!--</head>-->
+
+<!--<body>-->
+    <!--<metal:body fill-slot="body">-->
+        <!--<div id="content">-->
+            <!--<h1 class="documentFirstHeading"-->
+                <!--tal:content="string:Site Registration" />-->
+            <!--<div id="content-core">-->
+              <!--<form name="registration" action="confirmation-sent" method="post">-->
+                <!--<input type="text"-->
+                  <!--name="username"-->
+                  <!--size="20"-->
+                  <!--tal:attributes="value request/username | string:username" />-->
+                <!--<input type="text"-->
+                  <!--name="email"-->
+                  <!--size="20"-->
+                  <!--tal:attributes="value request/email | string:email" />-->
+                <!--<input type="text"-->
+                  <!--name="password"-->
+                  <!--size="20"-->
+                  <!--tal:attributes="value request/password | string:password" />-->
+                <!--<input type="text"-->
+                  <!--name="confirm"-->
+                  <!--size="20"-->
+                  <!--tal:attributes="value request/confirm | string:confirm password" />-->
+                <!--<input type="submit" value="Fuck Yeah!">-->
+              <!--</form>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</metal:body>-->
+<!--</body>-->
+<!--</html>-->
