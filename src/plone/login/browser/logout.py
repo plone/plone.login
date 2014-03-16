@@ -9,6 +9,10 @@ class ILoggedOutView(Interface):
     pass
 
 
+class LogoutView(BrowserView):
+    pass
+
+
 class LoggedOutView(BrowserView):
 
     implements(ILoggedOutView)
