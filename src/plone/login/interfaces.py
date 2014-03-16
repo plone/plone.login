@@ -83,3 +83,20 @@ class IRegisterForm(Interface):
         title=_(u'Confirm password'),
         required=True,
     )
+
+
+class ILoginHelpForm(Interface):
+    """ Login Help form schema """
+
+    reset_password = schema.TextLine(
+        title=_(u'Username'),
+        description=_(u'Enter your username or email and we’ll send you a '
+                       'password reset link.'),
+        required=False,
+    )
+
+    recover_username = schema.TextLine(
+        title=_(u'Email'),
+        description=_(u'Enter your email and we’ll send you your username.'),
+        required=False,
+    )
