@@ -42,8 +42,7 @@
         name="register"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
-        class=".stubs.RegisterView"
-        template="templates/register.pt"
+        class=".register.RegisterFormView"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
 

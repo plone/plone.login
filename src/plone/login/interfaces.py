@@ -59,3 +59,27 @@ class ILoginForm(Interface):
         title=_(u'Came From'),
         required=False,
     )
+
+
+class IRegisterForm(Interface):
+    """ Register form schema """
+
+    username = schema.TextLine(
+        title=_(u'Username'),
+        required=True,
+    )
+
+    email = schema.TextLine(
+        title=_(u'Email'),
+        required=True,
+    )
+
+    password = schema.Password(
+        title=_(u'Password'),
+        required=True,
+    )
+
+    confirm = schema.Password(
+        title=_(u'Confirm password'),
+        required=True,
+    )
