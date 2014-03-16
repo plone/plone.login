@@ -6,11 +6,6 @@
       i18n:domain="plone">
 
 <head>
-    <metal:js fill-slot="javascript_head_slot">
-        <script type="text/javascript" src=""
-                tal:attributes="src string:${context/portal_url}/login.js">
-        </script>
-    </metal:js>
     <metal:block fill-slot="top_slot"
                  tal:define="dummy python:request.set('disable_border',1);
                              disable_column_one python:request.set('disable_plone.leftcolumn',1);
@@ -18,23 +13,9 @@
 </head>
 <body>
 
-  <metal:main fill-slot="main"
-              tal:define="isAnon context/@@plone_portal_state/anonymous">
+<metal:main fill-slot="main">
 
-<tal:reallyloggedout condition="isAnon">
-  <h1 class="documentFirstHeading"
-      i18n:translate="heading_signed_out">You are now logged out</h1>
-
-  <div class="documentDescription"
-     i18n:translate="description_loginagain">You can log in again below.</div>
-
-  <div id="content-core">
-      <metal:login use-macro="context/login_form/macros/login" />
-  </div>
-
-</tal:reallyloggedout>
-
-<tal:notloggedoutafterall tal:condition="not: isAnon">
+<tal:notloggedoutafterall>
     <h1 class="documentFirstHeading"
         i18n:translate="heading_quit_to_log_out">Still logged in as a Zope user</h1>
 
