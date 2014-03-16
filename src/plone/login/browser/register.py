@@ -7,11 +7,13 @@ from Products.statusmessages.interfaces import IStatusMessage
 from plone.login import MessageFactory as _
 from plone.login.interfaces import IRegisterForm
 from plone.z3cform import layout
+from zope.interface import Invalid
 from zope.component import getMultiAdapter
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 from z3c.form.interfaces import HIDDEN_MODE
+from z3c.form.interfaces import WidgetActionExecutionError
 
 
 class RegisterForm(form.EditForm):
@@ -22,6 +24,7 @@ class RegisterForm(form.EditForm):
     id = "RegisterForm"
     label = _(u"Register")
     description = _(u"We want you")
+    enableCSRFProtection = True
 
     ignoreContext = True
 
@@ -33,28 +36,59 @@ class RegisterForm(form.EditForm):
 
         super(RegisterForm, self).updateWidgets(prefix="")
 
+    def updateFields(self):
+        fields = field.Fields(IRegisterForm)
+        props = portal_props.site_properties
+        use_email_as_login = props.getProperty('use_email_as_login')
+        if use_email_as_login:
+            fields.remove('username')
+        super(RegisterForm, self).updateFields()
+
+
+
     @button.buttonAndHandler(_('Register'), name='register')
     def handleRegister(self, action):
+
+        authenticator=getMultiAdapter((self.context, self.request),
+                                      name=u"authenticator")
+        if not authenticator.verify():
+            raise Unauthorized
+
         data, errors = self.extractData()
+
+        if 'password' in data:
+            password = data.get('password')
+            password_ctl = data.get('password_ctl')
+            if password != password_ctl:
+                    raise WidgetActionExecutionError(
+                    'email',
+                    Invalid(u"Passwords must match"))
+
+        if 'username' in data:
+            username = data.get('username')
+
+        if 'email' in data:
+            email = data.get('email')
+
+        props = portal_props.site_properties
+        use_email_as_login = props.getProperty('use_email_as_login')
+        if use_email_as_login:
+            username, email = data.get('email')
+
         if errors:
             self.status = self.formErrorsMessage
             return
-        membership_tool = getToolByName(self.context, 'portal_membership')
-        if membership_tool.isAnonymousUser():
-            self.request.response.expireCookie('__ac', path='/')
-            email_login = getToolByName(self.context, 'portal_properties') \
-                            .site_properties.getProperty('use_email_as_login')
-            if email_login:
-                IStatusMessage(self.request).addStatusMessage(
-                    _(u'Login failed. Both email address and password are case '
-                    u'sensitive, check that caps lock is not enabled.'),
-                    'error')
-            else:
-                IStatusMessage(self.request).addStatusMessage(
-                    _(u'Login failed. Both login name and password are case '
-                    u'sensitive, check that caps lock is not enabled.'),
-                    'error')
+
+        registration = getToolByName(self.context, 'portal_registration')
+        try:
+            registration.addMember(username, password, REQUEST=self.request)
+        except (AttributeError, ValueError), err:
+            logging.exception(err)
+            IStatusMessage(self.request).addStatusMessage(err, type="error")
             return
+
+        membership_tool = getToolByName(self.context, 'portal_membership')
+        membership_tool.loginUser(self.request)
         member = membership_tool.getAuthenticatedMember()
         login_time = member.getProperty('login_time', '2000/01/01')
         if not isinstance(login_time, DateTime):
@@ -63,14 +97,6 @@ class RegisterForm(form.EditForm):
         if initial_login:
             # TODO: Redirect if this is initial login
             pass
-
-        must_change_password = member.getProperty('must_change_password', 0)
-
-        if must_change_password:
-            # TODO: This user needs to change his password
-            pass
-
-        membership_tool.loginUser(self.request)
 
 
         IStatusMessage(self.request).addStatusMessage(_(u"You are now logged in."),
