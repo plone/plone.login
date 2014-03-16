@@ -74,6 +74,14 @@
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
+    <browser:page
+        name="logged-out"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        permission="zope.Public"
+        template="templates/logged_out.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
+        />
+
 
     <browser:page
         name="login-help"

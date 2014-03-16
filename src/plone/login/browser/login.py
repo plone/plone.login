@@ -8,8 +8,10 @@ class LoginView(BrowserView):
 class RegisterView(BrowserView):
     pass
 
+
 class ConfirmationSentView(BrowserView):
-    pass    
+    pass
+
 
 class InsufficientPrivilegesView(BrowserView):
     pass
