@@ -1,0 +1,10 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    i18n_domain="plone">
+
+  <permission
+      id="plone.RequestAccess"
+      title="Plone: Request Access to Content"
+      />
+
+</configure>

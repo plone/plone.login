@@ -1,0 +1,15 @@
+<rolemap>
+    <permissions>
+        <permission name="Plone: Request Access to Content" acquire="False">
+            <role name="Authenticated"/>
+            <role name="Manager"/>
+            <role name="Site Administrator"/>
+            <role name="Member"/>
+            <role name="Owner"/>
+            <role name="Reviewer"/>
+            <role name="Reader" />
+            <role name="Editor" />
+            <role name="Contributor" />
+        </permission>
+    </permissions>
+</rolemap>
