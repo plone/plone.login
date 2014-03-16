@@ -20,7 +20,7 @@
         tal:attributes="action view/action; enctype view/enctype">
 
         <div class="meat">
-        <div tal:repeat="subform view/subforms">
+        <div class="half" tal:repeat="subform view/subforms">
             <tal:subform replace="structure subform/render" />
         </div>
         </div>

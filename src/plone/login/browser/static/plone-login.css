@@ -13,7 +13,7 @@
   background: rgba(33, 33, 33, 0.5);
   margin: 0 auto; }*/
 
-#login {
+#login, #trouble {
   background: #fff;
   padding: 1% 3% 1%;
   display: block;
@@ -34,7 +34,7 @@
   padding: 10px;
   position: absolute;
   top: 10px;
-  right: 15px; 
+  right: 15px;
   z-index: 500;
 }
 
@@ -43,13 +43,17 @@
   color: #3887be;
   font-size: 2em; }
 
-#login a {
+#login a, #trouble a {
   color: #3887be;
   font-weight: bold; }
 
 #login .meat {
   margin-top: 2em; }
 #login .meat.federated {
+  background: url(img/or-div.png) center center no-repeat; }
+
+#trouble .meat {
+  margin-top: 2em;
   background: url(img/or-div.png) center center no-repeat; }
 
 #login .half {
@@ -61,20 +65,27 @@
   #login .half.external {
     padding-left: 5%; }
 
+#trouble .half {
+  width: 49.5%;
+  display: inline-block;
+  vertical-align: top;
+  padding-right: 5%;
+  padding-left: 5%; }
+
 #login .pwd-strength {
   margin-bottom: 0.75em;
   width: 100%; }
 
-#login label {
+#login label, #trouble label {
   font-size: 0.9em; }
 
-#login input {
+#login input, #trouble input {
   border-radius: 0px;
   border: 2px solid #e5e5e5;
   height: 36px;
   margin-bottom: 0.75em;
   font-size: 0.9em; }
-  #login input.submit {
+  #login input.submit, #trouble input.submit {
     background: #3887be;
     color: #fff;
     width: 100%;
