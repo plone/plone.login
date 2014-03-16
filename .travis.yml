@@ -1,0 +1,13 @@
+language: python
+python: 2.7
+install:
+  - python bootstrap.py -v 2.2.1
+  - bin/buildout -c travis.cfg annotate
+  - bin/buildout -N -t 3 -c travis.cfg
+script:
+  - bin/code-analysis
+  - bin/test
+after_success:
+  - bin/createcoverage run bin/test
+  - pip install -q coveralls
+  - coveralls
