@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 from Products.statusmessages.interfaces import IStatusMessage
-
 from plone.login import MessageFactory as _
 from plone.login.interfaces import ICompleteProfile
-
 from plone.z3cform import layout
-
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form

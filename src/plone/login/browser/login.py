@@ -1,23 +1,16 @@
 # -*- coding: utf-8 -*-
-
 from DateTime import DateTime
-
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
-from zope.component import getMultiAdapter
-
-
 from plone.login import MessageFactory as _
 from plone.login.interfaces import ILoginForm
-
 from plone.z3cform import layout
-
+from zope.component import getMultiAdapter
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
-
 from z3c.form.interfaces import HIDDEN_MODE
 
 
