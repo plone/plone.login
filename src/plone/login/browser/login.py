@@ -120,7 +120,8 @@ class InsufficientPrivilegesView(BrowserView):
     def portal_url(self):
         portal_state = getMultiAdapter((self.context, self.request),
                                        name='plone_portal_state')
-        return portal_state.portal_url
+        return portal_state.portal_url()
+
 
 class RequestAccessView(BrowserView):
 
