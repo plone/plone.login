@@ -21,10 +21,10 @@ class TestViews(unittest.TestCase):
         view = getMultiAdapter((self.portal, self.request),
                                name="reset-password")
         view = view.__of__(self.portal)
-        self.failUnless(view())
+        self.assertTrue(view())
 
     def test_loggedout_view(self):
         view = getMultiAdapter((self.portal, self.request),
                                name="logged-out")
         view = view.__of__(self.portal)
-        self.failUnless(view())
+        self.assertTrue(view())
