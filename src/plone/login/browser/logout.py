@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from Products.Five.browser import BrowserView
-from zope.interface import implements, Interface
+from zope.interface import Interface
+from zope.interface import implements
 from zope.component import getMultiAdapter
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.login import MessageFactory as _
