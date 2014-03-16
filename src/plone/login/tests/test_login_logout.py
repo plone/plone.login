@@ -85,3 +85,15 @@ class TestLoginLogout(unittest.TestCase):
 
         self.browser.open('http://nohost/plone/@@overview-controlpanel')
         self.assertIn('Insufficient Privileges', self.browser.contents)
+
+
+class TestRequestAccess(unittest.TestCase):
+
+    layer = PLONE_LOGIN_FUNCTIONAL_TESTING
+
+    def setUp(self):
+        # Make sure our browserlayer is applied
+        alsoProvides(IPloneLoginLayer)
+        self.browser = Browser(self.layer['app'])
+
+
