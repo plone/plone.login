@@ -79,7 +79,7 @@ class IRegisterForm(Interface):
         required=True,
     )
 
-    confirm = schema.Password(
+    password_ctl = schema.Password(
         title=_(u'Confirm password'),
         required=True,
     )
