@@ -131,7 +131,12 @@ class InsufficientPrivilegesView(BrowserView):
 class RequestAccessView(BrowserView):
 
     def __call__(self):
-        import pdb; pdb.set_trace( )
 
+        # Send message to []
 
+        # Redirect back to insufficient privilege page.
+        msg = _(u'Request sent.')
+        IStatusMessage(self.request).addStatusMessage(msg, type='info')
+        redirect_url = self.request.get('came_from')
+        return self.request.response.redirect(redirect_url)
 
