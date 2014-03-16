@@ -37,6 +37,7 @@ class RegisterForm(form.EditForm):
 
     def updateFields(self):
         fields = field.Fields(IRegisterForm)
+        portal_props = getToolByName(self.context, 'portal_properties')
         props = portal_props.site_properties
         use_email_as_login = props.getProperty('use_email_as_login')
         if use_email_as_login:
@@ -69,6 +70,7 @@ class RegisterForm(form.EditForm):
         if 'email' in data:
             email = data.get('email')
 
+        portal_props = getToolByName(self.context, 'portal_properties')
         props = portal_props.site_properties
         use_email_as_login = props.getProperty('use_email_as_login')
         if use_email_as_login:
@@ -81,7 +83,7 @@ class RegisterForm(form.EditForm):
 
         registration = getToolByName(self.context, 'portal_registration')
         try:
-            registration.addMember(username, password, REQUEST=self.request)
+            registration.addMember(username, password)
         except (AttributeError, ValueError), err:
             logging.exception(err)
             IStatusMessage(self.request).addStatusMessage(err, type="error")
@@ -100,7 +102,8 @@ class RegisterForm(form.EditForm):
 
         IStatusMessage(self.request).addStatusMessage(_(u"You are now logged in."),
                                                     "info")
-        if data['came_from']:
+        came_from = self.request.form.get('came_from')
+        if data.get('came_from'):
             came_from = data['came_from']
         else:
             came_from = self.context.portal_url()
