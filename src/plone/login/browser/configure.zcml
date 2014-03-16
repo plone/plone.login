@@ -69,8 +69,7 @@
         name="login"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
-        class=".stubs.LoginView"
-        template="templates/login.pt"
+        class=".login.LoginFormView"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
 

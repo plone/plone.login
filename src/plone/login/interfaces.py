@@ -40,3 +40,22 @@ class ICompleteProfile(Interface):
         description=_(u'Please provide a bio of yourself.'),
         required=False,
     )
+
+
+class ILoginForm(Interface):
+    """ Login form schema """
+
+    __ac_name = schema.TextLine(
+        title=_(u'Login Name'),
+        required=True,
+    )
+
+    __ac_password = schema.Password(
+        title=_(u'Password'),
+        required=True,
+    )
+
+    came_from = schema.TextLine(
+        title=_(u'Came From'),
+        required=False,
+    )
