@@ -123,18 +123,18 @@
   color: #989898;
   font-size: 0.9em; }
 
-#login .footer {
+#login .footer, #trouble .footer {
   clear: both;
   margin-top: 4em;
   font-size: 0.9em; }
-  #login .footer p {
+  #login .footer p, #trouble .footer p{
     width: 44%;
     display: inline-block;
     vertical-align: top;
     color: #3a3a3a; }
-    #login .footer p.right {
+    #login .footer p.right, #trouble .footer p.right {
       padding-left: 5%; }
-    #login .footer p a.emph {
+    #login .footer p a.emph, #trouble .footer p a.emph {
       font-size: 1.1em; }
 
 #login .alert {
