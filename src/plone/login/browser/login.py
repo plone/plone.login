@@ -94,7 +94,7 @@ class LoginForm(form.EditForm):
         membership_tool.loginUser(self.request)
 
 
-        IStatusMessage(self.request).addStatusMessage(_(u"You're now logged in."),
+        IStatusMessage(self.request).addStatusMessage(_(u"You are now logged in."),
                                                     "info")
         if data['came_from']:
             came_from = data['came_from']
