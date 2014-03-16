@@ -14,7 +14,7 @@
 </head>
 
 <body>
-   <metal:content fill-slot="content">
+   <metal:content fill-slot="main">
       <h1 class="documentFirstHeading"
           i18n:translate="heading_no_privileges">Insufficient Privileges</h1>
 
