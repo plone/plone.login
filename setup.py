@@ -1,5 +1,6 @@
-from setuptools import setup, find_packages
-import os
+# -*- coding: utf-8 -*-
+from setuptools import find_packages
+from setuptools import setup
 
 version = '1.0a1-dev0'
 
@@ -18,15 +19,15 @@ setup(name='plone.login',
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
-        "Environment :: Web Environment",
-        "Operating System :: OS Independent",
-        "Framework :: Zope2",
-        "Framework :: Plone",
-        "Framework :: Plone :: 4.3",
-        "Framework :: Plone :: 5.0",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 2.7",
-        "Topic :: Software Development :: Libraries :: Python Modules",
+          "Environment :: Web Environment",
+          "Operating System :: OS Independent",
+          "Framework :: Zope2",
+          "Framework :: Plone",
+          "Framework :: Plone :: 4.3",
+          "Framework :: Plone :: 5.0",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 2.7",
+          "Topic :: Software Development :: Libraries :: Python Modules",
       ],
       keywords='',
       author='The Plone Foundation',
