@@ -120,7 +120,8 @@ class InsufficientPrivilegesView(BrowserView):
         # 2) Is the site's email set up properly
         controlpanel = getMultiAdapter((self.context, self.request),
                                        name='overview-controlpanel')
-        return has_permission and controlpanel.mailhost_warning
+        can_send_email = not controlpanel.mailhost_warning()
+        return has_permission and can_send_email
 
     def portal_url(self):
         portal_state = getMultiAdapter((self.context, self.request),
