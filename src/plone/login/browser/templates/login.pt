@@ -1,3 +1,4 @@
+
 <div id="login">
   <div id="login-warnings">
     <div class="alert" tal:condition="python:request.form.get('error', False)">
@@ -7,7 +8,7 @@
   </div>
 
   <h1 tal:condition="view/label | nothing">
-    <span tal:replace="view/label">Form title</span>:
+    <span tal:replace="view/label">Form title</span>
   </h1>
 
   <p tal:condition="view/description | nothing"
