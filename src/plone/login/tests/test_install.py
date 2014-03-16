@@ -29,9 +29,6 @@ class TestInstall(unittest.TestCase):
         self.assertTrue(pid in installed,
                         'package appears not to have been installed')
 
-    def test_browserlayer(self):
-        pass
-
     def test_js_available(self):
         pass
 
