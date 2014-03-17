@@ -31,7 +31,6 @@ class RegisterForm(form.EditForm):
     def updateWidgets(self):
 
         super(RegisterForm, self).updateWidgets(prefix="")
-        """
         portal_props = getToolByName(self.context, 'portal_properties')
         props = portal_props.site_properties
         use_email_as_login = props.getProperty('use_email_as_login')
@@ -40,19 +39,34 @@ class RegisterForm(form.EditForm):
         else:
             self.widgets['email'].tabindex = 2
             self.widgets['username'].tabindex = 1
-            self.widgets['username'].klass = _(u'stretch')
+            klass = getattr(self.widgets['username'],'klass','')
+            if klass:
+                self.widgets['username'].klass = ' '.join([klass, _(u'stretch')])
+            else:
+                self.widgets['username'].klass = _(u'stretch')
             self.widgets['username'].placeholder = _(u'Username')
             self.widgets['username'].autocapitalize = _(u'off')
-        self.widgets['email'].klass = _(u'stretch')
+        klass = getattr(self.widgets['email'],'klass','')
+        if klass:
+            self.widgets['email'].klass = ' '.join([klass, _(u'stretch')])
+        else:
+            self.widgets['email'].klass = _(u'stretch')
         self.widgets['email'].placeholder = _(u'Email address')
         self.widgets['email'].autocapitalize = _(u'off')
         self.widgets['password'].tabindex = 3
-        self.widgets['password'].klass = _(u'stretch')
+        klass = getattr(self.widgets['password'],'klass','')
+        if klass:
+            self.widgets['password'].klass = ' '.join([klass, _(u'stretch')])
+        else:
+            self.widgets['password'].klass = _(u'stretch')
         self.widgets['password'].placeholder = _(u'Super secure password')
         self.widgets['password_confirm'].tabindex = 4
-        self.widgets['password_confirm'].klass = _(u'stretch')
+        klass = getattr(self.widgets['password_confirm'],'klass','')
+        if klass:
+            self.widgets['password_confirm'].klass = ' '.join([klass, _(u'stretch')])
+        else:
+            self.widgets['password_confirm'].klass = _(u'stretch')
         self.widgets['password_confirm'].placeholder = _(u'Confirm password')
-        """
 
     def updateFields(self):
         super(RegisterForm, self).updateFields()
