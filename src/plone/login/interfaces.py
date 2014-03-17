@@ -114,8 +114,6 @@ class ILoginSettings(Interface):
 From: "${user_fullname}" <${user_email}>
 To: ${owner_emails}, ${manager_emails}
 Subject: ${user_fullname} is requesting access to ${title}
-Precedence: bulk
 
-${user_fullname} is requesting access to ${url}.
-                   """)
+${user_fullname} is requesting access to the page "${title}" at ${url}. Please visit the sharing controls at ${url}/@@sharing to the user with username ${user_id}.""")
     )
