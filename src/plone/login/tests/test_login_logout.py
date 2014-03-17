@@ -5,7 +5,8 @@ import transaction
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
 from plone.testing.z2 import Browser
-
+from Products.MailHost.interfaces import IMailHost
+from zope.component import getUtility
 from zope.interface import alsoProvides
 
 from plone.login.interfaces import IPloneLoginLayer
@@ -95,3 +96,29 @@ class TestRequestAccess(unittest.TestCase):
         # Make sure our browserlayer is applied
         alsoProvides(IPloneLoginLayer)
         self.browser = Browser(self.layer['app'])
+
+    def test_insufficient_privileges_only_shows_access_button_when_site_can_send_email(self):
+
+        mailhost = getUtility(IMailHost)
+        self.assertEqual(mailhost.smtp_host, '')
+
+        self.browser.open('http://nohost/plone/login')
+        self.browser.getControl('Login Name').value = TEST_USER_NAME
+        self.browser.getControl('Password').value = TEST_USER_PASSWORD
+        self.browser.getControl('Log in').click()
+        self.assertIn('You are now logged in', self.browser.contents)
+
+        self.browser.open('http://nohost/plone/@@overview-controlpanel')
+        self.assertIn('Insufficient Privileges', self.browser.contents)
+
+        self.assertNotIn('Request Access', self.browser.contents)
+
+        mailhost.smtp_host = 'localhost'
+        setattr(self.layer['portal'], 'email_from_address', 'foo@example.com')
+
+        self.browser.open('http://nohost/plone/@@overview-controlpanel')
+        self.assertIn('Insufficient Privileges', self.browser.contents)
+
+        self.assertIn('Request Access', self.browser.contents)
+
+
