@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
-
+from AccessControl import Unauthorized
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.login import MessageFactory as _
@@ -12,7 +12,6 @@ from zope.component import getMultiAdapter
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
-from z3c.form.interfaces import HIDDEN_MODE
 from z3c.form.interfaces import WidgetActionExecutionError
 
 
@@ -44,13 +43,11 @@ class RegisterForm(form.EditForm):
             fields.remove('username')
         super(RegisterForm, self).updateFields()
 
-
-
     @button.buttonAndHandler(_('Register'), name='register')
     def handleRegister(self, action):
 
-        authenticator=getMultiAdapter((self.context, self.request),
-                                      name=u"authenticator")
+        authenticator = getMultiAdapter((self.context, self.request),
+                                        name=u"authenticator")
         if not authenticator.verify():
             raise Unauthorized
 
@@ -60,7 +57,7 @@ class RegisterForm(form.EditForm):
             password = data.get('password')
             password_ctl = data.get('password_ctl')
             if password != password_ctl:
-                    raise WidgetActionExecutionError(
+                raise WidgetActionExecutionError(
                     'email',
                     Invalid(u"Passwords must match"))
 
@@ -80,12 +77,10 @@ class RegisterForm(form.EditForm):
             self.status = self.formErrorsMessage
             return
 
-
         registration = getToolByName(self.context, 'portal_registration')
         try:
             registration.addMember(username, password)
         except (AttributeError, ValueError), err:
-            logging.exception(err)
             IStatusMessage(self.request).addStatusMessage(err, type="error")
             return
 
@@ -100,8 +95,8 @@ class RegisterForm(form.EditForm):
             # TODO: Redirect if this is initial login
             pass
 
-        IStatusMessage(self.request).addStatusMessage(_(u"You are now logged in."),
-                                                    "info")
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"You are now logged in."), "info")
         came_from = self.request.form.get('came_from')
         if data.get('came_from'):
             came_from = data['came_from']
