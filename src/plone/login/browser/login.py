@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import urllib
 from AccessControl import getSecurityManager
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
@@ -54,6 +55,7 @@ class LoginForm(form.EditForm):
         if errors:
             self.status = self.formErrorsMessage
             return
+
         membership_tool = getToolByName(self.context, 'portal_membership')
         if membership_tool.isAnonymousUser():
             self.request.response.expireCookie('__ac', path='/')
@@ -70,6 +72,7 @@ class LoginForm(form.EditForm):
                       u'sensitive, check that caps lock is not enabled.'),
                     'error')
             return
+
         member = membership_tool.getAuthenticatedMember()
         login_time = member.getProperty('login_time', '2000/01/01')
         if not isinstance(login_time, DateTime):
@@ -107,9 +110,15 @@ class RequireLoginView(BrowserView):
                                        name='plone_portal_state')
         portal = portal_state.portal()
         if portal_state.anonymous():
-            return portal.restrictedTraverse('login')()
+            url = "%s/login" % portal.absolute_url()
+            came_from = self.request.get('came_from', None)
+            if came_from:
+                url += '?came_from=%s' % urllib.quote(came_from)
+            #return portal.restrictedTraverse('login')()
         else:
-            return portal.restrictedTraverse('insufficient-privileges')()
+            url = "%s/insufficient-privileges" % portal.absolute_url()
+
+        self.request.response.redirect(url)
 
 
 class InsufficientPrivilegesView(BrowserView):
