@@ -29,7 +29,7 @@
          </p>
 
          <form method="post"
-               tal:attributes="action string:${view/portal_url}/@@request-access">
+               tal:attributes="action string:${view/request_url}/@@request-access">
             <input type="hidden"
                    name="came_from"
                    tal:attributes="value context/@@plone_context_state/current_page_url" />

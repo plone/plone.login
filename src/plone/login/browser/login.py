@@ -132,11 +132,8 @@ class InsufficientPrivilegesView(BrowserView):
         can_send_email = not controlpanel.mailhost_warning()
         return has_permission and can_send_email
 
-    def portal_url(self):
-        portal_state = getMultiAdapter((self.context, self.request),
-                                       name='plone_portal_state')
-        return portal_state.portal_url()
-
+    def request_url(self):
+        return self.request.get('came_from')
 
 class RequestAccessView(BrowserView):
 
