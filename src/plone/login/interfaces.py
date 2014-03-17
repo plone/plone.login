@@ -100,3 +100,22 @@ class ILoginHelpForm(Interface):
         description=_(u'Enter your email and we’ll send you your username.'),
         required=False,
     )
+
+
+class ILoginSettings(Interface):
+    """ Site settings for handling user registration and authentication
+    """
+
+    request_access_template = schema.Text(
+        title=_(u'Request access template'),
+        description=_(u'Email sent to content owners when a user requests access.'),
+        required=True,
+        default=_(u"""
+From: "${user_fullname}" <${user_email}>
+To: ${owner_emails}
+Subject: ${user_fullname} is requesting access to ${title}
+Precedence: bulk
+
+${user_fullname} is requesting access to ${url}.
+                   """)
+    )
