@@ -95,5 +95,3 @@ class TestRequestAccess(unittest.TestCase):
         # Make sure our browserlayer is applied
         alsoProvides(IPloneLoginLayer)
         self.browser = Browser(self.layer['app'])
-
-
