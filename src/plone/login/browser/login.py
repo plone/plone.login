@@ -140,4 +140,3 @@ class RequestAccessView(BrowserView):
         IStatusMessage(self.request).addStatusMessage(msg, type='info')
         redirect_url = self.request.get('came_from')
         return self.request.response.redirect(redirect_url)
-
