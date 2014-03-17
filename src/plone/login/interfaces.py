@@ -1,7 +1,17 @@
 # -*- coding: utf-8 -*-
+
+from z3c.form.interfaces import WidgetActionExecutionError
+
 from zope.interface import Interface
+from zope.interface import invariant
+from zope.interface import Invalid
 from zope import schema
 
+from Products.CMFCore.utils import getToolByName
+
+from plone import api
+
+from plone.schema import Email
 from plone.theme.interfaces import IDefaultPloneLayer
 
 from plone.login import MessageFactory as _
@@ -69,7 +79,7 @@ class IRegisterForm(Interface):
         required=True,
     )
 
-    email = schema.TextLine(
+    email = Email(
         title=_(u'Email'),
         required=True,
     )
@@ -83,6 +93,22 @@ class IRegisterForm(Interface):
         title=_(u'Confirm password'),
         required=True,
     )
+
+    @invariant
+    def ensureUsernameUnique(obj):
+        site = api.portal.get()
+        registration = getToolByName(site, 'portal_registration')
+        if not registration.isMemberIdAllowed(obj.username):
+            raise WidgetActionExecutionError(
+                'username',
+                Invalid(_(u"Your username is already in use or invalid.")))
+
+    @invariant
+    def ensureValidPassword(obj):
+        if obj.password != obj.password_ctl:
+            raise WidgetActionExecutionError(
+                'password',
+                Invalid(_(u"Password and Confirm password do not match.")))
 
 
 class ILoginHelpForm(Interface):
