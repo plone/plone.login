@@ -115,6 +115,7 @@ class TestRequestAccess(unittest.TestCase):
 
         mailhost.smtp_host = 'localhost'
         setattr(self.layer['portal'], 'email_from_address', 'foo@example.com')
+        transaction.commit()
 
         self.browser.open('http://nohost/plone/@@overview-controlpanel')
         self.assertIn('Insufficient Privileges', self.browser.contents)
