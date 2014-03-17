@@ -46,7 +46,7 @@ class TestRegisterForm(unittest.TestCase):
         self.request['username'] = u'test_user'
         self.request['email'] = u'secret'
         self.request['password'] = u'12345'
-        self.request['password_ctl'] = u'12345'
+        self.request['password_confirm'] = u'12345'
         form = self.portal.restrictedTraverse(FORM_ID)
         form.form_instance.update()
 
@@ -58,7 +58,7 @@ class TestRegisterForm(unittest.TestCase):
         self.request['username'] = u'tester'
         self.request['email'] = u'tester@example.org'
         self.request['password'] = u'12345'
-        self.request['password_ctl'] = u'12345'
+        self.request['password_confirm'] = u'12345'
         form = self.portal.restrictedTraverse(FORM_ID)
         form.form_instance.update()
         form.form_instance.handleRegister(form.form_instance, 'http://nohost')
