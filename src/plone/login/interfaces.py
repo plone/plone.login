@@ -112,7 +112,7 @@ class ILoginSettings(Interface):
         required=True,
         default=_(u"""
 From: "${user_fullname}" <${user_email}>
-To: ${owner_emails}
+To: ${owner_emails}, ${manager_emails}
 Subject: ${user_fullname} is requesting access to ${title}
 Precedence: bulk
 
