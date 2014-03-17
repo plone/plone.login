@@ -121,5 +121,3 @@ class TestRequestAccess(unittest.TestCase):
         self.assertIn('Insufficient Privileges', self.browser.contents)
 
         self.assertIn('Request Access', self.browser.contents)
-
-
