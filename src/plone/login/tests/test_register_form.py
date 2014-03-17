@@ -55,7 +55,8 @@ class TestRegisterForm(unittest.TestCase):
 
     def test_user_registered(self):
         self._setup_authenticator_request()
-        self.request['username'] = u'tester'
+        username = u'tester'
+        self.request['username'] = username
         self.request['email'] = u'tester@example.org'
         self.request['password'] = u'12345'
         self.request['password_confirm'] = u'12345'
@@ -63,5 +64,4 @@ class TestRegisterForm(unittest.TestCase):
         form.form_instance.update()
         form.form_instance.handleRegister(form.form_instance, 'http://nohost')
 
-        data, errors = form.form_instance.extractData()
-        self.assertIn('tester', self.mt.listMemberIds())
+        self.assertIn(username, self.mt.listMemberIds())
