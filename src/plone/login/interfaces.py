@@ -89,7 +89,7 @@ class IRegisterForm(Interface):
         required=True,
     )
 
-    password_ctl = schema.Password(
+    password_confirm = schema.Password(
         title=_(u'Confirm password'),
         required=True,
     )
@@ -105,7 +105,7 @@ class IRegisterForm(Interface):
 
     @invariant
     def ensureValidPassword(obj):
-        if obj.password != obj.password_ctl:
+        if obj.password != obj.password_confirm:
             raise WidgetActionExecutionError(
                 'password',
                 Invalid(_(u"Password and Confirm password do not match.")))

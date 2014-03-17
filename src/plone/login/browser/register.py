@@ -31,15 +31,37 @@ class RegisterForm(form.EditForm):
     def updateWidgets(self):
 
         super(RegisterForm, self).updateWidgets(prefix="")
+        """
+        portal_props = getToolByName(self.context, 'portal_properties')
+        props = portal_props.site_properties
+        use_email_as_login = props.getProperty('use_email_as_login')
+        if use_email_as_login:
+            self.widgets['email'].tabindex = 1
+        else:
+            self.widgets['email'].tabindex = 2
+            self.widgets['username'].tabindex = 1
+            self.widgets['username'].klass = _(u'stretch')
+            self.widgets['username'].placeholder = _(u'Username')
+            self.widgets['username'].autocapitalize = _(u'off')
+        self.widgets['email'].klass = _(u'stretch')
+        self.widgets['email'].placeholder = _(u'Email address')
+        self.widgets['email'].autocapitalize = _(u'off')
+        self.widgets['password'].tabindex = 3
+        self.widgets['password'].klass = _(u'stretch')
+        self.widgets['password'].placeholder = _(u'Super secure password')
+        self.widgets['password_confirm'].tabindex = 4
+        self.widgets['password_confirm'].klass = _(u'stretch')
+        self.widgets['password_confirm'].placeholder = _(u'Confirm password')
+        """
 
     def updateFields(self):
+        super(RegisterForm, self).updateFields()
         fields = field.Fields(IRegisterForm)
         portal_props = getToolByName(self.context, 'portal_properties')
         props = portal_props.site_properties
         use_email_as_login = props.getProperty('use_email_as_login')
         if use_email_as_login:
             fields.remove('username')
-        super(RegisterForm, self).updateFields()
 
     @button.buttonAndHandler(_('Register'), name='register')
     def handleRegister(self, action):
