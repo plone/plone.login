@@ -142,7 +142,19 @@ class RequestAccessView(BrowserView):
 
     def __call__(self):
 
-        # Send message to []
+        # Send message to content owners
+        from plone.stringinterp import Interpolator
+        interp = Interpolator(self.context)
+
+        # Pull template from controlpanel
+        from zope.component import getUtility
+        from plone.registry.interfaces import IRegistry
+
+        registry = getUtility(IRegistry)
+        email_template = registry['plone.request_access_template']
+        # Parse with stringinterp
+        email_content = interp(email_template)
+        # request.RESPONSE.setHeader('Content-Type', 'text/plain;; charset=utf-8')
 
         # Redirect back to insufficient privilege page.
         msg = _(u'Request sent.')
