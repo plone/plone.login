@@ -140,16 +140,20 @@ class InsufficientPrivilegesView(BrowserView):
     def request_url(self):
         return self.request.get('came_from')
 
+
 class RequestAccessView(BrowserView):
 
     def __call__(self):
-
         # Send request email
-        self.send_request_email()
+        if self.send_request_email():
+            # Redirect back to insufficient privilege page.
+            msg = _(u'Request sent.')
+            msg_type = 'info'
+        else:
+            msg = _(u'Unable to send request.')
+            msg_type = 'error'
 
-        # Redirect back to insufficient privilege page.
-        msg = _(u'Request sent.')
-        IStatusMessage(self.request).addStatusMessage(msg, type='info')
+        IStatusMessage(self.request).addStatusMessage(msg, type=msg_type)
         redirect_url = self.request.get('came_from')
         return self.request.response.redirect(redirect_url)
 
@@ -165,8 +169,12 @@ class RequestAccessView(BrowserView):
         m_to = message_obj['To']
         m_from = message_obj['From']
         msg_type = message_obj.get('Content-Type', 'text/plain')
+        body = message_obj.get_payload()
         host = getToolByName(self, 'MailHost')
-        host.send(mail_text,
+
+        if not m_to or m_from:
+            return False
+        host.send(body,
                   m_to,
                   m_from,
                   subject=subject,
