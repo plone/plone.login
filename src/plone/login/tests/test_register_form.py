@@ -44,7 +44,7 @@ class TestRegisterForm(unittest.TestCase):
     def test_form_update(self):
         self._setup_authenticator_request()
         self.request['username'] = u'test_user'
-        self.request['email'] = u'secret'
+        self.request['email'] = u'secret@example.org'
         self.request['password'] = u'12345'
         self.request['password_confirm'] = u'12345'
         form = self.portal.restrictedTraverse(FORM_ID)
