@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<object name="portal_javascripts" meta_type="JavaScripts Registry">
+    <javascript
+        id="++resource++plone.login/register.js"
+        enabled="True"
+        expression="context/@@register"
+        authenticated="False"
+        cacheable="True"
+        compression="safe"
+        cookable="True"
+        inline="False"/>
+</object>
