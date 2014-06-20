@@ -10,11 +10,13 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.login import MessageFactory as _
 from plone.login.interfaces import ILoginForm
+from plone.login.interfaces import IRedirectAfterLogin
 from plone.stringinterp import Interpolator
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from plone.z3cform import layout
 from zope.component import getMultiAdapter
+from zope.component import queryMultiAdapter
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
@@ -60,7 +62,6 @@ class LoginForm(form.EditForm):
         if errors:
             self.status = self.formErrorsMessage
             return
-
         membership_tool = getToolByName(self.context, 'portal_membership')
         if membership_tool.isAnonymousUser():
             self.request.response.expireCookie('__ac', path='/')
@@ -97,10 +98,22 @@ class LoginForm(form.EditForm):
 
         IStatusMessage(self.request).addStatusMessage(_(u"You are now logged in."),
                                                       "info")
+
+        came_from = None
         if data['came_from']:
             came_from = data['came_from']
+
+        self.redirect_after_login(came_from)
+
+    def redirect_after_login(self, came_from=None):
+        adapter = queryMultiAdapter((self.context, self.request),
+                                    IRedirectAfterLogin)
+        if adapter:
+            came_from = adapter(came_from)
         else:
-            came_from = self.context.portal_url()
+            if not came_from:
+                came_from = self.context.portal_url()
+
         self.request.response.redirect(came_from)
 
 

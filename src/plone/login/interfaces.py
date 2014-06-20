@@ -21,6 +21,10 @@ class IPloneLoginLayer(IDefaultPloneLayer):
     """ Marker interface for plone.login views. """
 
 
+class IRedirectAfterLogin(Interface):
+    """ Redirect after login adapters should provide this interface """
+
+
 class ILogin(Interface):
     login = schema.TextLine(
         title=_('Login'),
