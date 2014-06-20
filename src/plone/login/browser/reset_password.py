@@ -74,7 +74,7 @@ class ResetPasswordForm(form.EditForm):
 
         # Try traverse subpath first:
         try:
-            key = traverse_subpath[0]
+            key = self.request['TraversalRequestNameStack'][:0]
         except IndexError:
             key = None
 
