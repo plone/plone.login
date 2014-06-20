@@ -49,7 +49,7 @@ class ResetPasswordForm(form.EditForm):
             self.widgets['password_confirm'].klass = _(u'stretch')
         self.widgets['password_confirm'].placeholder = _(u'Confirm password')
 
-    @button.buttonAndHandler(_('Reset'), name='reset')
+    @button.buttonAndHandler(_('Reset Password'), name='reset_password')
     def handlePasswordReset(self, action):
 
         authenticator = getMultiAdapter((self.context, self.request),
