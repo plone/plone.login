@@ -119,7 +119,6 @@ class RequireLoginView(BrowserView):
             came_from = self.request.get('came_from', None)
             if came_from:
                 url += '?came_from=%s' % urllib.quote(came_from)
-            #return portal.restrictedTraverse('login')()
         else:
             url = "%s/insufficient-privileges" % portal.absolute_url()
 

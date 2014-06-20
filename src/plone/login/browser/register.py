@@ -39,14 +39,14 @@ class RegisterForm(form.EditForm):
         else:
             self.widgets['email'].tabindex = 2
             self.widgets['username'].tabindex = 1
-            klass = getattr(self.widgets['username'],'klass','')
+            klass = getattr(self.widgets['username'], 'klass', '')
             if klass:
                 self.widgets['username'].klass = ' '.join([klass, _(u'stretch')])
             else:
                 self.widgets['username'].klass = _(u'stretch')
             self.widgets['username'].placeholder = _(u'Username')
             self.widgets['username'].autocapitalize = _(u'off')
-        klass = getattr(self.widgets['email'],'klass','')
+        klass = getattr(self.widgets['email'], 'klass', '')
         if klass:
             self.widgets['email'].klass = ' '.join([klass, _(u'stretch')])
         else:
@@ -54,14 +54,14 @@ class RegisterForm(form.EditForm):
         self.widgets['email'].placeholder = _(u'Email address')
         self.widgets['email'].autocapitalize = _(u'off')
         self.widgets['password'].tabindex = 3
-        klass = getattr(self.widgets['password'],'klass','')
+        klass = getattr(self.widgets['password'], 'klass', '')
         if klass:
             self.widgets['password'].klass = ' '.join([klass, _(u'stretch')])
         else:
             self.widgets['password'].klass = _(u'stretch')
         self.widgets['password'].placeholder = _(u'Super secure password')
         self.widgets['password_confirm'].tabindex = 4
-        klass = getattr(self.widgets['password_confirm'],'klass','')
+        klass = getattr(self.widgets['password_confirm'], 'klass', '')
         if klass:
             self.widgets['password_confirm'].klass = ' '.join([klass, _(u'stretch')])
         else:

@@ -7,7 +7,6 @@ from Products.CMFCore.utils import getToolByName
 from plone.app.z3cform.interfaces import IPloneFormLayer
 from plone.login.interfaces import IPloneLoginLayer
 
-#from plone import api
 from plone.login.testing import \
     PLONE_LOGIN_INTEGRATION_TESTING
 

@@ -23,15 +23,8 @@ class PloneloginLayer(PloneSandboxLayer):
             context=configurationContext
         )
 
-        # Install products that use an old-style initialize() function
-        #z2.installProduct(app, 'Products.PloneFormGen')
     def setUpPloneSite(self, portal):
         applyProfile(portal, 'plone.login:default')
-
-
-#    def tearDownZope(self, app):
-#        # Uninstall products installed above
-#        z2.uninstallProduct(app, 'Products.PloneFormGen')
 
 
 PLONE_LOGIN_FIXTURE = PloneloginLayer()

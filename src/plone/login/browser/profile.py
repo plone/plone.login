@@ -28,7 +28,6 @@ class CompleteProfileForm(form.EditForm):
         if errors:
             self.status = self.formErrorsMessage
             return
-        #self.applyChanges(data)
         IStatusMessage(self.request).addStatusMessage(_(u"Changes saved"),
                                                       "info")
 

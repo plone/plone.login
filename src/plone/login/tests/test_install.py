@@ -18,7 +18,6 @@ class TestInstall(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.registry = getUtility(IRegistry)
-        #self.jqueryui_settings = self.registry.forInterface(IJQueryUIPlugins)
         self.qi_tool = getToolByName(self.portal, 'portal_quickinstaller')
 
     def test_product_is_installed(self):
