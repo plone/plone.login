@@ -18,10 +18,6 @@ class InsufficientPrivilegesView(BrowserView):
     pass
 
 
-class ResetPasswordView(BrowserView):
-    pass
-
-
 class SendEmailView(BrowserView):
     pass
 
