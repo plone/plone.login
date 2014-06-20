@@ -82,6 +82,7 @@ class ResetPasswordForm(form.EditForm):
         if not key:
             key = self.request.get('key', None)
 
+        pw_tool = getToolByName(self.context, 'portal_password_reset')
         # key is the value for arg randomstring
         pw_tool.resetPassword(current, key, password)
 
