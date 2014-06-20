@@ -64,9 +64,26 @@ class ResetPasswordForm(form.EditForm):
 
         password = str(data.get('password'))
         password2 = str(data.get('password_confirm'))
+        if 'password' in data and 'password_confirm' in data:
+            if data['password'] != data['password_confirm']:
+                raise WidgetActionExecutionError(
+                    'password',
+                    Invalid(u"Passwords must match."))
 
         current = api.user.get_current()
-        pw_tool.resetPassword(current, randomstring, password)
+
+        # Try traverse subpath first:
+        try:
+            key = traverse_subpath[0]
+        except IndexError:
+            key = None
+
+        # Fall back to request variable for BW compat
+        if not key:
+            key = self.request.get('key', None)
+
+        # key is the value for arg randomstring
+        pw_tool.resetPassword(current, key, password)
 
         IStatusMessage(self.request).addStatusMessage(
             _(u"Your password has been reset."), "info")
