@@ -143,3 +143,24 @@ Subject: ${user_fullname} is requesting access to ${title}
 
 ${user_fullname} is requesting access to the page "${title}" at ${url}. Please visit the sharing controls at ${url}/@@sharing to the user with username ${user_id}.""")
     )
+
+
+class IResetPasswordForm(Interface):
+    """ reset password form schema """
+
+    password = schema.Password(
+        title=_(u'Password'),
+        required=True,
+    )
+
+    password_confirm = schema.Password(
+        title=_(u'Confirm password'),
+        required=True,
+    )
+
+    @invariant
+    def ensureValidPassword(obj):
+        if obj.password != obj.password_confirm:
+            raise WidgetActionExecutionError(
+                'password',
+                Invalid(_(u"Password and Confirm password do not match.")))
