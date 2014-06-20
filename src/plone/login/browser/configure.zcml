@@ -32,7 +32,7 @@
         name="reset-password"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="cmf.MailForgottonPassword"
-        class=".stubs.ResetPasswordView"
+        class=".reset_password.ResetPasswordFormView"
         template="templates/reset_password.pt"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
