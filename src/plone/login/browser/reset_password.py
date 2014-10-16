@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
-from DateTime import DateTime
-from Products.CMFCore.utils import getToolByName
 from AccessControl import Unauthorized
+from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from plone import api
 from plone.login import MessageFactory as _
 from plone.login.interfaces import IResetPasswordForm
 from plone.z3cform import layout
-from zope.component import getMultiAdapter
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 from z3c.form.interfaces import WidgetActionExecutionError
+from zope.component import getMultiAdapter
 from zope.interface.exceptions import Invalid
 
 
