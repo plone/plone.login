@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-import unittest
+from plone.login.interfaces import IPloneLoginLayer
+from plone.login.testing import PLONE_LOGIN_INTEGRATION_TESTING
 from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
-from plone.login.interfaces import IPloneLoginLayer
-from plone.login.testing import \
-    PLONE_LOGIN_INTEGRATION_TESTING
+import unittest
 
 
 class TestViews(unittest.TestCase):
@@ -19,12 +18,12 @@ class TestViews(unittest.TestCase):
 
     def test_resetpassword_view(self):
         view = getMultiAdapter((self.portal, self.request),
-                               name="reset-password")
+                               name='reset-password')
         view = view.__of__(self.portal)
         self.assertTrue(view())
 
     def test_loggedout_view(self):
         view = getMultiAdapter((self.portal, self.request),
-                               name="logged-out")
+                               name='logged-out')
         view = view.__of__(self.portal)
         self.assertTrue(view())

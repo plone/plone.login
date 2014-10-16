@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
-import unittest
-
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
+from plone.login.interfaces import IPloneLoginLayer
 from plone.login.interfaces import IRedirectAfterLogin
+from plone.login.testing import PLONE_LOGIN_FUNCTIONAL_TESTING
 from plone.testing.z2 import Browser
+from zope.interface import Interface
 from zope.interface import alsoProvides
 from zope.interface import implements
-from zope.interface import Interface
-
-from plone.login.interfaces import IPloneLoginLayer
-from plone.login.testing import PLONE_LOGIN_FUNCTIONAL_TESTING
+import unittest
 
 
 class AfterLoginAdapter(object):
@@ -22,7 +20,7 @@ class AfterLoginAdapter(object):
         self.request = request
 
     def __call__(self, came_from=None):
-        return "http://nohost/plone/sitemap"
+        return 'http://nohost/plone/sitemap'
 
 
 class TestRedirectAfterLogin(unittest.TestCase):
@@ -43,10 +41,11 @@ class TestRedirectAfterLogin(unittest.TestCase):
         self.browser.getControl('Password').value = TEST_USER_PASSWORD
         self.browser.getControl('Log in').click()
 
-        self.assertIn("You are now logged in.", self.browser.contents)
+        self.assertIn('You are now logged in.', self.browser.contents)
         self.assertEqual(self.browser.url,
                          'http://nohost/plone',
-                         'Successful login did not redirect to the homepage when came_from was not defined.')
+                         'Successful login did not redirect to the homepage '
+                         'when came_from was not defined.')
 
         # Now log out.
         self.browser.getLink('Log out').click()
@@ -62,11 +61,12 @@ class TestRedirectAfterLogin(unittest.TestCase):
 
         self.browser.getControl('Login Name').value = TEST_USER_NAME
         self.browser.getControl('Password').value = TEST_USER_PASSWORD
-        self.browser.getControl(name='came_from').value = "http://nohost/plone/contact-info"
+        self.browser.getControl(name='came_from').value = \
+            'http://nohost/plone/contact-info'
 
         self.browser.getControl('Log in').click()
 
-        self.assertIn("You are now logged in.", self.browser.contents)
+        self.assertIn('You are now logged in.', self.browser.contents)
         self.assertEqual(self.browser.url,
                          'http://nohost/plone/contact-info',
                          'Successful login did not redirect to the came_from.')
@@ -91,17 +91,19 @@ class TestRedirectAfterLogin(unittest.TestCase):
 
         self.browser.getControl('Login Name').value = TEST_USER_NAME
         self.browser.getControl('Password').value = TEST_USER_PASSWORD
-        self.browser.getControl(name='came_from').value = "http://nohost/plone/contact-info"
+        self.browser.getControl(name='came_from').value = \
+            'http://nohost/plone/contact-info'
 
         self.browser.getControl('Log in').click()
 
         gsm.unregisterAdapter(AfterLoginAdapter,
                               (Interface, IPloneLoginLayer))
 
-        self.assertIn("You are now logged in.", self.browser.contents)
+        self.assertIn('You are now logged in.', self.browser.contents)
         self.assertEqual(self.browser.url,
                          'http://nohost/plone/sitemap',
-                         'Successful login did not use the adapter for redirect.')
+                         'Successful login did not use the adapter for '
+                         'redirect.')
 
         # Now log out.
         self.browser.getLink('Log out').click()

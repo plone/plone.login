@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
+from plone.app.testing import FunctionalTesting
+from plone.app.testing import IntegrationTesting
+from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import applyProfile
-from plone.app.testing import PLONE_FIXTURE
-from plone.app.testing import IntegrationTesting
-from plone.app.testing import FunctionalTesting
-
 from plone.testing import z2
-
 from zope.configuration import xmlconfig
 
 
@@ -30,9 +28,9 @@ class PloneloginLayer(PloneSandboxLayer):
 PLONE_LOGIN_FIXTURE = PloneloginLayer()
 PLONE_LOGIN_INTEGRATION_TESTING = IntegrationTesting(
     bases=(PLONE_LOGIN_FIXTURE,),
-    name="PloneloginLayer:Integration"
+    name='PloneloginLayer:Integration'
 )
 PLONE_LOGIN_FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(PLONE_LOGIN_FIXTURE, z2.ZSERVER_FIXTURE),
-    name="PloneloginLayer:Functional"
+    name='PloneloginLayer:Functional'
 )

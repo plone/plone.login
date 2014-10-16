@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
-
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
-
 from plone.login import MessageFactory as _
 from plone.login.interfaces import ILoginHelpForm
-
 from plone.z3cform import layout
-
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
@@ -15,8 +11,8 @@ from z3c.form import form
 
 class RequestResetPassword(form.Form):
 
-    id = "RequestResetPassword"
-    label = u""
+    id = 'RequestResetPassword'
+    label = u''
     fields = field.Fields(ILoginHelpForm).select('reset_password')
     ignoreContext = True
 
@@ -33,8 +29,8 @@ class RequestResetPassword(form.Form):
 
 class RequestUsername(form.Form):
 
-    id = "RequestUsername"
-    label = u""
+    id = 'RequestUsername'
+    label = u''
     fields = field.Fields(ILoginHelpForm).select('recover_username')
     ignoreContext = True
 
@@ -51,13 +47,13 @@ class RequestUsername(form.Form):
 
 
 class LoginHelpForm(form.EditForm):
-    """ Implementation of the login help form """
+    ''' Implementation of the login help form '''
 
     subforms = []
 
-    id = "LoginHelpForm"
-    label = _(u"Need Help?")
-    description = _(u"Don't worry, I forget my password all the time.")
+    id = 'LoginHelpForm'
+    label = _(u'Need Help?')
+    description = _(u'Don\'t worry, I forget my password all the time.')
 
     ignoreContext = True
 

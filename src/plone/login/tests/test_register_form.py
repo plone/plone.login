@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-import unittest
-import re
-from zope.interface import alsoProvides
-from zope.component import getMultiAdapter
 from Products.CMFCore.utils import getToolByName
 from plone.app.z3cform.interfaces import IPloneFormLayer
 from plone.login.interfaces import IPloneLoginLayer
-
-from plone.login.testing import \
-    PLONE_LOGIN_INTEGRATION_TESTING
+from plone.login.testing import PLONE_LOGIN_INTEGRATION_TESTING
+from zope.component import getMultiAdapter
+from zope.interface import alsoProvides
+import re
+import unittest
 
 FORM_ID = 'register'
 
@@ -29,14 +27,14 @@ class TestRegisterForm(unittest.TestCase):
     def _setup_authenticator_request(self):
         self.request.set('REQUEST_METHOD', 'POST')
         authenticator = getMultiAdapter((self.portal, self.request),
-                                        name=u"authenticator")
+                                        name=u'authenticator')
         html = authenticator.authenticator()
         token = re.search('value="(.*)"', html).groups()[0]
         self.request.set('_authenticator', token)
 
     def test_register_view(self):
         view = getMultiAdapter((self.portal, self.request),
-                               name="register")
+                               name='register')
         view = view.__of__(self.portal)
         self.assertTrue(view())
 

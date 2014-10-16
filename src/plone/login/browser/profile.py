@@ -12,9 +12,9 @@ class CompleteProfileForm(form.EditForm):
     """ Implementation of the complete-profile form """
 
     fields = field.Fields(ICompleteProfile)
-    id = "CompleteProfileForm"
-    label = _(u"Complete your profile")
-    description = _(u"Please provide additional information about yourself.")
+    id = 'CompleteProfileForm'
+    label = _(u'Complete your profile')
+    description = _(u'Please provide additional information about yourself.')
 
     ignoreContext = True
 
@@ -28,13 +28,13 @@ class CompleteProfileForm(form.EditForm):
         if errors:
             self.status = self.formErrorsMessage
             return
-        IStatusMessage(self.request).addStatusMessage(_(u"Changes saved"),
-                                                      "info")
+        IStatusMessage(self.request).addStatusMessage(
+            _(u'Changes saved'), 'info')
 
     @button.buttonAndHandler(_('Cancel'), name='cancel')
     def handleCancel(self, action):
-        IStatusMessage(self.request).addStatusMessage(_(u"Edit cancelled"),
-                                                      "info")
+        IStatusMessage(self.request).addStatusMessage(
+            _(u'Edit cancelled'), 'info')
 
 
 class CompleteProfileFormView(layout.FormWrapper):

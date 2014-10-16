@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-import unittest
-from zope.component import getUtility
-from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from plone.browserlayer.utils import registered_layers
-
-from plone.login.testing import \
-    PLONE_LOGIN_INTEGRATION_TESTING
+from plone.login.testing import PLONE_LOGIN_INTEGRATION_TESTING
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
+import unittest
 
 
 class TestInstall(unittest.TestCase):

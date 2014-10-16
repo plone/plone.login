@@ -32,7 +32,8 @@ class LogoutView(BrowserView):
         external_logout_url = site_properties.getProperty(
             'external_logout_url')
         if external_logout_url:
-            target_url = "%s?next=%s" % (external_logout_url, target_url)
+            target_url = '{0:s}?next={1:s}'.format(
+                external_logout_url, target_url)
 
         self.request.response.redirect(target_url)
 
@@ -42,8 +43,9 @@ class LoggedOutView(BrowserView):
     implements(ILoggedOutView)
 
     def __call__(self):
-        portal_state = getMultiAdapter((self.context, self.request),
-                                       name='plone_portal_state')
+        portal_state = getMultiAdapter(
+            (self.context, self.request), name='plone_portal_state')
+
         if portal_state.anonymous():
             IStatusMessage(self.request).addStatusMessage(
                 _(u'You have been logged out.'), 'info')

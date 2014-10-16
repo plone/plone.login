@@ -20,19 +20,19 @@ class ResetPasswordForm(form.EditForm):
 
     fields = field.Fields(IResetPasswordForm)
 
-    id = "ResetPasswordForm"
-    label = _(u"Reset password")
-    description = _(u"Reset")
+    id = 'ResetPasswordForm'
+    label = _(u'Reset password')
+    description = _(u'Reset')
 
     ignoreContext = True
 
     render = ViewPageTemplateFile('templates/reset_password.pt')
 
-    prefix = ""
+    prefix = ''
 
     def updateWidgets(self):
 
-        super(ResetPasswordForm, self).updateWidgets(prefix="")
+        super(ResetPasswordForm, self).updateWidgets(prefix='')
 
         self.widgets['password'].tabindex = 1
         klass = getattr(self.widgets['password'], 'klass', '')
@@ -54,7 +54,7 @@ class ResetPasswordForm(form.EditForm):
     def handlePasswordReset(self, action):
 
         authenticator = getMultiAdapter((self.context, self.request),
-                                        name=u"authenticator")
+                                        name=u'authenticator')
         if not authenticator.verify():
             raise Unauthorized
         data, errors = self.extractData()
@@ -67,7 +67,7 @@ class ResetPasswordForm(form.EditForm):
             if data['password'] != data['password_confirm']:
                 raise WidgetActionExecutionError(
                     'password',
-                    Invalid(u"Passwords must match."))
+                    Invalid(u'Passwords must match.'))
 
         current = api.user.get_current()
 
@@ -86,7 +86,7 @@ class ResetPasswordForm(form.EditForm):
         pw_tool.resetPassword(current, key, data.get('password'))
 
         IStatusMessage(self.request).addStatusMessage(
-            _(u"Your password has been reset."), "info")
+            _(u'Your password has been reset.'), 'info')
 
         self.request.response.redirect(self.context.absolute_url())
 

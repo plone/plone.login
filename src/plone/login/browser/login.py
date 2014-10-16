@@ -1,26 +1,26 @@
 # -*- coding: utf-8 -*-
-import urllib
-from Products.CMFCore.interfaces import ISiteRoot
-from email import message_from_string
 from AccessControl import getSecurityManager
 from DateTime import DateTime
+from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
+from email import message_from_string
 from plone.login import MessageFactory as _
 from plone.login.interfaces import ILoginForm
 from plone.login.interfaces import IRedirectAfterLogin
-from plone.stringinterp import Interpolator
-from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
+from plone.stringinterp import Interpolator
 from plone.z3cform import layout
-from zope.component import getMultiAdapter
-from zope.component import queryMultiAdapter
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 from z3c.form.interfaces import HIDDEN_MODE
+from zope.component import getMultiAdapter
+from zope.component import getUtility
+from zope.component import queryMultiAdapter
+import urllib
 
 
 class LoginForm(form.EditForm):
@@ -28,15 +28,15 @@ class LoginForm(form.EditForm):
 
     fields = field.Fields(ILoginForm)
 
-    id = "LoginForm"
-    label = _(u"Log in")
-    description = _(u"Long time no see.")
+    id = 'LoginForm'
+    label = _(u'Log in')
+    description = _(u'Long time no see.')
 
     ignoreContext = True
 
     render = ViewPageTemplateFile('templates/login.pt')
 
-    prefix = ""
+    prefix = ''
 
     def updateWidgets(self):
         try:
@@ -47,13 +47,13 @@ class LoginForm(form.EditForm):
             except:
                 auth = None
         if auth:
-            self.fields['ac_name'].__name__ = auth.get('name_cookie', '__ac_name')
-            self.fields['ac_password'].__name__ = auth.get('pw_cookie', '__ac_password')
+            self.fields['ac_name'].__name__ = auth.get('name_cookie', '__ac_name')  # noqa
+            self.fields['ac_password'].__name__ = auth.get('pw_cookie', '__ac_password')  # noqa
         else:
             self.fields['ac_name'].__name__ = '__ac_name'
             self.fields['ac_password'].__name__ = '__ac_password'
 
-        super(LoginForm, self).updateWidgets(prefix="")
+        super(LoginForm, self).updateWidgets(prefix='')
         self.widgets['came_from'].mode = HIDDEN_MODE
 
     @button.buttonAndHandler(_('Log in'), name='login')
@@ -68,15 +68,15 @@ class LoginForm(form.EditForm):
             email_login = getToolByName(self.context, 'portal_properties') \
                 .site_properties.getProperty('use_email_as_login')
             if email_login:
-                IStatusMessage(self.request).addStatusMessage(
-                    _(u'Login failed. Both email address and password are case '
-                      u'sensitive, check that caps lock is not enabled.'),
-                    'error')
+                IStatusMessage(self.request).addStatusMessage(_(
+                    u'Login failed. Both email address and password are case '
+                    u'sensitive, check that caps lock is not enabled.'
+                ), 'error')
             else:
-                IStatusMessage(self.request).addStatusMessage(
-                    _(u'Login failed. Both login name and password are case '
-                      u'sensitive, check that caps lock is not enabled.'),
-                    'error')
+                IStatusMessage(self.request).addStatusMessage(_(
+                    u'Login failed. Both login name and password are case '
+                    u'sensitive, check that caps lock is not enabled.'
+                ), 'error')
             return
 
         member = membership_tool.getAuthenticatedMember()
@@ -96,8 +96,8 @@ class LoginForm(form.EditForm):
 
         membership_tool.loginUser(self.request)
 
-        IStatusMessage(self.request).addStatusMessage(_(u"You are now logged in."),
-                                                      "info")
+        IStatusMessage(self.request).addStatusMessage(
+            _(u'You are now logged in.'), 'info')
 
         came_from = None
         if data['came_from']:
@@ -128,12 +128,12 @@ class RequireLoginView(BrowserView):
                                        name='plone_portal_state')
         portal = portal_state.portal()
         if portal_state.anonymous():
-            url = "%s/login" % portal.absolute_url()
+            url = '{0:s}/login'.format(portal.absolute_url())
             came_from = self.request.get('came_from', None)
             if came_from:
-                url += '?came_from=%s' % urllib.quote(came_from)
+                url += '?came_from={0:s}'.format(urllib.quote(came_from))
         else:
-            url = "%s/insufficient-privileges" % portal.absolute_url()
+            url = '{0:s}/insufficient-privileges'.format(portal.absolute_url())
 
         self.request.response.redirect(url)
 
@@ -142,7 +142,8 @@ class InsufficientPrivilegesView(BrowserView):
 
     def canRequestAccess(self):
         # 1) Does the user have permissions to request access?
-        has_permission = getSecurityManager().checkPermission('Plone: Request Access to Content', self.context)
+        has_permission = getSecurityManager().checkPermission(
+            'Plone: Request Access to Content', self.context)
         # 2) Is the site's email set up properly
         controlpanel = getMultiAdapter((self.context, self.request),
                                        name='overview-controlpanel')

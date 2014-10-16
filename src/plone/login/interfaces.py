@@ -1,20 +1,14 @@
 # -*- coding: utf-8 -*-
-
-from z3c.form.interfaces import WidgetActionExecutionError
-
-from zope.interface import Interface
-from zope.interface import invariant
-from zope.interface import Invalid
-from zope import schema
-
 from Products.CMFCore.utils import getToolByName
-
 from plone import api
-
+from plone.login import MessageFactory as _
 from plone.schema import Email
 from plone.theme.interfaces import IDefaultPloneLayer
-
-from plone.login import MessageFactory as _
+from z3c.form.interfaces import WidgetActionExecutionError
+from zope import schema
+from zope.interface import Interface
+from zope.interface import Invalid
+from zope.interface import invariant
 
 
 class IPloneLoginLayer(IDefaultPloneLayer):
@@ -105,14 +99,14 @@ class IRegisterForm(Interface):
         if not registration.isMemberIdAllowed(obj.username):
             raise WidgetActionExecutionError(
                 'username',
-                Invalid(_(u"Your username is already in use or invalid.")))
+                Invalid(_(u'Your username is already in use or invalid.')))
 
     @invariant
     def ensureValidPassword(obj):
         if obj.password != obj.password_confirm:
             raise WidgetActionExecutionError(
                 'password',
-                Invalid(_(u"Password and Confirm password do not match.")))
+                Invalid(_(u'Password and Confirm password do not match.')))
 
 
 class ILoginHelpForm(Interface):
@@ -138,14 +132,17 @@ class ILoginSettings(Interface):
 
     request_access_template = schema.Text(
         title=_(u'Request access template'),
-        description=_(u'Email sent to content owners when a user requests access.'),
+        description=_(u'Email sent to content owners when a user requests '
+                      u'access.'),
         required=True,
         default=_(u"""
 From: "${user_fullname}" <${user_email}>
 To: ${owner_emails}, ${manager_emails}
 Subject: ${user_fullname} is requesting access to ${title}
 
-${user_fullname} is requesting access to the page "${title}" at ${url}. Please visit the sharing controls at ${url}/@@sharing to the user with username ${user_id}.""")
+${user_fullname} is requesting access to the page "${title}" at ${url}. \
+Please visit the sharing controls at ${url}/@@sharing to the user with \
+username ${user_id}.""")
     )
 
 
@@ -167,4 +164,4 @@ class IResetPasswordForm(Interface):
         if obj.password != obj.password_confirm:
             raise WidgetActionExecutionError(
                 'password',
-                Invalid(_(u"Password and Confirm password do not match.")))
+                Invalid(_(u'Password and Confirm password do not match.')))
