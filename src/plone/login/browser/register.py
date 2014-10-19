@@ -5,6 +5,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.login import MessageFactory as _
+from plone.login.browser.login_help import append_klasses
 from plone.login.interfaces import IRegisterForm
 from plone.z3cform import layout
 from z3c.form import button
@@ -29,52 +30,35 @@ class RegisterForm(form.EditForm):
     prefix = ''
 
     def updateWidgets(self):
-
         super(RegisterForm, self).updateWidgets(prefix='')
         portal_props = getToolByName(self.context, 'portal_properties')
         props = portal_props.site_properties
         use_email_as_login = props.getProperty('use_email_as_login')
-        if use_email_as_login:
-            self.widgets['email'].tabindex = 1
-        else:
-            self.widgets['email'].tabindex = 2
+
+        self.widgets['email'].tabindex = 1
+        self.widgets['email'].autocapitalize = 'off'
         self.widgets['email'].placeholder = _(
             u'placeholder_email', default=u'Email address')
+        append_klasses(self.widgets['email'], 'stretch')
+
+        if not use_email_as_login:
+            self.widgets['email'].tabindex += 1
+
             self.widgets['username'].tabindex = 1
-            klass = getattr(self.widgets['username'], 'klass', '')
-            if klass:
-                self.widgets['username'].klass = ' '.join([
-                    klass, _(u'stretch')
-                ])
-            else:
-                self.widgets['username'].klass = _(u'stretch')
             self.widgets['username'].autocapitalize = _(u'off')
-        klass = getattr(self.widgets['email'], 'klass', '')
-        if klass:
-            self.widgets['email'].klass = ' '.join([klass, _(u'stretch')])
-        else:
-            self.widgets['email'].klass = _(u'stretch')
-        self.widgets['email'].autocapitalize = _(u'off')
             self.widgets['username'].placeholder = _(
                 u'placeholder_username', default=u'Username')
+            append_klasses(self.widgets['username'], 'stretch')
+
         self.widgets['password'].tabindex = 3
-        klass = getattr(self.widgets['password'], 'klass', '')
-        if klass:
-            self.widgets['password'].klass = ' '.join([klass, _(u'stretch')])
-        else:
-            self.widgets['password'].klass = _(u'stretch')
         self.widgets['password'].placeholder = _(
             u'placeholder_password', default=u'Super secure password')
+        append_klasses(self.widgets['password'], 'stretch')
+
         self.widgets['password_confirm'].tabindex = 4
-        klass = getattr(self.widgets['password_confirm'], 'klass', '')
-        if klass:
-            self.widgets['password_confirm'].klass = ' '.join([
-                klass, _(u'stretch')
-            ])
-        else:
-            self.widgets['password_confirm'].klass = _(u'stretch')
         self.widgets['password_confirm'].placeholder = _(
             u'placeholder_password_confirm', default=u'Confirm password')
+        append_klasses(self.widgets['password_confirm'], 'stretch')
 
     def updateFields(self):
         super(RegisterForm, self).updateFields()

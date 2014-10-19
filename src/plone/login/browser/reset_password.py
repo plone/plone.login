@@ -5,6 +5,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from plone import api
 from plone.login import MessageFactory as _
+from plone.login.browser.login_help import append_klasses
 from plone.login.interfaces import IResetPasswordForm
 from plone.z3cform import layout
 from z3c.form import button
@@ -31,24 +32,15 @@ class ResetPasswordForm(form.EditForm):
     prefix = ''
 
     def updateWidgets(self):
-
         super(ResetPasswordForm, self).updateWidgets(prefix='')
 
-        self.widgets['password'].tabindex = 1
-        klass = getattr(self.widgets['password'], 'klass', '')
-        if klass:
-            self.widgets['password'].klass = ' '.join([klass, _(u'stretch')])
-        else:
-            self.widgets['password'].klass = _(u'stretch')
+        for idx, fn in enumerate(['password', 'password_confirm', ]):
+            self.widgets[fn].tabindex = idx + 1
+            append_klasses(self.widgets[fn], 'stretch')
+
         self.widgets['password'].placeholder = _(
             u'placeholder_password', default=u'Super secure password')
-        self.widgets['password_confirm'].tabindex = 2
-        klass = getattr(self.widgets['password_confirm'], 'klass', '')
-        if klass:
-            self.widgets['password_confirm'].klass = ' '.join(
-                [klass, _(u'stretch')])
-        else:
-            self.widgets['password_confirm'].klass = _(u'stretch')
+
         self.widgets['password_confirm'].placeholder = _(
             u'placeholder_password_confirm', default=u'Confirm password')
 

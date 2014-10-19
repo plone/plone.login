@@ -9,6 +9,14 @@ from z3c.form import field
 from z3c.form import form
 
 
+def append_klasses(widget, klasses):
+    if isinstance(klasses, (basestring, unicode)):
+        klasses = [klasses, ]
+
+    klasses.insert(0, getattr(widget, 'klass', None))
+    return ' '.join(filter(None, klasses))
+
+
 class RequestResetPassword(form.Form):
 
     id = 'RequestResetPassword'
