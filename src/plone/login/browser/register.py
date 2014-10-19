@@ -19,8 +19,8 @@ class RegisterForm(form.EditForm):
     fields = field.Fields(IRegisterForm)
 
     id = 'RegisterForm'
-    label = _(u'Sign up')
-    description = _(u'Join the club.')
+    label = _(u'heading_register_form', default=u'Sign up')
+    description = _(u'description_register_form', default=u'Join the club.')
 
     ignoreContext = True
 
@@ -38,6 +38,8 @@ class RegisterForm(form.EditForm):
             self.widgets['email'].tabindex = 1
         else:
             self.widgets['email'].tabindex = 2
+        self.widgets['email'].placeholder = _(
+            u'placeholder_email', default=u'Email address')
             self.widgets['username'].tabindex = 1
             klass = getattr(self.widgets['username'], 'klass', '')
             if klass:
@@ -46,22 +48,23 @@ class RegisterForm(form.EditForm):
                 ])
             else:
                 self.widgets['username'].klass = _(u'stretch')
-            self.widgets['username'].placeholder = _(u'Username')
             self.widgets['username'].autocapitalize = _(u'off')
         klass = getattr(self.widgets['email'], 'klass', '')
         if klass:
             self.widgets['email'].klass = ' '.join([klass, _(u'stretch')])
         else:
             self.widgets['email'].klass = _(u'stretch')
-        self.widgets['email'].placeholder = _(u'Email address')
         self.widgets['email'].autocapitalize = _(u'off')
+            self.widgets['username'].placeholder = _(
+                u'placeholder_username', default=u'Username')
         self.widgets['password'].tabindex = 3
         klass = getattr(self.widgets['password'], 'klass', '')
         if klass:
             self.widgets['password'].klass = ' '.join([klass, _(u'stretch')])
         else:
             self.widgets['password'].klass = _(u'stretch')
-        self.widgets['password'].placeholder = _(u'Super secure password')
+        self.widgets['password'].placeholder = _(
+            u'placeholder_password', default=u'Super secure password')
         self.widgets['password_confirm'].tabindex = 4
         klass = getattr(self.widgets['password_confirm'], 'klass', '')
         if klass:
@@ -70,7 +73,8 @@ class RegisterForm(form.EditForm):
             ])
         else:
             self.widgets['password_confirm'].klass = _(u'stretch')
-        self.widgets['password_confirm'].placeholder = _(u'Confirm password')
+        self.widgets['password_confirm'].placeholder = _(
+            u'placeholder_password_confirm', default=u'Confirm password')
 
     def updateFields(self):
         super(RegisterForm, self).updateFields()
@@ -81,7 +85,8 @@ class RegisterForm(form.EditForm):
         if use_email_as_login:
             fields.remove('username')
 
-    @button.buttonAndHandler(_('Register'), name='register')
+    @button.buttonAndHandler(
+        _(u'button_register', default=u'Register'), name='register')
     def handleRegister(self, action):
 
         authenticator = getMultiAdapter((self.context, self.request),
@@ -135,7 +140,8 @@ class RegisterForm(form.EditForm):
             pass
 
         IStatusMessage(self.request).addStatusMessage(
-            _(u'You are now logged in.'), 'info')
+            _(u'statusmessage_your_now_logged_in', default=u'You are now '
+              u'logged in.'), 'info')
 
         # TODO: Add way to configure the redirect
         self.request.response.redirect(self.context.absolute_url())

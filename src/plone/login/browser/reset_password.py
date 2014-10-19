@@ -21,8 +21,8 @@ class ResetPasswordForm(form.EditForm):
     fields = field.Fields(IResetPasswordForm)
 
     id = 'ResetPasswordForm'
-    label = _(u'Reset password')
-    description = _(u'Reset')
+    label = _(u'heading_password_reset_form', default=u'Reset password')
+    description = _(u'description_password_reset_form', default=u'Reset')
 
     ignoreContext = True
 
@@ -40,7 +40,8 @@ class ResetPasswordForm(form.EditForm):
             self.widgets['password'].klass = ' '.join([klass, _(u'stretch')])
         else:
             self.widgets['password'].klass = _(u'stretch')
-        self.widgets['password'].placeholder = _(u'Super secure password')
+        self.widgets['password'].placeholder = _(
+            u'placeholder_password', default=u'Super secure password')
         self.widgets['password_confirm'].tabindex = 2
         klass = getattr(self.widgets['password_confirm'], 'klass', '')
         if klass:
@@ -48,9 +49,12 @@ class ResetPasswordForm(form.EditForm):
                 [klass, _(u'stretch')])
         else:
             self.widgets['password_confirm'].klass = _(u'stretch')
-        self.widgets['password_confirm'].placeholder = _(u'Confirm password')
+        self.widgets['password_confirm'].placeholder = _(
+            u'placeholder_password_confirm', default=u'Confirm password')
 
-    @button.buttonAndHandler(_('Reset Password'), name='reset_password')
+    @button.buttonAndHandler(
+        _(u'button_reset_password', default=u'Reset Password'),
+        name='reset_password')
     def handlePasswordReset(self, action):
 
         authenticator = getMultiAdapter((self.context, self.request),
@@ -65,9 +69,9 @@ class ResetPasswordForm(form.EditForm):
 
         if 'password' in data and 'password_confirm' in data:
             if data['password'] != data['password_confirm']:
-                raise WidgetActionExecutionError(
-                    'password',
-                    Invalid(u'Passwords must match.'))
+                raise WidgetActionExecutionError('password', Invalid(_(
+                    u'error_passwords_must_match', default=u'Passwords must '
+                    u'match.')))
 
         current = api.user.get_current()
 
@@ -86,7 +90,8 @@ class ResetPasswordForm(form.EditForm):
         pw_tool.resetPassword(current, key, data.get('password'))
 
         IStatusMessage(self.request).addStatusMessage(
-            _(u'Your password has been reset.'), 'info')
+            _(u'statusmessage_pwreset_passwort_was_reset', default=u'Your '
+              u'password has been reset.'), 'info')
 
         self.request.response.redirect(self.context.absolute_url())
 

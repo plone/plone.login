@@ -18,13 +18,15 @@ class RequestResetPassword(form.Form):
 
     render = ViewPageTemplateFile('templates/subform_render.pt')
 
-    @button.buttonAndHandler(_('Reset your password'), name='reset')
+    @button.buttonAndHandler(
+        _(u'button_pwreset_reset_password', default=u'Reset your password'),
+        name='reset')
     def handleResetPassword(self, action):
         # TODO: Send Email with password reset url
         IStatusMessage(self.request).addStatusMessage(
-            _(u'An email has been sent with instructions on how to reset your '
-              u'password.'),
-            'info')
+            _(u'statusmessage_pwreset_password_mail_sent', default=u'An '
+              u'email has been sent with instructions on how to reset your '
+              u'password.'), 'info')
 
 
 class RequestUsername(form.Form):
@@ -38,12 +40,14 @@ class RequestUsername(form.Form):
 
     # TODO: Add validation to the field to check that is a proper email
 
-    @button.buttonAndHandler(_('Get your username'), name='get_username')
+    @button.buttonAndHandler(
+        _(u'button_pwreset_get_username', default='Get your username'),
+        name='get_username')
     def handleGetUsername(self, action):
         # TODO: Send Email with username
         IStatusMessage(self.request).addStatusMessage(
-            _(u'An email has been sent with your username.'),
-            'info')
+            _(u'statusmessage_pwreset_username_mail_sent', default=u'An '
+              u'email has been sent with your username.'), 'info')
 
 
 class LoginHelpForm(form.EditForm):
@@ -52,8 +56,9 @@ class LoginHelpForm(form.EditForm):
     subforms = []
 
     id = 'LoginHelpForm'
-    label = _(u'Need Help?')
-    description = _(u'Don\'t worry, I forget my password all the time.')
+    label = _(u'heading_login_form_help', default=u'Need Help?')
+    description = _(u'description_login_form_help', default=u'Don\'t worry, I '
+                    u'forget my password all the time.')
 
     ignoreContext = True
 

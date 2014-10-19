@@ -48,7 +48,9 @@ class LoggedOutView(BrowserView):
 
         if portal_state.anonymous():
             IStatusMessage(self.request).addStatusMessage(
-                _(u'You have been logged out.'), 'info')
+                _(u'statusmessage_logged_out', default=u'You have been '
+                  u'logged out.'), 'info')
+
             self.request.response.redirect(
                 portal_state.navigation_root_url())
         else:

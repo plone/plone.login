@@ -13,8 +13,9 @@ class CompleteProfileForm(form.EditForm):
 
     fields = field.Fields(ICompleteProfile)
     id = 'CompleteProfileForm'
-    label = _(u'Complete your profile')
-    description = _(u'Please provide additional information about yourself.')
+    label = _(u'heading_complete_profile', default=u'Complete your profile')
+    description = _(u'description_complete_profile', default=u'Please provide '
+                    u'additional information about yourself.')
 
     ignoreContext = True
 
@@ -22,19 +23,22 @@ class CompleteProfileForm(form.EditForm):
         # XXX: Get member here?
         return self.context
 
-    @button.buttonAndHandler(_('Save'), name=None)
+    @button.buttonAndHandler(_(u'button_save', default=u'Save'), name=None)
     def handleSave(self, action):
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage
             return
-        IStatusMessage(self.request).addStatusMessage(
-            _(u'Changes saved'), 'info')
+        IStatusMessage(self.request).addStatusMessage(_(
+            u'statusmessage_changes_saved', default=u'Changes saved'
+        ), 'info')
 
-    @button.buttonAndHandler(_('Cancel'), name='cancel')
+    @button.buttonAndHandler(
+        _(u'button_cancel', default=u'Cancel'), name='cancel')
     def handleCancel(self, action):
-        IStatusMessage(self.request).addStatusMessage(
-            _(u'Edit cancelled'), 'info')
+        IStatusMessage(self.request).addStatusMessage(_(
+            u'statusmessage_edit_cancelled', default=u'Edit cancelled'
+        ), 'info')
 
 
 class CompleteProfileFormView(layout.FormWrapper):
