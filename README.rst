@@ -1,4 +1,5 @@
-.. contents::
+.. image:: https://travis-ci.org/plone/plone.login.svg?branch=master
+    :target: https://travis-ci.org/plone/plone.login
 
 plone.login
 ===========
