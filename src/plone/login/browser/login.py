@@ -34,8 +34,8 @@ class LoginForm(form.EditForm):
     fields = field.Fields(ILoginFormSchema)
 
     id = 'LoginForm'
-    label = _(u'Log in')
-    description = _(u'Long time no see.')
+    label = _('heading_login_form', default=u'Log in')
+    description = _('description_login_form', default=u'Long time no see.')
 
     ignoreContext = True
     prefix = ''
@@ -98,8 +98,9 @@ class LoginForm(form.EditForm):
 
         membership_tool.loginUser(self.request)
 
-        IStatusMessage(self.request).addStatusMessage(
-            _(u'You are now logged in.'), 'info')
+        IStatusMessage(self.request).addStatusMessage(_(
+            u'statusmessage_logged_in', default=u'You are now logged in.'
+        ), 'info')
 
         came_from = None
         if data['came_from']:
