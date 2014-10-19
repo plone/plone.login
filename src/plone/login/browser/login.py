@@ -4,15 +4,18 @@ from DateTime import DateTime
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from email import message_from_string
 from plone.login import MessageFactory as _
+from plone.login.browser.login_help import template_path
 from plone.login.interfaces import ILoginForm
+from plone.login.interfaces import ILoginFormSchema
+from plone.login.interfaces import IPloneLoginLayer
 from plone.login.interfaces import IRedirectAfterLogin
 from plone.registry.interfaces import IRegistry
 from plone.stringinterp import Interpolator
 from plone.z3cform import layout
+from plone.z3cform.templates import FormTemplateFactory
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
@@ -20,22 +23,21 @@ from z3c.form.interfaces import HIDDEN_MODE
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
+from zope.interface import implementer
 import urllib
 
 
+@implementer(ILoginForm)
 class LoginForm(form.EditForm):
     """ Implementation of the login form """
 
-    fields = field.Fields(ILoginForm)
+    fields = field.Fields(ILoginFormSchema)
 
     id = 'LoginForm'
     label = _(u'Log in')
     description = _(u'Long time no see.')
 
     ignoreContext = True
-
-    render = ViewPageTemplateFile('templates/login.pt')
-
     prefix = ''
 
     def updateWidgets(self):
@@ -121,6 +123,13 @@ class LoginFormView(layout.FormWrapper):
     form = LoginForm
 
 
+wrapped_login_template = FormTemplateFactory(
+    template_path('login.pt'),
+    form=ILoginForm,
+    request=IPloneLoginLayer
+)
+
+
 class RequireLoginView(BrowserView):
 
     def __call__(self):
@@ -145,8 +154,8 @@ class InsufficientPrivilegesView(BrowserView):
         has_permission = getSecurityManager().checkPermission(
             'Plone: Request Access to Content', self.context)
         # 2) Is the site's email set up properly
-        controlpanel = getMultiAdapter((self.context, self.request),
-                                       name='overview-controlpanel')
+        controlpanel = getMultiAdapter(
+            (self.context, self.request), name='overview-controlpanel')
         can_send_email = not controlpanel.mailhost_warning()
         return has_permission and can_send_email
 

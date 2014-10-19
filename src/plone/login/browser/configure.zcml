@@ -45,6 +45,8 @@
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
+    <adapter factory=".reset_password.wrapped_pwreset_template" />
+
     <!-- XXX: Fix permission or DIE -->
     <browser:page
         name="register"
@@ -53,6 +55,8 @@
         class=".register.RegisterFormView"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
+
+    <adapter factory=".register.wrapped_register_template" />
 
     <!-- XXX: Fix permission or DIE -->
     <browser:page
@@ -81,6 +85,8 @@
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
+    <adapter factory=".login.wrapped_login_template" />
+
     <browser:page
         name="logout"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
@@ -108,6 +114,8 @@
         template="templates/form_wrapper.pt"
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
+
+    <adapter factory=".login_help.wrapped_loginhelp_template" />
 
     <browser:page
         name="require_login"

@@ -45,6 +45,7 @@ setup(name='plone.login',
           'plone.app.controlpanel',
           'plone.app.z3cform',
           'plone.schema',
+          'plone.z3cform',
       ],
       extras_require={'test': ['plone.app.testing']},
       entry_points="""
