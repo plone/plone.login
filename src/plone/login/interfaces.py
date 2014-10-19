@@ -21,10 +21,11 @@ class IRedirectAfterLogin(Interface):
 
 class ILogin(Interface):
     login = schema.TextLine(
-        title=_('Login'),
+        title=_(u'label_login', default=u'Login'),
     )
+
     password = schema.Password(
-        title=_('Password'),
+        title=_(u'label_password', default=u'Password'),
     )
 
 
@@ -54,17 +55,17 @@ class ILoginForm(Interface):
     """ Login form schema """
 
     ac_name = schema.TextLine(
-        title=_(u'Login Name'),
+        title=_(u'label_login_name', default=u'Login Name'),
         required=True,
     )
 
     ac_password = schema.Password(
-        title=_(u'Password'),
+        title=_(u'label_password', default=u'Password'),
         required=True,
     )
 
     came_from = schema.TextLine(
-        title=_(u'Came From'),
+        title=u'Came From',  # not translated, hidden field
         required=False,
     )
 
@@ -73,22 +74,22 @@ class IRegisterForm(Interface):
     """ Register form schema """
 
     username = schema.TextLine(
-        title=_(u'Username'),
+        title=_(u'label_username', default=u'Username'),
         required=True,
     )
 
     email = Email(
-        title=_(u'Email'),
+        title=_(u'label_email', default=u'Email'),
         required=True,
     )
 
     password = schema.Password(
-        title=_(u'Password'),
+        title=_(u'label_password', default=u'Password'),
         required=True,
     )
 
     password_confirm = schema.Password(
-        title=_(u'Confirm password'),
+        title=_(u'label_password_confirm', default=u'Confirm password'),
         required=True,
     )
 
@@ -97,31 +98,32 @@ class IRegisterForm(Interface):
         site = api.portal.get()
         registration = getToolByName(site, 'portal_registration')
         if not registration.isMemberIdAllowed(obj.username):
-            raise WidgetActionExecutionError(
-                'username',
-                Invalid(_(u'Your username is already in use or invalid.')))
+            raise WidgetActionExecutionError('username', Invalid(
+                _(u'error_username_alread_taken_or_invalid', default=u'Your '
+                  u'username is already in use or invalid.')))
 
     @invariant
     def ensureValidPassword(obj):
         if obj.password != obj.password_confirm:
-            raise WidgetActionExecutionError(
-                'password',
-                Invalid(_(u'Password and Confirm password do not match.')))
+            raise WidgetActionExecutionError('password', Invalid(
+                _(u'error_password_and_confirm_not_match', default=u'Password '
+                  u'and Confirm password do not match.')))
 
 
 class ILoginHelpForm(Interface):
     """ Login Help form schema """
 
     reset_password = schema.TextLine(
-        title=_(u'Username'),
-        description=_(u'Enter your username or email and we’ll send you a '
-                      u'password reset link.'),
+        title=_(u'label_pwreset_username', default=u'Username'),
+        description=_(u'help_pwreset_username', default=u'Enter your username '
+                      u'or email and we’ll send you a password reset link.'),
         required=False,
     )
 
     recover_username = schema.TextLine(
-        title=_(u'Email'),
-        description=_(u'Enter your email and we’ll send you your username.'),
+        title=_(u'label_pwreset_email', default=u'Email'),
+        description=_(u'help_pwreset_email', default=u'Enter your email and '
+                      u'we’ll send you your username.'),
         required=False,
     )
 
@@ -150,18 +152,18 @@ class IResetPasswordForm(Interface):
     """ reset password form schema """
 
     password = schema.Password(
-        title=_(u'Password'),
+        title=_(u'label_pwreset_password', default=u'Password'),
         required=True,
     )
 
     password_confirm = schema.Password(
-        title=_(u'Confirm password'),
+        title=_(u'label_pwreset_confirm', default=u'Confirm password'),
         required=True,
     )
 
     @invariant
     def ensureValidPassword(obj):
         if obj.password != obj.password_confirm:
-            raise WidgetActionExecutionError(
-                'password',
-                Invalid(_(u'Password and Confirm password do not match.')))
+            raise WidgetActionExecutionError('password', Invalid(_(
+                u'error_password_and_confirm_not_match', default=u'Password '
+                u'and Confirm password do not match.')))
