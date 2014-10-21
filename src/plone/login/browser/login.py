@@ -40,20 +40,27 @@ class LoginForm(form.EditForm):
     ignoreContext = True
     prefix = ''
 
-    def updateWidgets(self):
+    def _get_auth(self):
         try:
-            auth = self.context.acl_users.credentials_cookie_auth
+            return self.context.acl_users.credentials_cookie_auth
         except:
             try:
-                auth = self.context.cookie_authentication
+                return self.context.cookie_authentication
             except:
-                auth = None
+                pass
+
+    def updateWidgets(self):
+        auth = self._get_auth()
+
         if auth:
-            self.fields['ac_name'].__name__ = auth.get('name_cookie', '__ac_name')  # noqa
-            self.fields['ac_password'].__name__ = auth.get('pw_cookie', '__ac_password')  # noqa
+            fieldname_name = auth.get('name_cookie', '__ac_name')
+            fieldname_password = auth.get('pw_cookie', '__ac_password')
         else:
-            self.fields['ac_name'].__name__ = '__ac_name'
-            self.fields['ac_password'].__name__ = '__ac_password'
+            fieldname_name = '__ac_name'
+            fieldname_password = '__ac_password'
+
+        self.fields['ac_name'].__name__ = fieldname_name
+        self.fields['ac_password'].__name__ = fieldname_password
 
         super(LoginForm, self).updateWidgets(prefix='')
         self.widgets['came_from'].mode = HIDDEN_MODE

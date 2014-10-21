@@ -22,7 +22,7 @@ def append_klasses(widget, klasses):
         klasses = [klasses, ]
 
     klasses.insert(0, getattr(widget, 'klass', None))
-    return ' '.join(filter(None, klasses))
+    widget.klass = ' '.join(filter(None, klasses))
 
 
 class RequestResetPassword(form.Form):

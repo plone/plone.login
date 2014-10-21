@@ -1,4 +1,8 @@
-.. contents::
+Build Status
+------------
+
+.. image:: https://travis-ci.org/plone/plone.login.svg?branch=master
+    :target: https://travis-ci.org/plone/plone.login
 
 plone.login
 ===========
@@ -11,9 +15,8 @@ Customize where to redirect after login
 You can customize the location the user will be redirected to after successfuly
 logging in to the site.
 
-Just write an adapter as follows:
+Just write an adapter as follows::
 
-.. code:: python
     from zope.interface import implements
     from plone.login.interfaces import IRedirectAfterLogin
     ...
@@ -32,9 +35,8 @@ Just write an adapter as follows:
             return "http://plone.org"
 
 
-Then register the adapter through ZCML:
+Then register the adapter through ZCML::
 
-.. code:: zcml
     <adapter
         factory=".adapter.AfterLoginAdapter"
         for="OFS.interfaces.ITraversable
