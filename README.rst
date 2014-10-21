@@ -9,6 +9,30 @@ plone.login
 
 Updating Plone's login framework 1 mockup at a time
 
+Customize templates
+-------------------
+
+The templates for any ``plone.login`` from may be customized because they're
+based on ``plone.z3cform.templates.FormTemplateFactory``.  This allows users
+to customize the templates on their own themelayer without customizing form
+and formwrapper classes and reregister them through zcml. Example::
+
+    # -*- coding: utf-8 -*-
+    from plone.login.interfaces import ILoginForm
+    from plone.z3cform.templates import FormTemplateFactory
+    from your.theme.interfaces import IYourThemeLayer
+
+    loginform_templatefactory = FormTemplateFactory(
+        template_path('/path/to/your/login_form.pt'),
+        form=ILoginForm,
+        request=IYourThemeLayer
+    )
+
+Then register the adapter through ZCML::
+
+    <adapter factory=".templates.loginform_templatefactory" />
+
+
 Customize where to redirect after login
 ---------------------------------------
 
