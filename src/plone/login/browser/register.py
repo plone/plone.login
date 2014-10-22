@@ -2,30 +2,33 @@
 from AccessControl import Unauthorized
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.login import MessageFactory as _
 from plone.login.browser.login_help import append_klasses
+from plone.login.browser.login_help import template_path
+from plone.login.interfaces import IPloneLoginLayer
 from plone.login.interfaces import IRegisterForm
+from plone.login.interfaces import IRegisterFormSchema
 from plone.z3cform import layout
+from plone.z3cform.templates import FormTemplateFactory
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 from zope.component import getMultiAdapter
+from zope.interface import implementer
 
 
+@implementer(IRegisterForm)
 class RegisterForm(form.EditForm):
     ''' Implementation of the registration form '''
 
-    fields = field.Fields(IRegisterForm)
+    fields = field.Fields(IRegisterFormSchema)
 
     id = 'RegisterForm'
     label = _(u'heading_register_form', default=u'Sign up')
     description = _(u'description_register_form', default=u'Join the club.')
 
     ignoreContext = True
-
-    render = ViewPageTemplateFile('templates/register.pt')
 
     prefix = ''
 
@@ -133,3 +136,10 @@ class RegisterForm(form.EditForm):
 
 class RegisterFormView(layout.FormWrapper):
     form = RegisterForm
+
+
+wrapped_register_template = FormTemplateFactory(
+    template_path('register.pt'),
+    form=IRegisterForm,
+    request=IPloneLoginLayer
+)

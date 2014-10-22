@@ -1,33 +1,36 @@
 # -*- coding: utf-8 -*-
 from AccessControl import Unauthorized
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from plone import api
 from plone.login import MessageFactory as _
 from plone.login.browser.login_help import append_klasses
+from plone.login.browser.login_help import template_path
+from plone.login.interfaces import IPloneLoginLayer
 from plone.login.interfaces import IResetPasswordForm
+from plone.login.interfaces import IResetPasswordFormSchema
 from plone.z3cform import layout
+from plone.z3cform.templates import FormTemplateFactory
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 from z3c.form.interfaces import WidgetActionExecutionError
 from zope.component import getMultiAdapter
+from zope.interface import implementer
 from zope.interface.exceptions import Invalid
 
 
+@implementer(IResetPasswordForm)
 class ResetPasswordForm(form.EditForm):
     """ Implementation of the reset password form """
 
-    fields = field.Fields(IResetPasswordForm)
+    fields = field.Fields(IResetPasswordFormSchema)
 
     id = 'ResetPasswordForm'
     label = _(u'heading_password_reset_form', default=u'Reset password')
     description = _(u'description_password_reset_form', default=u'Reset')
 
     ignoreContext = True
-
-    render = ViewPageTemplateFile('templates/reset_password.pt')
 
     prefix = ''
 
@@ -49,8 +52,8 @@ class ResetPasswordForm(form.EditForm):
         name='reset_password')
     def handlePasswordReset(self, action):
 
-        authenticator = getMultiAdapter((self.context, self.request),
-                                        name=u'authenticator')
+        authenticator = getMultiAdapter(
+            (self.context, self.request), name=u'authenticator')
         if not authenticator.verify():
             raise Unauthorized
         data, errors = self.extractData()
@@ -90,3 +93,10 @@ class ResetPasswordForm(form.EditForm):
 
 class ResetPasswordFormView(layout.FormWrapper):
     form = ResetPasswordForm
+
+
+wrapped_pwreset_template = FormTemplateFactory(
+    template_path('reset_password.pt'),
+    form=IResetPasswordForm,
+    request=IPloneLoginLayer
+)

@@ -4,6 +4,7 @@ from plone import api
 from plone.login import MessageFactory as _
 from plone.schema import Email
 from plone.theme.interfaces import IDefaultPloneLayer
+from plone.z3cform.interfaces import IWrappedForm
 from z3c.form.interfaces import WidgetActionExecutionError
 from zope import schema
 from zope.interface import Interface
@@ -51,7 +52,11 @@ class ICompleteProfile(Interface):
     )
 
 
-class ILoginForm(Interface):
+class ILoginForm(IWrappedForm):
+    """ Login form marker interface """
+
+
+class ILoginFormSchema(Interface):
     """ Login form schema """
 
     ac_name = schema.TextLine(
@@ -70,7 +75,11 @@ class ILoginForm(Interface):
     )
 
 
-class IRegisterForm(Interface):
+class IRegisterForm(IWrappedForm):
+    """ Register form marker interface """
+
+
+class IRegisterFormSchema(Interface):
     """ Register form schema """
 
     username = schema.TextLine(
@@ -110,7 +119,11 @@ class IRegisterForm(Interface):
                   u'and Confirm password do not match.')))
 
 
-class ILoginHelpForm(Interface):
+class ILoginHelpForm(IWrappedForm):
+    """ Login Help form marker interface """
+
+
+class ILoginHelpFormSchema(Interface):
     """ Login Help form schema """
 
     reset_password = schema.TextLine(
@@ -129,8 +142,7 @@ class ILoginHelpForm(Interface):
 
 
 class ILoginSettings(Interface):
-    """ Site settings for handling user registration and authentication
-    """
+    """ Site settings for handling user registration and authentication """
 
     request_access_template = schema.Text(
         title=_(u'Request access template'),
@@ -148,7 +160,11 @@ username ${user_id}.""")
     )
 
 
-class IResetPasswordForm(Interface):
+class IResetPasswordForm(IWrappedForm):
+    """ reset passwort form marker interface """
+
+
+class IResetPasswordFormSchema(Interface):
     """ reset password form schema """
 
     password = schema.Password(

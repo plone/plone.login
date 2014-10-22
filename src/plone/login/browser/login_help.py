@@ -3,10 +3,18 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.login import MessageFactory as _
 from plone.login.interfaces import ILoginHelpForm
+from plone.login.interfaces import ILoginHelpFormSchema
+from plone.login.interfaces import IPloneLoginLayer
 from plone.z3cform import layout
+from plone.z3cform.templates import FormTemplateFactory
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
+from zope.interface import implementer
+import os
+
+template_path = lambda p: os.path.join(
+    os.path.dirname(__file__), 'templates', p)
 
 
 def append_klasses(widget, klasses):
@@ -21,7 +29,7 @@ class RequestResetPassword(form.Form):
 
     id = 'RequestResetPassword'
     label = u''
-    fields = field.Fields(ILoginHelpForm).select('reset_password')
+    fields = field.Fields(ILoginHelpFormSchema).select('reset_password')
     ignoreContext = True
 
     render = ViewPageTemplateFile('templates/subform_render.pt')
@@ -41,7 +49,7 @@ class RequestUsername(form.Form):
 
     id = 'RequestUsername'
     label = u''
-    fields = field.Fields(ILoginHelpForm).select('recover_username')
+    fields = field.Fields(ILoginHelpFormSchema).select('recover_username')
     ignoreContext = True
 
     render = ViewPageTemplateFile('templates/subform_render.pt')
@@ -58,6 +66,7 @@ class RequestUsername(form.Form):
               u'email has been sent with your username.'), 'info')
 
 
+@implementer(ILoginHelpForm)
 class LoginHelpForm(form.EditForm):
     ''' Implementation of the login help form '''
 
@@ -69,8 +78,6 @@ class LoginHelpForm(form.EditForm):
                     u'forget my password all the time.')
 
     ignoreContext = True
-
-    render = ViewPageTemplateFile('templates/login_help.pt')
 
     def can_reset_password(self):
         # TODO: Actually check that the site allows reseting password
@@ -98,3 +105,10 @@ class LoginHelpForm(form.EditForm):
 
 class LoginHelpFormView(layout.FormWrapper):
     form = LoginHelpForm
+
+
+wrapped_loginhelp_template = FormTemplateFactory(
+    template_path('login_help.pt'),
+    form=ILoginHelpForm,
+    request=IPloneLoginLayer
+)
