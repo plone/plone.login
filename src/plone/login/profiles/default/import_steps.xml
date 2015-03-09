@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<import-steps>
+    <import-step handler="plone.login.setuphandlers.setupPlugins"
+                 id="plone.login.setup"
+                 title="Setup PAS Plugins"
+                 version="20150309">
+        <dependency step="plone-final"/>
+        Setup PAS Plugins
+    </import-step>
+</import-steps>

@@ -1,8 +1,11 @@
 Changelog
 =========
 
-0.1-dev-dev (unreleased)
-------------------------
+1.0.0 (unreleased)
+------------------
+
+- Add OAuth plugin provider
+  [saily]
 
 - Package created using templer
   [The Plone Foundation]

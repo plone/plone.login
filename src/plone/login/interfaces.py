@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from Products.CMFCore.utils import getToolByName
 from plone import api
 from plone.login import MessageFactory as _
 from plone.schema import Email
@@ -104,8 +103,7 @@ class IRegisterFormSchema(Interface):
 
     @invariant
     def ensureUsernameUnique(obj):
-        site = api.portal.get()
-        registration = getToolByName(site, 'portal_registration')
+        registration = api.portal.get_tool('portal_registration')
         if not registration.isMemberIdAllowed(obj.username):
             raise WidgetActionExecutionError('username', Invalid(
                 _(u'error_username_alread_taken_or_invalid', default=u'Your '
@@ -157,6 +155,30 @@ Subject: ${user_fullname} is requesting access to ${title}
 ${user_fullname} is requesting access to the page "${title}" at ${url}. \
 Please visit the sharing controls at ${url}/@@sharing to the user with \
 username ${user_id}.""")
+    )
+
+    oauth_providers = schema.Dict(
+        title=_(u'Available OAuth providers'),
+        key_type=schema.ASCIILine(title=u'Provider'),
+        value_type=schema.Dict(
+            key_type=schema.ASCIILine(title=u'Property'),
+            value_type=schema.ASCIILine(title=u'Value'),
+            required=True,
+            default={
+                'title': 'Login with oauth provider',  # TODO make multilingual
+                'client_id': 'APP_ID',
+                'client_secret': 'APP_SECRET',
+                'auth_url': 'http://localhost:3000/oauth/authorize',
+                'response_type': 'code',
+                'grant_type': 'authorization_code',
+                'token_url': 'http://localhost:3000/oauth/token',
+                'profile_url': '',
+                'response_code_variable': 'code',
+                'access_token_variable': 'access_token',
+            },
+        ),
+        required=True,
+        default={}
     )
 
 

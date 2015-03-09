@@ -91,8 +91,12 @@
         </form>
         </div>
         <div class="external half">
-          <input class="submit facebook" type="submit" value="Log in with Facebook">
-          <input class="submit google" type="submit" value="Log in with Google">
+          <a tal:repeat="item view/oauth_providers"
+             tal:attributes="class string:button ${item/css_class};
+                             href item/url"
+             tal:content="item/title">
+            Login with OAuth provider
+          </a>
         </div>
       </div>
       <div class="footer">

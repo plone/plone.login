@@ -10,6 +10,7 @@ from plone.login import MessageFactory as _
 from plone.login.browser.login_help import template_path
 from plone.login.interfaces import ILoginForm
 from plone.login.interfaces import ILoginFormSchema
+from plone.login.interfaces import ILoginSettings
 from plone.login.interfaces import IPloneLoginLayer
 from plone.login.interfaces import IRedirectAfterLogin
 from plone.registry.interfaces import IRegistry
@@ -39,6 +40,10 @@ class LoginForm(form.EditForm):
 
     ignoreContext = True
     prefix = ''
+
+    @property
+    def settings(self):
+        return getUtility(IRegistry).forInterface(ILoginSettings)
 
     def _get_auth(self):
         try:
@@ -125,6 +130,15 @@ class LoginForm(form.EditForm):
                 came_from = self.context.portal_url()
 
         self.request.response.redirect(came_from)
+
+    def oauth_providers(self):
+        for provider, data in self.settings.oauth_providers.items():
+            yield {
+                'url': '{0:s}/@@login-oauth/{1:s}'.format(
+                    self.context.absolute_url(), provider),
+                'title': data.get('title', provider),
+                'css_class': data.get('css_class')
+            }
 
 
 class LoginFormView(layout.FormWrapper):
