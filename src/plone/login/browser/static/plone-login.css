@@ -92,7 +92,8 @@
     font-size: 0.9em;
 }
 
-#login input, #trouble input {
+#login input,
+#trouble input {
     border-radius: 0px;
     border: 2px solid #e5e5e5;
     height: 36px;
@@ -106,20 +107,6 @@
     width: 100%;
     border: 0px;
     border-radius: 2px;
-}
-
-#login input.facebook {
-    background: #3b5998 url(img/btn-facebook.png) left center no-repeat;
-    text-align: left;
-    padding-left: 50px;
-    border-radius: 0px;
-}
-
-#login input.google {
-    background: #df4a32 url(img/btn-google.png) left center no-repeat;
-    text-align: left;
-    padding-left: 50px;
-    border-radius: 0px;
 }
 
 ::-webkit-input-placeholder {
@@ -197,5 +184,34 @@
 }
 
 #login .alert a {
+    color: #fff;
+}
+
+
+/* OAuth Login */
+.button {
+    display: block;
+    padding: 0.5em 0.5em 0.5em 30px;
+    background: #e5e5e5 no-repeat left center;
+    background-size: 2em;
+    background-image: url(img/oauth_logo.svg);
+    margin: 0 0 2px 0;
+}
+.gitlab {
+    background-image: url(img/github13.svg);
+}
+.twitter {
+    background-image: url(img/twitter21.svg);
+}
+.google {
+    background-image: url(img/google29.svg);
+    background-color: #df4a32;
+}
+.linkedin {
+    background-image: url(img/linkedin12.svg);
+}
+.facebook {
+    background-image: url(img/facebook31.svg);
+    background-color: #3b5998;
     color: #fff;
 }

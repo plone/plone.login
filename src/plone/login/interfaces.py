@@ -175,6 +175,7 @@ username ${user_id}.""")
                 'profile_url': '',
                 'response_code_variable': 'code',
                 'access_token_variable': 'access_token',
+                'css_class': 'oauth',
             },
         ),
         required=True,
