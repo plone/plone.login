@@ -46,10 +46,10 @@ class LoginForm(form.EditForm):
     def _get_auth(self):
         try:
             return self.context.acl_users.credentials_cookie_auth
-        except:
+        except AttributeError:
             try:
                 return self.context.cookie_authentication
-            except:
+            except AttributeError:
                 pass
 
     def updateWidgets(self):

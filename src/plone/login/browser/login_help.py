@@ -13,7 +13,7 @@ from z3c.form import form
 from zope.interface import implementer
 import os
 
-template_path = lambda p: os.path.join(
+template_path = lambda p: os.path.join(  # noqa: E731
     os.path.dirname(__file__), 'templates', p)
 
 
