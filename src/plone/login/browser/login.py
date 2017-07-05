@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 from AccessControl import getSecurityManager
 from DateTime import DateTime
-from Products.CMFCore.interfaces import ISiteRoot
-from Products.CMFCore.utils import getToolByName
-from Products.Five.browser import BrowserView
-from Products.statusmessages.interfaces import IStatusMessage
 from email import message_from_string
 from plone.login import MessageFactory as _
 from plone.login.browser.login_help import template_path
@@ -16,6 +12,11 @@ from plone.registry.interfaces import IRegistry
 from plone.stringinterp import Interpolator
 from plone.z3cform import layout
 from plone.z3cform.templates import FormTemplateFactory
+from Products.CMFCore.interfaces import ISiteRoot
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import ISecuritySchema
+from Products.Five.browser import BrowserView
+from Products.statusmessages.interfaces import IStatusMessage
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
@@ -23,7 +24,9 @@ from z3c.form.interfaces import HIDDEN_MODE
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
+from zope.component import queryUtility
 from zope.interface import implementer
+
 import urllib
 
 
@@ -74,9 +77,7 @@ class LoginForm(form.EditForm):
         membership_tool = getToolByName(self.context, 'portal_membership')
         if membership_tool.isAnonymousUser():
             self.request.response.expireCookie('__ac', path='/')
-            email_login = getToolByName(self.context, 'portal_properties') \
-                .site_properties.getProperty('use_email_as_login')
-            if email_login:
+            if self.email_login_enabled():
                 IStatusMessage(self.request).addStatusMessage(_(
                     u'Login failed. Both email address and password are case '
                     u'sensitive, check that caps lock is not enabled.'
@@ -125,6 +126,12 @@ class LoginForm(form.EditForm):
                 came_from = self.context.portal_url()
 
         self.request.response.redirect(came_from)
+
+    def email_login_enabled(self):
+        registry = queryUtility(IRegistry)
+        security_settings = registry.forInterface(
+            ISecuritySchema, prefix='plone')
+        return security_settings.use_email_as_login
 
 
 class LoginFormView(layout.FormWrapper):
