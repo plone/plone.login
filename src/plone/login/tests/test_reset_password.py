@@ -35,7 +35,6 @@ class TestResetPasswordForm(unittest.TestCase):
     def test_reset_password_view(self):
         view = getMultiAdapter((self.portal, self.request),
                                name='reset-password')
-        view = view.__of__(self.portal)
         self.assertTrue(view())
 
     def test_form_update(self):

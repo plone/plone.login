@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-from Products.CMFCore.utils import getToolByName
-from plone import api
 from plone.login import MessageFactory as _
-from plone.schema import Email
 from plone.theme.interfaces import IDefaultPloneLayer
 from plone.z3cform.interfaces import IWrappedForm
 from z3c.form.interfaces import WidgetActionExecutionError
@@ -73,50 +70,6 @@ class ILoginFormSchema(Interface):
         title=u'Came From',  # not translated, hidden field
         required=False,
     )
-
-
-class IRegisterForm(IWrappedForm):
-    """ Register form marker interface """
-
-
-class IRegisterFormSchema(Interface):
-    """ Register form schema """
-
-    username = schema.TextLine(
-        title=_(u'label_username', default=u'Username'),
-        required=True,
-    )
-
-    email = Email(
-        title=_(u'label_email', default=u'Email'),
-        required=True,
-    )
-
-    password = schema.Password(
-        title=_(u'label_password', default=u'Password'),
-        required=True,
-    )
-
-    password_confirm = schema.Password(
-        title=_(u'label_password_confirm', default=u'Confirm password'),
-        required=True,
-    )
-
-    @invariant
-    def ensureUsernameUnique(obj):
-        site = api.portal.get()
-        registration = getToolByName(site, 'portal_registration')
-        if not registration.isMemberIdAllowed(obj.username):
-            raise WidgetActionExecutionError('username', Invalid(
-                _(u'error_username_alread_taken_or_invalid', default=u'Your '
-                  u'username is already in use or invalid.')))
-
-    @invariant
-    def ensureValidPassword(obj):
-        if obj.password != obj.password_confirm:
-            raise WidgetActionExecutionError('password', Invalid(
-                _(u'error_password_and_confirm_not_match', default=u'Password '
-                  u'and Confirm password do not match.')))
 
 
 class ILoginHelpForm(IWrappedForm):

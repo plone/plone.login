@@ -27,7 +27,6 @@ class TestLoginForm(unittest.TestCase):
     def test_login_view(self):
         view = getMultiAdapter((self.portal, self.request),
                                name='login')
-        view = view.__of__(self.portal)
         self.assertTrue(view())
 
     def _setup_authenticator_request(self):
