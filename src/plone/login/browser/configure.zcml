@@ -21,14 +21,6 @@
         />
 
     <browser:page
-        name="request-access"
-        for="*"
-        permission="plone.RequestAccess"
-        class=".login.RequestAccessView"
-        layer="plone.login.interfaces.IPloneLoginLayer"
-        />
-
-    <browser:page
         name="reset-password"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="cmf.MailForgottonPassword"

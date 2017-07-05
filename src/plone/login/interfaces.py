@@ -141,25 +141,6 @@ class ILoginHelpFormSchema(Interface):
     )
 
 
-class ILoginSettings(Interface):
-    """ Site settings for handling user registration and authentication """
-
-    request_access_template = schema.Text(
-        title=_(u'Request access template'),
-        description=_(u'Email sent to content owners when a user requests '
-                      u'access.'),
-        required=True,
-        default=_(u"""
-From: "${user_fullname}" <${user_email}>
-To: ${owner_emails}, ${manager_emails}
-Subject: ${user_fullname} is requesting access to ${title}
-
-${user_fullname} is requesting access to the page "${title}" at ${url}. \
-Please visit the sharing controls at ${url}/@@sharing to the user with \
-username ${user_id}.""")
-    )
-
-
 class IResetPasswordForm(IWrappedForm):
     """ reset passwort form marker interface """
 

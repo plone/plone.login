@@ -22,19 +22,5 @@
       You are logged in, but do not have sufficient privileges to view this page.
       </p>
 
-      <tal:canrequestaccess tal:condition="view/canRequestAccess">
-         <p>
-         If you believe you are receiving this message in error, you can
-         request access from the owner.
-         </p>
-
-         <form method="post"
-               tal:attributes="action string:${view/request_url}/@@request-access">
-            <input type="hidden"
-                   name="came_from"
-                   tal:attributes="value context/@@plone_context_state/current_page_url" />
-            <input type="submit" value="Request Access" />
-         </form>
-      </tal:canrequestaccess>
    </metal:content>
 </html>
