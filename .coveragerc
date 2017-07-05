@@ -1,0 +1,6 @@
+[report]
+include =
+    src/plone/login/*
+omit =
+    */test*
+    */upgrades/*
