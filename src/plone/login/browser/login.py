@@ -127,6 +127,12 @@ class LoginForm(form.EditForm):
 
         self.request.response.redirect(came_from)
 
+    def self_registration_enabled(self):
+        registry = queryUtility(IRegistry)
+        security_settings = registry.forInterface(
+            ISecuritySchema, prefix='plone')
+        return security_settings.enable_self_reg
+
     def email_login_enabled(self):
         registry = queryUtility(IRegistry)
         security_settings = registry.forInterface(

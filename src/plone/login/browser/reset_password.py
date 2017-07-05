@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from AccessControl import Unauthorized
-from Products.CMFCore.utils import getToolByName
-from Products.statusmessages.interfaces import IStatusMessage
 from plone import api
 from plone.login import MessageFactory as _
 from plone.login.browser.login_help import append_klasses
@@ -9,13 +7,18 @@ from plone.login.browser.login_help import template_path
 from plone.login.interfaces import IPloneLoginLayer
 from plone.login.interfaces import IResetPasswordForm
 from plone.login.interfaces import IResetPasswordFormSchema
+from plone.registry.interfaces import IRegistry
 from plone.z3cform import layout
 from plone.z3cform.templates import FormTemplateFactory
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import ISecuritySchema
+from Products.statusmessages.interfaces import IStatusMessage
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 from z3c.form.interfaces import WidgetActionExecutionError
 from zope.component import getMultiAdapter
+from zope.component import queryUtility
 from zope.interface import implementer
 from zope.interface.exceptions import Invalid
 
@@ -89,6 +92,12 @@ class ResetPasswordForm(form.EditForm):
               u'password has been reset.'), 'info')
 
         self.request.response.redirect(self.context.absolute_url())
+
+    def self_registration_enabled(self):
+        registry = queryUtility(IRegistry)
+        security_settings = registry.forInterface(
+            ISecuritySchema, prefix='plone')
+        return security_settings.enable_self_reg
 
 
 class ResetPasswordFormView(layout.FormWrapper):

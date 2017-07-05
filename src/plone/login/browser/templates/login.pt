@@ -95,12 +95,14 @@
           <input class="submit google" type="submit" value="Log in with Google">
         </div>
       </div>
-      <div class="footer">
+      <div class="footer"
+           tal:define="portal_state context/@@plone_portal_state;
+                       portal_url portal_state/portal_url">
         <p class="trouble"
            i18n:translate="footer_login_trouble">Trouble logging in? <tal:link
-           i18n:name="link_login_help"><a href="@@login-help" i18n:translate="footer_login_link_get_help">Get help</a></tal:link>.</p>
-        <p i18n:translate="footer_login_signup" class="signup right">Need an account? <tal:link
-           i18n:name="link_login_signup"><a href="@@register" class="emph" i18n:translate="footer_login_link_signup">Sign up here &raquo;</a>.</tal:link></p>
+           i18n:name="link_login_help"><a href="@@login-help" tal:attributes="href string:${portal_url}/@@login-help" i18n:translate="footer_login_link_get_help">Get help</a></tal:link>.</p>
+        <p i18n:translate="footer_login_signup" class="signup right" tal:condition="python:view.self_registration_enabled()">Need an account? <tal:link
+           i18n:name="link_login_signup"><a href="@@register" tal:attributes="href string:${portal_url}/@@register" class="emph" i18n:translate="footer_login_link_signup">Sign up here &raquo;</a>.</tal:link></p>
       </div>
     </div>
 
