@@ -66,6 +66,10 @@ class LoginForm(form.EditForm):
         self.fields['ac_password'].__name__ = fieldname_password
 
         super(LoginForm, self).updateWidgets(prefix='')
+
+        if self.use_email_as_login():
+            self.widgets[fieldname_name].label = _(u'label_email',
+                                                   default=u'E-mail')
         self.widgets['came_from'].mode = HIDDEN_MODE
 
     @button.buttonAndHandler(_('Log in'), name='login')
@@ -77,7 +81,7 @@ class LoginForm(form.EditForm):
         membership_tool = getToolByName(self.context, 'portal_membership')
         if membership_tool.isAnonymousUser():
             self.request.response.expireCookie('__ac', path='/')
-            if self.email_login_enabled():
+            if self.use_email_as_login():
                 IStatusMessage(self.request).addStatusMessage(_(
                     u'Login failed. Both email address and password are case '
                     u'sensitive, check that caps lock is not enabled.'
@@ -133,7 +137,7 @@ class LoginForm(form.EditForm):
             ISecuritySchema, prefix='plone')
         return security_settings.enable_self_reg
 
-    def email_login_enabled(self):
+    def use_email_as_login(self):
         registry = queryUtility(IRegistry)
         security_settings = registry.forInterface(
             ISecuritySchema, prefix='plone')
