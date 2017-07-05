@@ -100,8 +100,8 @@ class LoginForm(form.EditForm):
         must_change_password = member.getProperty('must_change_password', 0)
 
         if must_change_password:
-            portal_url = getToolByName(self.context, 'portal_url')()
-            return self.request.response.redirect(portal_url + '/@@reset-password')
+            # TODO: This user needs to change his password
+            pass
 
         membership_tool.loginUser(self.request)
 
