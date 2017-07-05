@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-from AccessControl import getSecurityManager
 from DateTime import DateTime
-from email import message_from_string
 from plone.login import MessageFactory as _
 from plone.login.browser.login_help import template_path
 from plone.login.interfaces import ILoginForm
@@ -9,10 +7,8 @@ from plone.login.interfaces import ILoginFormSchema
 from plone.login.interfaces import IPloneLoginLayer
 from plone.login.interfaces import IRedirectAfterLogin
 from plone.registry.interfaces import IRegistry
-from plone.stringinterp import Interpolator
 from plone.z3cform import layout
 from plone.z3cform.templates import FormTemplateFactory
-from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.Five.browser import BrowserView
@@ -22,7 +18,6 @@ from z3c.form import field
 from z3c.form import form
 from z3c.form.interfaces import HIDDEN_MODE
 from zope.component import getMultiAdapter
-from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.interface import implementer
@@ -105,8 +100,8 @@ class LoginForm(form.EditForm):
         must_change_password = member.getProperty('must_change_password', 0)
 
         if must_change_password:
-            # TODO: This user needs to change his password
-            pass
+            portal_url = getToolByName(self.context, 'portal_url')()
+            return self.request.response.redirect(portal_url + '/@@reset-password')
 
         membership_tool.loginUser(self.request)
 

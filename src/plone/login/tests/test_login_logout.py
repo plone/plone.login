@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-from Products.MailHost.interfaces import IMailHost
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
 from plone.login.interfaces import IPloneLoginLayer
 from plone.login.testing import PLONE_LOGIN_FUNCTIONAL_TESTING
 from plone.testing.z2 import Browser
-from zope.component import getUtility
 from zope.interface import alsoProvides
+
 import transaction
 import unittest
 
