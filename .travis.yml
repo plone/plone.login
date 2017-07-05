@@ -7,6 +7,10 @@ cache:
     - $HOME/buildout-cache
 before_install:
   - mkdir -p $HOME/buildout-cache/{eggs,downloads}
+  - mkdir $HOME/.buildout
+  - echo "[buildout]" > $HOME/.buildout/default.cfg
+  - echo "download-cache = $HOME/buildout-cache/downloads" >> $HOME/.buildout/default.cfg
+  - echo "eggs-directory = $HOME/buildout-cache/eggs" >> $HOME/.buildout/default.cfg
   - virtualenv .
   - bin/python bootstrap.py --setuptools-version=33.1.1 --buildout-version=2.8.0  #from https://github.com/plone/buildout.coredev/blob/5.1/requirements.txt 2017-05-30 11:57
 install:
