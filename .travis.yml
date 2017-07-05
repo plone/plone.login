@@ -1,9 +1,16 @@
 language: python
 python: 2.7
+sudo: false
+cache:
+  pip: true
+  directories:
+    - $HOME/buildout-cache
+before_install:
+  - mkdir -p $HOME/buildout-cache/{eggs,downloads}
+  - virtualenv .
+  - bin/python bootstrap.py --setuptools-version=33.1.1 --buildout-version=2.8.0  #from https://github.com/plone/buildout.coredev/blob/5.1/requirements.txt 2017-05-30 11:57
 install:
-  - python bootstrap.py -v 2.2.1
-  - bin/buildout -c travis.cfg annotate
-  - bin/buildout -N -t 5 -c travis.cfg
+  - bin/buildout -Nvt 5 -c travis.cfg
 script:
   - bin/code-analysis
   - bin/test
