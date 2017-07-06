@@ -67,6 +67,10 @@ class LoginForm(form.EditForm):
                                                    default=u'E-mail')
         self.widgets['came_from'].mode = HIDDEN_MODE
 
+    def updateActions(self):
+        super(LoginForm, self).updateActions()
+        self.actions['login'].addClass('context')
+
     @button.buttonAndHandler(_('Log in'), name='login')
     def handleLogin(self, action):
         data, errors = self.extractData()
