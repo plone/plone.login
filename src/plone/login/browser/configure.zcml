@@ -6,11 +6,6 @@
     xmlns:five="http://namespaces.zope.org/five"
     >
 
-    <browser:resourceDirectory
-        name="plone.login"
-        directory="static"
-        />
-
     <browser:page
         name="insufficient-privileges"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
