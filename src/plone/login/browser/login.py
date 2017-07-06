@@ -32,7 +32,7 @@ class LoginForm(form.EditForm):
     fields = field.Fields(ILoginFormSchema)
 
     id = 'LoginForm'
-    label = _('heading_login_form', default=u'Log in')
+    label = _('label_log_in', default=u'Log in')
     description = _('description_login_form', default=u'Long time no see.')
 
     ignoreContext = True
