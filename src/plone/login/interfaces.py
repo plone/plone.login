@@ -9,6 +9,10 @@ from zope.interface import Invalid
 from zope.interface import invariant
 
 
+class IPloneLoginLayer(IDefaultPloneLayer):
+    """ Marker interface for plone.login views. """
+
+
 class IRedirectAfterLogin(Interface):
     """ Redirect after login adapters should provide this interface """
 
