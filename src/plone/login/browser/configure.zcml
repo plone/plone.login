@@ -50,14 +50,6 @@
         />
 
     <browser:page
-        name="complete-profile"
-        for="plone.app.layout.navigation.interfaces.INavigationRoot"
-        class=".profile.CompleteProfileFormView"
-        permission="cmf.SetOwnProperties"
-        layer="plone.login.interfaces.IPloneLoginLayer"
-        />
-
-    <browser:page
         name="login"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
