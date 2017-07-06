@@ -4,6 +4,10 @@ Build Status
 .. image:: https://travis-ci.org/plone/plone.login.svg?branch=master
     :target: https://travis-ci.org/plone/plone.login
 
+.. image:: https://coveralls.io/repos/github/plone/plone.login/badge.svg?branch=master
+    :target: https://coveralls.io/github/plone/plone.login?branch=master
+
+
 plone.login
 ===========
 
