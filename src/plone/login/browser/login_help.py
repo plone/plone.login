@@ -6,11 +6,17 @@ from plone.login.interfaces import ILoginHelpForm
 from plone.login.interfaces import ILoginHelpFormSchema
 from plone.z3cform import layout
 from plone.z3cform.templates import FormTemplateFactory
+from Products.CMFCore.utils import getToolByName
+from zope.component.hooks import getSite
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 from zope.interface import implementer
+
 import os
+import logging
+
+log = logging.getLogger(__name__)
 
 template_path = lambda p: os.path.join(  # noqa: E731
     os.path.dirname(__file__), 'templates', p)
@@ -37,7 +43,20 @@ class RequestResetPassword(form.Form):
         _(u'button_pwreset_reset_password', default=u'Reset your password'),
         name='reset')
     def handleResetPassword(self, action):
-        # TODO: Send Email with password reset url
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+        portal = getSite()
+        regtool = getToolByName(portal, 'portal_registration')
+        try:
+            regtool.mailPassword(data['reset_password'], self.request)
+        except ValueError as e:
+            # We act as if a message has been to prevent probing Plone
+            # for loginnames. Instead we log the error-message.
+            log.info('Error while trying to send a reset-password notice to user {0}: {1}'.format(data['reset_password'], e))  # noqa: E501
+            pass
+
         IStatusMessage(self.request).addStatusMessage(
             _(u'statusmessage_pwreset_password_mail_sent', default=u'An '
               u'email has been sent with instructions on how to reset your '
@@ -59,6 +78,10 @@ class RequestUsername(form.Form):
         _(u'button_pwreset_get_username', default='Get your username'),
         name='get_username')
     def handleGetUsername(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
         # TODO: Send Email with username
         IStatusMessage(self.request).addStatusMessage(
             _(u'statusmessage_pwreset_username_mail_sent', default=u'An '

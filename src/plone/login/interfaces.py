@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.login import MessageFactory as _
+from plone.schema.email import Email
 from plone.theme.interfaces import IDefaultPloneLayer
 from plone.z3cform.interfaces import IWrappedForm
 from z3c.form.interfaces import WidgetActionExecutionError
@@ -66,14 +67,14 @@ class ILoginHelpFormSchema(Interface):
         title=_(u'label_pwreset_username', default=u'Username'),
         description=_(u'help_pwreset_username', default=u'Enter your username '
                       u'or email and we’ll send you a password reset link.'),
-        required=False,
+        required=True,
     )
 
-    recover_username = schema.TextLine(
+    recover_username = Email(
         title=_(u'label_pwreset_email', default=u'Email'),
         description=_(u'help_pwreset_email', default=u'Enter your email and '
                       u'we’ll send you your username.'),
-        required=False,
+        required=True,
     )
 
 
