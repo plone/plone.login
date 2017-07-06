@@ -15,14 +15,13 @@
         tal:content="structure view/description">Form description</p>
 
     <tal:widgets repeat="widget view/widgets/values">
-        <div class="row"
-                tal:define="hidden python:widget.mode == 'hidden'"
-                tal:omit-tag="hidden">
+        <div tal:define="hidden python:widget.mode == 'hidden'"
+             tal:omit-tag="hidden">
 
-                <div class="field"
-                    tal:define="error widget/error;
-                                hidden python:widget.mode == 'hidden';"
-                    tal:attributes="class python:'field' + (error and ' error' or '')">
+            <div class="field"
+                tal:define="error widget/error;
+                            hidden python:widget.mode == 'hidden';"
+                tal:attributes="class python:'field' + (error and ' error' or '')">
                 <label for=""
                         tal:attributes="for widget/id"
                         tal:condition="not:hidden">
@@ -52,12 +51,14 @@
                 <div class="widget">
                     <input type="text" tal:replace="structure widget/render" />
                 </div>
-                </div>
+            </div>
         </div>
     </tal:widgets>
 
-    <div class="action" tal:repeat="action view/actions/values|nothing">
-        <input type="submit" tal:replace="structure action/render" />
+    <div class="formControls">
+        <tal:actions tal:repeat="action view/actions/values|nothing">
+            <input type="submit" tal:replace="structure action/render" />
+        </tal:actions>
     </div>
 
 </body>

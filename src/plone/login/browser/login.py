@@ -35,7 +35,7 @@ class LoginForm(form.EditForm):
     fields = field.Fields(ILoginFormSchema)
 
     id = 'LoginForm'
-    label = _('heading_login_form', default=u'Log in')
+    label = _('label_log_in', default=u'Log in')
     description = _('description_login_form', default=u'Long time no see.')
 
     ignoreContext = True
@@ -100,6 +100,10 @@ class LoginForm(form.EditForm):
                 if came_from_template_id not in login_template_ids:
                     return came_from
         return None
+
+    def updateActions(self):
+        super(LoginForm, self).updateActions()
+        self.actions['login'].addClass('context')
 
     @button.buttonAndHandler(_('Log in'), name='login')
     def handleLogin(self, action):
