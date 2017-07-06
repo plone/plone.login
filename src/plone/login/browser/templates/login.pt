@@ -8,6 +8,17 @@
 <body tal:omit-tag="">
 
 <div id="login">
+
+  <div class="portalMessage error pat-cookietrigger" style="display:none">
+      <strong i18n:translate="">
+          Error
+      </strong>
+      <span tal:omit-tag=""
+          i18n:translate="enable_cookies_message_before_login">
+          Cookies are not enabled. You must enable cookies before you can log in.
+      </span>
+  </div>
+
   <div id="login-warnings">
     <div class="alert" tal:condition="python:request.form.get('error', False)">
       <h4 i18n:translate="heading_login_uhoh">Uh oh!</h4>
