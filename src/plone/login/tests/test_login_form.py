@@ -47,3 +47,20 @@ class TestLoginForm(unittest.TestCase):
 
         data, errors = form.form_instance.extractData()
         self.assertEqual(len(errors), 0)
+
+    def test_failsafe_login_form(self):
+        view = getMultiAdapter((self.portal, self.request),
+                               name='failsafe_login_form')
+        html = view()
+        self.assertNotIn('main-container', html)
+
+    def test_failsafe_login_form_update(self):
+        self._setup_authenticator_request()
+        self.request['__ac_name'] = u'test'
+        self.request['__ac_password'] = u'secret'
+        self.request['form.widgets.came_from'] = [u'']
+        form = self.portal.restrictedTraverse('failsafe_login_form')
+        form.update()
+
+        data, errors = form.extractData()
+        self.assertEqual(len(errors), 0)

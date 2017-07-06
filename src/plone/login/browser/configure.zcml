@@ -53,6 +53,15 @@
         layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
+    <browser:page
+        name="failsafe_login_form"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        permission="zope.Public"
+        class=".login.LoginForm"
+        template="templates/form_wrapper.pt"
+        layer="plone.login.interfaces.IPloneLoginLayer"
+        />
+
     <adapter factory=".login.wrapped_login_template" />
 
     <browser:page
