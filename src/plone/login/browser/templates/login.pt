@@ -7,7 +7,7 @@
       tal:omit-tag="">
 <body tal:omit-tag="">
 
-<div id="login">
+ <div id="login-form">
 
   <div class="portalMessage error pat-cookietrigger" style="display:none">
       <strong i18n:translate="">
@@ -34,79 +34,81 @@
   </div>
 
   <h1 tal:condition="view/label | nothing">
-    <span tal:replace="view/label">Form title</span>
+    <span tal:replace="view/label" i18n:translate="">Form title</span>
   </h1>
 
   <p tal:condition="view/description | nothing"
-     tal:content="structure view/description">Form description</p>
+     tal:content="structure view/description"
+     i18n:translate="">Form description</p>
 
+    <form action="." method="post"
+          tal:attributes="action view/action; enctype view/enctype">
 
-        <form action="." method="post"
-            tal:attributes="action view/action; enctype view/enctype">
+        <tal:widgets repeat="widget view/widgets/values">
 
-            <tal:widgets repeat="widget view/widgets/values">
+            <tal:block tal:define="hidden python:widget.mode == 'hidden'">
+            <div tal:condition="not:hidden">
 
-                <tal:block tal:define="hidden python:widget.mode == 'hidden'">
-                <div class="row" tal:condition="not:hidden">
+                <div class="field"
+                     tal:define="error widget/error"
+                     tal:attributes="class python:'field' + (error and ' error' or '')">
 
-                    <div class="field"
-                         tal:define="error widget/error"
-                         tal:attributes="class python:'field' + (error and ' error' or '')">
+                    <label for=""
+                           tal:attributes="for widget/id"
+                           tal:condition="not:hidden">
+                        <span i18n:translate=""
+                              tal:content="widget/label">label</span>
+                        <span class="required horizontal" title="Required"
+                              tal:condition="python:widget.required and not hidden"
+                              i18n:attributes="title title_required;">&nbsp;</span>
+                    </label>
 
-                        <label for=""
-                               tal:attributes="for widget/id"
-                               tal:condition="not:hidden">
-                            <span i18n:translate=""
-                                  tal:content="widget/label">label</span>
-                        </label>
+                    <div class="formHelp"
+                         tal:define="description widget/field/description"
+                         i18n:translate=""
+                         tal:content="description"
+                         tal:condition="description">
+                        field description
+                    </div>
 
-                        <span class="fieldRequired" title="Required"
-                              i18n:translate="label_required"
-                              i18n:attributes="title title_required;">
-                            (Required)
-                        </span>
+                    <div tal:condition="error"
+                         tal:content="structure error/render">
+                        Error
+                    </div>
 
-                        <div class="formHelp"
-                             tal:define="description widget/field/description"
-                             i18n:translate=""
-                             tal:content="description"
-                             tal:condition="description">
-                            field description
-                        </div>
-
-                        <div tal:condition="error"
-                             tal:content="structure error/render">
-                            Error
-                        </div>
-
-                        <div class="widget">
-                            <input type="text" tal:replace="structure widget/render" />
-                        </div>
-
+                    <div class="widget">
+                        <input type="text" tal:replace="structure widget/render" />
                     </div>
 
                 </div>
-                <input type="hidden"
-                       tal:condition="hidden"
-                       tal:replace="structure widget/render" />
-                </tal:block>
-            </tal:widgets>
-            <span tal:replace="structure context/@@authenticator/authenticator"/>
 
-            <div class="action" tal:repeat="action view/actions/values|nothing">
-              <input type="submit" tal:replace="structure action/render" />
             </div>
-        </form>
-      <div class="footer"
-           tal:define="portal_state context/@@plone_portal_state;
-                       portal_url portal_state/portal_url">
-        <p class="trouble"
-           i18n:translate="footer_login_trouble">Trouble logging in? <tal:link
-           i18n:name="link_login_help"><a href="@@login-help" tal:attributes="href string:${portal_url}/@@login-help" i18n:translate="footer_login_link_get_help">Get help</a></tal:link>.</p>
-        <p i18n:translate="footer_login_signup" class="signup right" tal:condition="python:view.self_registration_enabled()">Need an account? <tal:link
-           i18n:name="link_login_signup"><a href="@@register" tal:attributes="href string:${portal_url}/@@register" class="emph" i18n:translate="footer_login_link_signup">Sign up here &raquo;</a>.</tal:link></p>
-      </div>
-    </div>
+
+            <input type="hidden"
+                   tal:condition="hidden"
+                   tal:replace="structure widget/render" />
+            </tal:block>
+
+        </tal:widgets>
+        <span tal:replace="structure context/@@authenticator/authenticator"/>
+
+        <div class="formControls">
+          <tal:actions tal:repeat="action view/actions/values|nothing">
+            <input type="submit" tal:replace="structure action/render" />
+          </tal:actions>
+        </div>
+    </form>
+
+  <div class="footer"
+       tal:define="portal_state context/@@plone_portal_state;
+                   portal_url portal_state/portal_url">
+    <p i18n:translate="footer_login_trouble">Trouble logging in? <tal:link
+       i18n:name="link_login_help"><a href="@@login-help" tal:attributes="href string:${portal_url}/@@login-help" i18n:translate="footer_login_link_get_help">Get help</a></tal:link>.</p>
+    <p i18n:translate="footer_login_signup" tal:condition="python:view.self_registration_enabled()">Need an account? <tal:link
+       i18n:name="link_login_signup"><a href="@@register" tal:attributes="href string:${portal_url}/@@register" class="emph" i18n:translate="footer_login_link_signup">Sign up here &raquo;</a>.</tal:link></p>
+  </div>
+
+ </div>
 
 </body>
 </html>

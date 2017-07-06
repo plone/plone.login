@@ -7,7 +7,7 @@
       tal:omit-tag="">
 <body tal:omit-tag="">
 
-    <div id="trouble">
+    <div>
 
     <h1 tal:condition="view/label | nothing">
         <span tal:replace="view/label">Form title</span>
@@ -19,15 +19,16 @@
     <form action="." method="post"
         tal:attributes="action view/action; enctype view/enctype">
 
-        <div class="meat">
-        <div class="half" tal:repeat="subform view/subforms">
-            <tal:subform replace="structure subform/render" />
+      <div class="row">
+        <div class="col-xs-6 col-sm-6" tal:repeat="subform view/subforms">
+            <tal:subform replace="structure subform/render"></tal:subform>
         </div>
-        </div>
+      </div>
 
-        <span tal:replace="structure context/@@authenticator/authenticator"/>
+      <span tal:replace="structure context/@@authenticator/authenticator"/>
 
     </form>
+
     <div class="footer">
       <p class="trouble">Still no dice? <a href="contact-info">Contact an admin.</a></p>
       <p class="login right">Eureka!? <a href="@@login" class="emph">Log in here &raquo;</a></p>
