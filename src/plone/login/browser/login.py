@@ -72,9 +72,10 @@ class LoginForm(form.EditForm):
         self.widgets['came_from'].value = self.get_came_from()
 
     def get_came_from(self):
-        came_from = self.request.get('came_from',
-                                     self.request.get('HTTP_REFERER', None))
-        if came_from is not None:
+        came_from = self.request.get('came_from', None)
+        if not came_from:
+            came_from = self.request.get('HTTP_REFERER', None)
+        if came_from:
             url_tool = getToolByName(self.context, 'portal_url')
             if url_tool.isURLInPortal(came_from):
                 came_from_template_id = urlparse(came_from)[2].split('/')[-1]

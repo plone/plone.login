@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
+from plone.login.browser.login import LoginForm
 from plone.login.interfaces import IPloneLoginLayer
 from plone.login.interfaces import IRedirectAfterLogin
 from plone.login.testing import PLONE_LOGIN_FUNCTIONAL_TESTING
+from plone.login.testing import PLONE_LOGIN_INTEGRATION_TESTING
 from plone.testing.z2 import Browser
 from zope.interface import Interface
 from zope.interface import alsoProvides
@@ -21,6 +23,37 @@ class AfterLoginAdapter(object):
 
     def __call__(self, came_from=None):
         return 'http://nohost/plone/sitemap'
+
+
+class TestCameFromFiltering(unittest.TestCase):
+    layer = PLONE_LOGIN_INTEGRATION_TESTING
+
+    def setUp(self):
+        self.request = self.layer['request']
+        self.portal = self.layer['portal']
+        self.form = LoginForm(self.portal, self.request)
+
+    def test_get_came_from_via_request(self):
+        self.assertEqual(self.form.get_came_from(), None)
+        url = 'https://nohost/plone/foo-bar'
+        self.request['came_from'] = url
+        self.assertEqual(self.form.get_came_from(), url)
+
+    def test_external_urls_are_ignored(self):
+        url = 'https://example.com/maliciousness'
+        self.request['came_from'] = url
+        self.assertEqual(self.form.get_came_from(), None)
+
+    def test_login_templates_are_filtered(self):
+        url = 'https://nohost/plone/logout'
+        self.request['came_from'] = url
+        self.assertEqual(self.form.get_came_from(), None)
+
+    def test_referer_is_fallback(self):
+        url = 'https://nohost/plone/test'
+        self.request['came_from'] = None
+        self.request['HTTP_REFERER'] = url
+        self.assertEqual(self.form.get_came_from(), url)
 
 
 class TestRedirectAfterLogin(unittest.TestCase):
