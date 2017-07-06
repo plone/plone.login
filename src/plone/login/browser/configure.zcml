@@ -54,7 +54,6 @@
         permission="zope.Public"
         class=".login.LoginForm"
         template="templates/form_wrapper.pt"
-        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
     <adapter factory=".login.wrapped_login_template" />
