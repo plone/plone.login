@@ -23,6 +23,7 @@ from zope.component import queryUtility
 from zope.interface import implementer
 
 import urllib
+from urlparse import urlparse
 
 
 @implementer(ILoginForm)
@@ -66,6 +67,36 @@ class LoginForm(form.EditForm):
             self.widgets[fieldname_name].label = _(u'label_email',
                                                    default=u'E-mail')
         self.widgets['came_from'].mode = HIDDEN_MODE
+        self.widgets['came_from'].value = self.get_came_from()
+
+    def get_came_from(self):
+        came_from = self.request.get('came_from',
+                                     self.request.get('HTTP_REFERER', None))
+        if came_from is not None:
+            url_tool = getToolByName(self.context, 'portal_url')
+            if url_tool.isURLInPortal(came_from):
+                came_from_template_id = urlparse(came_from)[2].split('/')[-1]
+                # TODO: Scale down this list now that we've removed a lot of
+                # templates.
+                login_template_ids = ['login',
+                                      'login_success',
+                                      'login_password',
+                                      'login_failed',
+                                      'login_form',
+                                      'logged_in',
+                                      'logout',
+                                      'logged_out',
+                                      'registered',
+                                      'mail_password',
+                                      'mail_password_form',
+                                      'register',
+                                      'require_login',
+                                      'member_search_results',
+                                      'pwreset_finish',
+                                      'localhost']
+                if came_from_template_id not in login_template_ids:
+                    return came_from
+        return None
 
     @button.buttonAndHandler(_('Log in'), name='login')
     def handleLogin(self, action):
@@ -88,32 +119,28 @@ class LoginForm(form.EditForm):
                 ), 'error')
             return
 
-        member = membership_tool.getAuthenticatedMember()
-        login_time = member.getProperty('login_time', '2000/01/01')
-        if not isinstance(login_time, DateTime):
-            login_time = DateTime(login_time)
-        initial_login = login_time == DateTime('2000/01/01')
-        if initial_login:
-            # TODO: Redirect if this is initial login
-            pass
-
-        must_change_password = member.getProperty('must_change_password', 0)
-
-        if must_change_password:
-            # TODO: This user needs to change his password
-            pass
-
         membership_tool.loginUser(self.request)
 
         IStatusMessage(self.request).addStatusMessage(_(
             u'statusmessage_logged_in', default=u'You are now logged in.'
         ), 'info')
 
-        came_from = None
-        if data['came_from']:
-            came_from = data['came_from']
+        member = membership_tool.getAuthenticatedMember()
+        login_time = member.getProperty('login_time', '2000/01/01')
+        if not isinstance(login_time, DateTime):
+            login_time = DateTime(login_time)
+        self.is_initial_login = login_time == DateTime('2000/01/01')
 
+        must_change_password = member.getProperty('must_change_password', 0)
+
+        if must_change_password:
+            self.force_password_change()
+
+        came_from = data.get('came_from', None)
         self.redirect_after_login(came_from)
+
+    def force_password_change(self):
+        pass
 
     def redirect_after_login(self, came_from=None):
         adapter = queryMultiAdapter((self.context, self.request),
