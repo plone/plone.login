@@ -4,6 +4,7 @@ from plone.app.z3cform.interfaces import IPloneFormLayer
 from plone.login.testing import PLONE_LOGIN_INTEGRATION_TESTING
 from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
+from z3c.form.interfaces import WidgetActionExecutionError
 import re
 import unittest
 
@@ -44,3 +45,19 @@ class TestResetPasswordForm(unittest.TestCase):
 
         data, errors = form.form_instance.extractData()
         self.assertEqual(len(errors), 0)
+
+    def test_form_update_validation(self):
+        self._setup_authenticator_request()
+        self.request['password'] = u'1234'
+        self.request['password_confirm'] = u'12345'
+        form = self.portal.restrictedTraverse(FORM_ID)
+        form.form_instance.update()
+        with self.assertRaises(WidgetActionExecutionError):
+            data, errors = form.form_instance.extractData()
+
+        self.request['password'] = u''
+        self.request['password_confirm'] = u''
+        form = self.portal.restrictedTraverse(FORM_ID)
+        form.form_instance.update()
+        data, errors = form.form_instance.extractData()
+        self.assertEqual(len(errors), 2)
