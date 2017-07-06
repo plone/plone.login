@@ -12,7 +12,6 @@
         permission="zope.Public"
         class=".login.InsufficientPrivilegesView"
         template="templates/insufficient_privileges.pt"
-        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
     <browser:page
@@ -20,7 +19,6 @@
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="cmf.MailForgottonPassword"
         class=".reset_password.ResetPasswordFormView"
-        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
     <browser:page
@@ -29,7 +27,6 @@
         permission="cmf.MailForgottonPassword"
         class=".stubs.SendEmailView"
         template="templates/send_email.pt"
-        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
     <adapter factory=".reset_password.wrapped_pwreset_template" />
@@ -41,7 +38,6 @@
         permission="zope.Public"
         class=".stubs.ConfirmationSentView"
         template="templates/confirmation-sent.pt"
-        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
     <browser:page
@@ -50,7 +46,6 @@
         permission="zope.Public"
         class=".login.LoginFormView"
         template="templates/form_wrapper.pt"
-        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
     <browser:page
@@ -69,7 +64,6 @@
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
         class=".logout.LogoutView"
-        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
 
@@ -79,7 +73,6 @@
         permission="zope.Public"
         template="templates/logged_out.pt"
         class=".logout.LoggedOutView"
-        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
 
@@ -89,7 +82,6 @@
         permission="zope.Public"
         class=".login_help.LoginHelpFormView"
         template="templates/form_wrapper.pt"
-        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
     <adapter factory=".login_help.wrapped_loginhelp_template" />
@@ -99,7 +91,6 @@
         for="*"
         permission="zope.Public"
         class=".login.RequireLoginView"
-        layer="plone.login.interfaces.IPloneLoginLayer"
         />
 
 </configure>

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
-from plone.browserlayer.utils import registered_layers
 from plone.login.testing import PLONE_LOGIN_INTEGRATION_TESTING
-from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 import unittest
 
@@ -15,7 +13,6 @@ class TestInstall(unittest.TestCase):
         self.app = self.layer['app']
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.registry = getUtility(IRegistry)
         self.qi_tool = getToolByName(self.portal, 'portal_quickinstaller')
 
     def test_product_is_installed(self):
@@ -26,11 +23,3 @@ class TestInstall(unittest.TestCase):
         installed = [p['id'] for p in self.qi_tool.listInstalledProducts()]
         self.assertTrue(pid in installed,
                         'package appears not to have been installed')
-
-    def test_js_available(self):
-        pass
-
-    def test_addon_layer(self):
-        layers = [l.getName() for l in registered_layers()]
-        self.assertTrue('IPloneLoginLayer' in layers,
-                        'add-on layer was not installed')

@@ -4,7 +4,6 @@ from Products.statusmessages.interfaces import IStatusMessage
 from plone.login import MessageFactory as _
 from plone.login.interfaces import ILoginHelpForm
 from plone.login.interfaces import ILoginHelpFormSchema
-from plone.login.interfaces import IPloneLoginLayer
 from plone.z3cform import layout
 from plone.z3cform.templates import FormTemplateFactory
 from z3c.form import button
@@ -109,6 +108,4 @@ class LoginHelpFormView(layout.FormWrapper):
 
 wrapped_loginhelp_template = FormTemplateFactory(
     template_path('login_help.pt'),
-    form=ILoginHelpForm,
-    request=IPloneLoginLayer
-)
+    form=ILoginHelpForm)

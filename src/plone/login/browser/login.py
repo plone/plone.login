@@ -6,7 +6,6 @@ from plone.login.interfaces import IForcePasswordChange
 from plone.login.interfaces import IInitialLogin
 from plone.login.interfaces import ILoginForm
 from plone.login.interfaces import ILoginFormSchema
-from plone.login.interfaces import IPloneLoginLayer
 from plone.login.interfaces import IRedirectAfterLogin
 from plone.registry.interfaces import IRegistry
 from plone.z3cform import layout
@@ -191,9 +190,7 @@ class LoginFormView(layout.FormWrapper):
 
 wrapped_login_template = FormTemplateFactory(
     template_path('login.pt'),
-    form=ILoginForm,
-    request=IPloneLoginLayer
-)
+    form=ILoginForm)
 
 
 class RequireLoginView(BrowserView):

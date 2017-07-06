@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
-from plone.login.interfaces import IPloneLoginLayer
 from plone.login.testing import PLONE_LOGIN_FUNCTIONAL_TESTING
 from plone.testing.z2 import Browser
-from zope.interface import alsoProvides
 
 import transaction
 import unittest
@@ -15,8 +13,6 @@ class TestLoginLogout(unittest.TestCase):
     layer = PLONE_LOGIN_FUNCTIONAL_TESTING
 
     def setUp(self):
-        # Make sure our browserlayer is applied
-        alsoProvides(IPloneLoginLayer)
         self.browser = Browser(self.layer['app'])
 
     def test_login_with_bad_credentials(self):

@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<layers>
-
-  <layer name="plone.login"
-         interface="plone.login.interfaces.IPloneLoginLayer"/>
-
-</layers>

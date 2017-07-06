@@ -2,14 +2,13 @@
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
 from plone.login.browser.login import LoginForm
-from plone.login.interfaces import IPloneLoginLayer
 from plone.login.interfaces import IRedirectAfterLogin
 from plone.login.testing import PLONE_LOGIN_FUNCTIONAL_TESTING
 from plone.login.testing import PLONE_LOGIN_INTEGRATION_TESTING
 from plone.testing.z2 import Browser
 from zope.interface import Interface
-from zope.interface import alsoProvides
 from zope.interface import implements
+from zope.publisher.interfaces import IRequest
 import unittest
 
 
@@ -61,8 +60,6 @@ class TestRedirectAfterLogin(unittest.TestCase):
     layer = PLONE_LOGIN_FUNCTIONAL_TESTING
 
     def setUp(self):
-        # Make sure our browserlayer is applied
-        alsoProvides(IPloneLoginLayer)
         self.browser = Browser(self.layer['app'])
 
     def test_redirect_to_portal_if_no_adapter_nor_came_from(self):
@@ -116,7 +113,7 @@ class TestRedirectAfterLogin(unittest.TestCase):
         from zope.component import getGlobalSiteManager
         gsm = getGlobalSiteManager()
         gsm.registerAdapter(AfterLoginAdapter,
-                            (Interface, IPloneLoginLayer))
+                            (Interface, IRequest))
 
         self.browser.open('http://nohost/plone/login')
         self.browser.getLink('Log in').click()
@@ -130,7 +127,7 @@ class TestRedirectAfterLogin(unittest.TestCase):
         self.browser.getControl('Log in').click()
 
         gsm.unregisterAdapter(AfterLoginAdapter,
-                              (Interface, IPloneLoginLayer))
+                              (Interface, IRequest))
 
         self.assertIn('You are now logged in.', self.browser.contents)
         self.assertEqual(self.browser.url,

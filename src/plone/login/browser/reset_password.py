@@ -4,7 +4,6 @@ from plone import api
 from plone.login import MessageFactory as _
 from plone.login.browser.login_help import append_klasses
 from plone.login.browser.login_help import template_path
-from plone.login.interfaces import IPloneLoginLayer
 from plone.login.interfaces import IResetPasswordForm
 from plone.login.interfaces import IResetPasswordFormSchema
 from plone.registry.interfaces import IRegistry
@@ -106,6 +105,4 @@ class ResetPasswordFormView(layout.FormWrapper):
 
 wrapped_pwreset_template = FormTemplateFactory(
     template_path('reset_password.pt'),
-    form=IResetPasswordForm,
-    request=IPloneLoginLayer
-)
+    form=IResetPasswordForm)

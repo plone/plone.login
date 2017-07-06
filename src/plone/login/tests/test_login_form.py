@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
 from plone.app.z3cform.interfaces import IPloneFormLayer
-from plone.login.interfaces import IPloneLoginLayer
 from plone.login.testing import PLONE_LOGIN_INTEGRATION_TESTING
 from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
@@ -22,7 +21,6 @@ class TestLoginForm(unittest.TestCase):
         self.mt = getToolByName(self.portal, 'portal_membership')
         # suitable for testing z3c.form views
         alsoProvides(self.request, IPloneFormLayer)
-        alsoProvides(self.request, IPloneLoginLayer)
 
     def test_login_view(self):
         view = getMultiAdapter((self.portal, self.request),
