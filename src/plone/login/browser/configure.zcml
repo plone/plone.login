@@ -21,25 +21,9 @@
         class=".reset_password.ResetPasswordFormView"
         />
 
-    <browser:page
-        name="send-email"
-        for="plone.app.layout.navigation.interfaces.INavigationRoot"
-        permission="cmf.MailForgottonPassword"
-        class=".stubs.SendEmailView"
-        template="templates/send_email.pt"
-        />
-
     <adapter factory=".reset_password.wrapped_pwreset_template" />
 
     <!-- XXX: Fix permission or DIE -->
-    <browser:page
-        name="confirmation-sent"
-        for="plone.app.layout.navigation.interfaces.INavigationRoot"
-        permission="zope.Public"
-        class=".stubs.ConfirmationSentView"
-        template="templates/confirmation-sent.pt"
-        />
-
     <browser:page
         name="login"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
