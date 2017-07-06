@@ -2,6 +2,8 @@
 from DateTime import DateTime
 from plone.login import MessageFactory as _
 from plone.login.browser.login_help import template_path
+from plone.login.interfaces import IForcePasswordChange
+from plone.login.interfaces import IInitialLogin
 from plone.login.interfaces import ILoginForm
 from plone.login.interfaces import ILoginFormSchema
 from plone.login.interfaces import IPloneLoginLayer
@@ -129,18 +131,30 @@ class LoginForm(form.EditForm):
         login_time = member.getProperty('login_time', '2000/01/01')
         if not isinstance(login_time, DateTime):
             login_time = DateTime(login_time)
-        self.is_initial_login = login_time == DateTime('2000/01/01')
+        is_initial_login = login_time == DateTime('2000/01/01')
+        if is_initial_login:
+            self.handle_initial_login()
 
         must_change_password = member.getProperty('must_change_password', 0)
-
         if must_change_password:
             self.force_password_change()
 
         came_from = data.get('came_from', None)
         self.redirect_after_login(came_from)
 
+    def handle_initial_login(self):
+        handler = queryMultiAdapter((self.context, self.request),
+                                    IInitialLogin)
+        if handler:
+            handler()
+        return
+
     def force_password_change(self):
-        pass
+        handler = queryMultiAdapter((self.context, self.request),
+                                    IForcePasswordChange)
+        if handler:
+            handler()
+        return
 
     def redirect_after_login(self, came_from=None):
         adapter = queryMultiAdapter((self.context, self.request),

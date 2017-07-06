@@ -9,12 +9,17 @@ from zope.interface import Invalid
 from zope.interface import invariant
 
 
-class IPloneLoginLayer(IDefaultPloneLayer):
-    """ Marker interface for plone.login views. """
-
-
 class IRedirectAfterLogin(Interface):
     """ Redirect after login adapters should provide this interface """
+
+
+class IForcePasswordChange(Interface):
+    """ Hook point to customize forcing a password change """
+
+
+class IInitialLogin(Interface):
+    """ Hook point to customize what happens the first time a user logs into
+        the site """
 
 
 class ILogin(Interface):
