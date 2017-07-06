@@ -23,7 +23,6 @@
 
     <adapter factory=".reset_password.wrapped_pwreset_template" />
 
-    <!-- XXX: Fix permission or DIE -->
     <browser:page
         name="login"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
