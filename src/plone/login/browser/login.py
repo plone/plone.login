@@ -230,3 +230,20 @@ class InitialLoginPasswordChange(PasswordPanel):
         super(InitialLoginPasswordChange, self).action_reset_passwd(self, action)
         if not action.form.widgets.errors:
             self.request.response.redirect(self.context.portal_url())
+
+
+class ForcedPasswordChange(PasswordPanel):
+    template = ViewPageTemplateFile(
+        'templates/forced_password_change.pt')
+
+    @button.buttonAndHandler(
+            _(u'label_change_password', default=u'Change Password'),
+            name='reset_passwd'
+        )
+    def action_reset_passwd(self, action):
+        super(ForcedPasswordChange, self).action_reset_passwd(self, action)
+        if not action.form.widgets.errors:
+            membership_tool = getToolByName(self.context, 'portal_membership')
+            member = membership_tool.getAuthenticatedMember()
+            member.setProperties(must_change_password=0)
+            self.request.response.redirect(self.context.portal_url())

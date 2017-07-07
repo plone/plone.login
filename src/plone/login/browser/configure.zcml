@@ -72,4 +72,12 @@
         class=".login.InitialLoginPasswordChange"
         permission="cmf.SetOwnPassword"
         />
+
+    <browser:page
+        name="forced-password-change"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        class=".login.ForcedPasswordChange"
+        permission="cmf.SetOwnPassword"
+        />
+
 </configure>
