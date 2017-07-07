@@ -2,11 +2,8 @@
 from plone.login import MessageFactory as _
 from plone.schema.email import Email
 from plone.z3cform.interfaces import IWrappedForm
-from z3c.form.interfaces import WidgetActionExecutionError
 from zope import schema
 from zope.interface import Interface
-from zope.interface import Invalid
-from zope.interface import invariant
 
 
 class IRedirectAfterLogin(Interface):
