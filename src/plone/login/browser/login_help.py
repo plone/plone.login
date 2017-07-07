@@ -4,13 +4,16 @@ from Products.statusmessages.interfaces import IStatusMessage
 from plone.login import MessageFactory as _
 from plone.login.interfaces import ILoginHelpForm
 from plone.login.interfaces import ILoginHelpFormSchema
+from plone.registry.interfaces import IRegistry
 from plone.z3cform import layout
 from plone.z3cform.templates import FormTemplateFactory
 from Products.CMFCore.utils import getToolByName
 from zope.component.hooks import getSite
+from Products.CMFPlone.interfaces import ISecuritySchema
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
+from zope.component import getUtility
 from zope.interface import implementer
 
 import os
@@ -39,6 +42,12 @@ class RequestResetPassword(form.Form):
 
     render = ViewPageTemplateFile('templates/subform_render.pt')
 
+    def updateWidgets(self):
+        super(RequestResetPassword, self).updateWidgets(prefix='')
+        if self.use_email_as_login():
+            self.widgets['reset_password'].label = _(u'label_email',
+                                                     default=u'Email')
+
     @button.buttonAndHandler(
         _(u'button_pwreset_reset_password', default=u'Reset your password'),
         name='reset')
@@ -61,6 +70,12 @@ class RequestResetPassword(form.Form):
             _(u'statusmessage_pwreset_password_mail_sent', default=u'An '
               u'email has been sent with instructions on how to reset your '
               u'password.'), 'info')
+
+    def use_email_as_login(self):
+        registry = getUtility(IRegistry)
+        security_settings = registry.forInterface(
+            ISecuritySchema, prefix='plone')
+        return security_settings.use_email_as_login
 
 
 class RequestUsername(form.Form):
@@ -116,13 +131,19 @@ class LoginHelpForm(form.EditForm):
             form = RequestResetPassword(None, self.request)
             form.update()
             subforms.append(form)
-        if self.can_retrieve_username():
+        if not self.use_email_as_login() and self.can_retrieve_username():
             form = RequestUsername(None, self.request)
             form.update()
             subforms.append(form)
 
         self.subforms = subforms
         super(LoginHelpForm, self).update()
+
+    def use_email_as_login(self):
+        registry = getUtility(IRegistry)
+        security_settings = registry.forInterface(
+            ISecuritySchema, prefix='plone')
+        return security_settings.use_email_as_login
 
 
 class LoginHelpFormView(layout.FormWrapper):

@@ -14,13 +14,15 @@
     </h1>
 
     <p tal:condition="view/description | nothing"
-        tal:content="structure view/description">Form description</p>
+       tal:content="structure view/description">Form description</p>
 
     <form action="." method="post"
-        tal:attributes="action view/action; enctype view/enctype">
+          tal:attributes="action view/action; enctype view/enctype"
+          tal:define="subforms view/subforms">
 
       <div class="row">
-        <div class="col-xs-6 col-sm-6" tal:repeat="subform view/subforms">
+        <div class="col-xs-6 col-sm-6" tal:repeat="subform subforms"
+             tal:attributes="class python:'col-xs-12 col-sm-12' if len(subforms) == 1 else 'col-xs-6 col-sm-6'">
             <tal:subform replace="structure subform/render"></tal:subform>
         </div>
       </div>
