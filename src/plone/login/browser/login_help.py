@@ -66,7 +66,7 @@ class RequestResetPassword(form.Form):
     render = ViewPageTemplateFile('templates/subform_render.pt')
 
     def updateWidgets(self):
-        super(RequestResetPassword, self).updateWidgets(prefix='')
+        super(RequestResetPassword, self).updateWidgets()
         if self.use_email_as_login():
             self.widgets['reset_password'].label = _(u'label_email',
                                                      default=u'Email')
