@@ -23,7 +23,7 @@ class TestLoginHelp(unittest.TestCase):
 
     def test_view_form(self):
         view = getMultiAdapter((self.portal, self.request), name='login-help')
-        form = view.form(view, self.request)
+        form = view.form(None, self.request)
         self.assertEqual(form.subforms, [])
         form.update()
         self.assertEqual(len(form.subforms), 2)
@@ -37,17 +37,18 @@ class TestLoginHelp(unittest.TestCase):
     def test_view_form_with_emaillogin(self):
         api.portal.set_registry_record('plone.use_email_as_login', True)
         view = getMultiAdapter((self.portal, self.request), name='login-help')
-        form = view.form(view, self.request)
+        form = view.form(None, self.request)
         self.assertEqual(form.subforms, [])
         form.update()
         self.assertEqual(len(form.subforms), 1)
         reset_password = form.subforms[0]
         self.assertTrue(isinstance(reset_password, RequestResetPassword))
         self.assertTrue(reset_password())
+        self.assertTrue(view())
 
     def test_request_reset_password(self):
         view = getMultiAdapter((self.portal, self.request), name='login-help')
-        form = view.form(view, self.request)
+        form = view.form(None, self.request)
         form.update()
         reset_password = form.subforms[0]
         reset_password.handleResetPassword(reset_password, None)

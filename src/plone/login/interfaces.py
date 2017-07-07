@@ -75,28 +75,3 @@ class ILoginHelpFormSchema(Interface):
                       u'we’ll send you your username.'),
         required=True,
     )
-
-
-class IResetPasswordForm(IWrappedForm):
-    """ reset passwort form marker interface """
-
-
-class IResetPasswordFormSchema(Interface):
-    """ reset password form schema """
-
-    password = schema.Password(
-        title=_(u'label_pwreset_password', default=u'Password'),
-        required=True,
-    )
-
-    password_confirm = schema.Password(
-        title=_(u'label_pwreset_confirm', default=u'Confirm password'),
-        required=True,
-    )
-
-    @invariant
-    def ensureValidPassword(obj):
-        if obj.password != obj.password_confirm:
-            raise WidgetActionExecutionError('password', Invalid(_(
-                u'error_password_and_confirm_not_match', default=u'Password '
-                u'and Confirm password do not match.')))
