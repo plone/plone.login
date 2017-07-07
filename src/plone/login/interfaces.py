@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.login import MessageFactory as _
 from plone.schema.email import Email
-from plone.theme.interfaces import IDefaultPloneLayer
 from plone.z3cform.interfaces import IWrappedForm
 from z3c.form.interfaces import WidgetActionExecutionError
 from zope import schema

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
 from plone.login.testing import PLONE_LOGIN_INTEGRATION_TESTING
-from zope.component import getUtility
 import unittest
 
 
