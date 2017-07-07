@@ -37,7 +37,6 @@ class LoginForm(form.EditForm):
 
     id = 'LoginForm'
     label = _('label_log_in', default=u'Log in')
-    description = _('description_login_form', default=u'Long time no see.')
 
     ignoreContext = True
     prefix = ''
@@ -130,8 +129,8 @@ class LoginForm(form.EditForm):
         membership_tool.loginUser(self.request)
 
         IStatusMessage(self.request).addStatusMessage(_(
-            u'statusmessage_logged_in', default=u'You are now logged in.'
-        ), 'info')
+            u'you_are_now_logged_in',
+            default=u'Welcome! You are now logged in.'), 'info')
 
         member = membership_tool.getAuthenticatedMember()
         login_time = member.getProperty('login_time', '2000/01/01')

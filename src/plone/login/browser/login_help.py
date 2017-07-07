@@ -189,8 +189,6 @@ class LoginHelpForm(form.EditForm):
 
     id = 'LoginHelpForm'
     label = _(u'heading_login_form_help', default=u'Need Help?')
-    description = _(u'description_login_form_help', default=u'Don\'t worry, I '
-                    u'forget my password all the time.')
 
     ignoreContext = True
 

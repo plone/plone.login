@@ -32,8 +32,7 @@
     </form>
 
     <div class="footer">
-      <p class="trouble">Still no dice? <a href="contact-info">Contact an admin.</a></p>
-      <p class="login right">Eureka!? <a href="@@login" class="emph">Log in here &raquo;</a></p>
+      <p class="trouble">Need more help? <a href="contact-info">Contact an admin.</a></p>
     </div>
   </div>
 

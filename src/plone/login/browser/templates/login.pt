@@ -33,14 +33,6 @@
     </div>
   </div>
 
-  <h1 tal:condition="view/label | nothing">
-    <span tal:replace="view/label" i18n:translate="">Form title</span>
-  </h1>
-
-  <p tal:condition="view/description | nothing"
-     tal:content="structure view/description"
-     i18n:translate="">Form description</p>
-
     <form action="." method="post"
           tal:attributes="action view/action; enctype view/enctype">
 
