@@ -9,7 +9,6 @@ class TestViews(unittest.TestCase):
     layer = PLONE_LOGIN_INTEGRATION_TESTING
 
     def setUp(self):
-        self.app = self.layer['app']
         self.portal = self.layer['portal']
         self.request = self.layer['request']
 
