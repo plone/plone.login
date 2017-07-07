@@ -27,14 +27,10 @@
                         tal:condition="not:hidden">
                     <span i18n:translate=""
                         tal:content="widget/label">label</span>
+                    <span class="required horizontal" title="Required"
+                          tal:condition="python:widget.required and not hidden"
+                          i18n:attributes="title title_required;">&nbsp;</span>
                 </label>
-
-                <span class="fieldRequired" title="Required"
-                        tal:condition="python:widget.required and not hidden"
-                        i18n:translate="label_required"
-                        i18n:attributes="title title_required;">
-                    (Required)
-                </span>
 
                 <div class="formHelp"
                         tal:define="description widget/field/description"
