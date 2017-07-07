@@ -144,3 +144,38 @@ class TestLoginHelpFunctional(unittest.TestCase):
         self.assertIn('specified email is not valid.', self.browser.contents)
         # no new message was sent
         self.assertEqual(len(self.portal.MailHost.messages), 1)
+
+        self.browser.getControl(name='form.widgets.recover_username').value = 'bar@plone.org'  # noqa: E501
+        self.browser.getControl(name='form.buttons.get_username').click()
+        # no new message was sent
+        self.assertIn(
+            'email has been sent with your username.', self.browser.contents)
+        self.assertEqual(len(self.portal.MailHost.messages), 1)
+
+        api.user.create(
+            username='another_user_same_email',
+            email='foo@plone.org',
+            password='password1',
+            roles=('Member',),
+        )
+        transaction.commit()
+        self.browser.getControl(name='form.widgets.recover_username').value = 'foo@plone.org'  # noqa: E501
+        self.browser.getControl(name='form.buttons.get_username').click()
+        # no new message was sent
+        self.assertIn(
+            'email has been sent with your username.', self.browser.contents)
+        self.assertEqual(len(self.portal.MailHost.messages), 1)
+
+        api.user.create(
+            username='next_user_new_email',
+            email='bar@plone.org',
+            password='password1',
+            roles=('Member',),
+        )
+        transaction.commit()
+        self.browser.getControl(name='form.widgets.recover_username').value = 'bar@plone.org'  # noqa: E501
+        self.browser.getControl(name='form.buttons.get_username').click()
+        # a message was sent
+        self.assertIn(
+            'email has been sent with your username.', self.browser.contents)
+        self.assertEqual(len(self.portal.MailHost.messages), 2)
