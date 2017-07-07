@@ -34,6 +34,17 @@ class TestLoginHelp(unittest.TestCase):
         self.assertTrue(isinstance(request_username, RequestUsername))
         self.assertTrue(request_username())
 
+    def test_view_form_with_emaillogin(self):
+        api.portal.set_registry_record('plone.use_email_as_login', True)
+        view = getMultiAdapter((self.portal, self.request), name='login-help')
+        form = view.form(view, self.request)
+        self.assertEqual(form.subforms, [])
+        form.update()
+        self.assertEqual(len(form.subforms), 1)
+        reset_password = form.subforms[0]
+        self.assertTrue(isinstance(reset_password, RequestResetPassword))
+        self.assertTrue(reset_password())
+
     def test_request_reset_password(self):
         view = getMultiAdapter((self.portal, self.request), name='login-help')
         form = view.form(view, self.request)
@@ -72,7 +83,7 @@ class TestLoginHelpFunctional(unittest.TestCase):
         self.portal = self.layer['portal']
         self.browser = Browser(self.layer['app'])
 
-    def test_login_help_view(self):
+    def test_login_help_request_password_reset(self):
         self.browser.open('http://nohost/plone/login')
         self.browser.getLink('Get help').click()
         self.assertEqual(self.browser.url, 'http://nohost/plone/@@login-help')
@@ -99,4 +110,37 @@ class TestLoginHelpFunctional(unittest.TestCase):
         self.assertIn(
             'An email has been sent with instructions on how to reset your password.', self.browser.contents)  # noqa: E501
         # message was actually sent
+        self.assertEqual(len(self.portal.MailHost.messages), 1)
+
+    def test_login_help_request_username(self):
+        self.browser.open('http://nohost/plone/login')
+        self.browser.getLink('Get help').click()
+        self.assertEqual(self.browser.url, 'http://nohost/plone/@@login-help')
+
+        member = api.user.get('test_user_1_')
+        email = 'foo@plone.org'
+        member.setMemberProperties({'email': email})
+        transaction.commit()
+
+        # validaton error of empty required field
+        self.browser.getControl(name='form.buttons.get_username').click()
+        self.assertEqual(self.browser.url, 'http://nohost/plone/@@login-help')
+        self.assertIn('missing', self.browser.contents)
+
+        self.browser.getControl(name='form.widgets.recover_username').value = 'foo@plone.org'  # noqa: E501
+        self.browser.getControl(name='form.buttons.get_username').click()
+        self.assertEqual(self.browser.url, 'http://nohost/plone/@@login-help')
+        # email was sent
+        self.assertIn(
+            'email has been sent with your username.', self.browser.contents)
+        self.assertEqual(len(self.portal.MailHost.messages), 1)
+        message = self.portal.MailHost.messages[0]
+        self.assertIn('To: foo@plone.org', message)
+        self.assertIn('Your username is: test_user_1_', message)
+
+        self.browser.getControl(
+            name='form.widgets.recover_username').value = 'noemail'
+        self.browser.getControl(name='form.buttons.get_username').click()
+        self.assertIn('specified email is not valid.', self.browser.contents)
+        # no new message was sent
         self.assertEqual(len(self.portal.MailHost.messages), 1)
