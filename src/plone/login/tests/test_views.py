@@ -14,7 +14,7 @@ class TestViews(unittest.TestCase):
 
     def test_resetpassword_view(self):
         view = getMultiAdapter((self.portal, self.request),
-                               name='reset-password')
+                               name='initial-login-password-change')
         self.assertTrue(view())
 
     def test_loggedout_view(self):

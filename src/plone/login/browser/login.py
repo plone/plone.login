@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from DateTime import DateTime
+from plone.app.users.browser.passwordpanel import PasswordPanel
 from plone.login import MessageFactory as _
 from plone.login.browser.login_help import template_path
 from plone.login.interfaces import IForcePasswordChange
@@ -13,6 +14,7 @@ from plone.z3cform.templates import FormTemplateFactory
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.Five.browser import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from z3c.form import button
 from z3c.form import field
@@ -214,3 +216,17 @@ class InsufficientPrivilegesView(BrowserView):
 
     def request_url(self):
         return self.request.get('came_from')
+
+
+class InitialLoginPasswordChange(PasswordPanel):
+    template = ViewPageTemplateFile(
+        'templates/initial_login_password_change.pt')
+
+    @button.buttonAndHandler(
+            _(u'label_change_password', default=u'Change Password'),
+            name='reset_passwd'
+        )
+    def action_reset_passwd(self, action):
+        super(InitialLoginPasswordChange, self).action_reset_passwd(self, action)
+        if not action.form.widgets.errors:
+            self.request.response.redirect(self.context.portal_url())

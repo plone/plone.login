@@ -15,15 +15,6 @@
         />
 
     <browser:page
-        name="reset-password"
-        for="plone.app.layout.navigation.interfaces.INavigationRoot"
-        permission="cmf.MailForgottonPassword"
-        class=".reset_password.ResetPasswordFormView"
-        />
-
-    <adapter factory=".reset_password.wrapped_pwreset_template" />
-
-    <browser:page
         name="login"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
@@ -75,4 +66,10 @@
         class=".login.RequireLoginView"
         />
 
+    <browser:page
+        name="initial-login-password-change"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        class=".login.InitialLoginPasswordChange"
+        permission="cmf.SetOwnPassword"
+        />
 </configure>
