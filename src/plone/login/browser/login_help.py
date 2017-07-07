@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.statusmessages.interfaces import IStatusMessage
+from email import message_from_string
+from email.Header import Header
 from plone.login import MessageFactory as _
 from plone.login.interfaces import ILoginHelpForm
 from plone.login.interfaces import ILoginHelpFormSchema
@@ -8,16 +8,39 @@ from plone.registry.interfaces import IRegistry
 from plone.z3cform import layout
 from plone.z3cform.templates import FormTemplateFactory
 from Products.CMFCore.utils import getToolByName
-from zope.component.hooks import getSite
 from Products.CMFPlone.interfaces import ISecuritySchema
+from Products.CMFPlone.interfaces.controlpanel import IMailSchema
+from Products.CMFPlone.utils import safe_unicode
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.statusmessages.interfaces import IStatusMessage
+from smtplib import SMTPException, SMTPRecipientsRefused
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 from zope.component import getUtility
+from zope.component.hooks import getSite
 from zope.interface import implementer
 
-import os
 import logging
+import os
+
+SEND_USERNAME_TEMPLATE = u"""From: {encoded_mail_sender}
+To: {email}
+Subject: Your username for {portal_url}
+Content-Type: text/plain
+Precedence: bulk
+
+Dear {fullname},
+
+You requested to be reminded of your username for {portal_url}.
+Your username is: {login}
+
+
+With kind regards,
+
+--
+
+{email_from_name}"""
 
 log = logging.getLogger(__name__)
 
@@ -61,8 +84,9 @@ class RequestResetPassword(form.Form):
         try:
             regtool.mailPassword(data['reset_password'], self.request)
         except ValueError as e:
-            # We act as if a message has been to prevent probing Plone
-            # for loginnames. Instead we log the error-message.
+            # Paranoia Warning!
+            # We act as if a message has been sent to prevent probing Plone
+            # for valid loginnames. Instead we log the error-message.
             log.info('Error while trying to send a reset-password notice to user {0}: {1}'.format(data['reset_password'], e))  # noqa: E501
             pass
 
@@ -87,8 +111,6 @@ class RequestUsername(form.Form):
 
     render = ViewPageTemplateFile('templates/subform_render.pt')
 
-    # TODO: Add validation to the field to check that is a proper email
-
     @button.buttonAndHandler(
         _(u'button_pwreset_get_username', default='Get your username'),
         name='get_username')
@@ -97,10 +119,74 @@ class RequestUsername(form.Form):
         if errors:
             self.status = self.formErrorsMessage
             return
-        # TODO: Send Email with username
+        portal = getSite()
+        pas = getToolByName(portal, 'acl_users')
+        email = data['recover_username']
+        results = pas.searchUsers(email=email, exact_match=True)
+        send_email = True
+        if not results:
+            log.info('No user found for {0}'.format(email))
+            send_email = False
+        if len(results) > 1:
+            log.info('More than one user found for {0}'.format(email))
+            send_email = False
+        if send_email:
+            self.send_username(portal, results[0])
+
+        # Paranoia Warning!
+        # Same as with the reset-password form we don't want to allow
+        # probing for email-adresses of existing users.
+        # Because of this we always act as if that an email has been sent.
+        # Instead we log the error-message.
         IStatusMessage(self.request).addStatusMessage(
             _(u'statusmessage_pwreset_username_mail_sent', default=u'An '
               u'email has been sent with your username.'), 'info')
+
+    def send_username(self, portal, userinfo):
+        registry = getUtility(IRegistry)
+        encoding = registry.get('plone.email_charset', 'utf-8')
+
+        mail_text = SEND_USERNAME_TEMPLATE.format(
+            email=userinfo['email'],
+            portal_url=portal.absolute_url(),
+            fullname=userinfo['title'],
+            login=userinfo['login'],
+            email_from_name=registry['plone.email_from_name'],
+            encoded_mail_sender=self.encoded_mail_sender(),
+        )
+        # The mail headers are not properly encoded we need to extract
+        # them and let MailHost manage the encoding.
+        if isinstance(mail_text, unicode):
+            mail_text = mail_text.encode(encoding)
+        message_obj = message_from_string(mail_text.strip())
+        subject = message_obj['Subject']
+        m_to = message_obj['To']
+        m_from = message_obj['From']
+        msg_type = message_obj.get('Content-Type', 'text/plain')
+
+        host = getToolByName(portal, 'MailHost')
+        try:
+            host.send(mail_text, m_to, m_from, subject=subject,
+                      charset=encoding, immediate=True,
+                      msg_type=msg_type)
+        except SMTPRecipientsRefused:
+            # Don't disclose email address on failure
+            raise SMTPRecipientsRefused(
+                _(u'Recipient address rejected by server.'))
+        except SMTPException as e:
+            raise(e)
+
+    def encode_mail_header(self, text):
+        """ Encodes text into correctly encoded email header """
+        return Header(safe_unicode(text), 'utf-8')
+
+    def encoded_mail_sender(self):
+        """ returns encoded version of Portal name <portal_email> """
+        registry = getUtility(IRegistry)
+        mail_settings = registry.forInterface(IMailSchema, prefix="plone")
+        from_ = mail_settings.email_from_name
+        mail = mail_settings.email_from_address
+        return '"%s" <%s>' % (self.encode_mail_header(from_), mail)
 
 
 @implementer(ILoginHelpForm)
