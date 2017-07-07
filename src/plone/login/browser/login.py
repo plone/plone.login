@@ -87,7 +87,7 @@ class LoginForm(form.EditForm):
                                       'login_form',
                                       'logged_in',
                                       'logout',
-                                      'logged_out',
+                                      'logged-out',
                                       'registered',
                                       'mail_password',
                                       'mail_password_form',
