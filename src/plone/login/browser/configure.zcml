@@ -23,6 +23,14 @@
         />
 
     <browser:page
+        name="login_form"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        permission="zope.Public"
+        class=".login.LoginFormView"
+        template="templates/form_wrapper.pt"
+        />
+
+    <browser:page
         name="failsafe_login_form"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
