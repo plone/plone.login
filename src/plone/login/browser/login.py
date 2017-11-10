@@ -16,6 +16,7 @@ from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
+from six.moves.urllib import parse
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
@@ -24,9 +25,6 @@ from zope.component import getMultiAdapter
 from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.interface import implementer
-
-import urllib
-from urlparse import urlparse
 
 
 @implementer(ILoginForm)
@@ -78,7 +76,7 @@ class LoginForm(form.EditForm):
         if came_from:
             url_tool = getToolByName(self.context, 'portal_url')
             if url_tool.isURLInPortal(came_from):
-                came_from_template_id = urlparse(came_from)[2].split('/')[-1]
+                came_from_id = parse.urlparse(came_from)[2].split('/')[-1]
                 # TODO: Scale down this list now that we've removed a lot of
                 # templates.
                 login_template_ids = ['login',
@@ -97,7 +95,7 @@ class LoginForm(form.EditForm):
                                       'member_search_results',
                                       'pwreset_finish',
                                       'localhost']
-                if came_from_template_id not in login_template_ids:
+                if came_from_id not in login_template_ids:
                     return came_from
         return None
 
@@ -204,7 +202,7 @@ class RequireLoginView(BrowserView):
             url = '{0:s}/login'.format(portal.absolute_url())
             came_from = self.request.get('came_from', None)
             if came_from:
-                url += '?came_from={0:s}'.format(urllib.quote(came_from))
+                url += '?came_from={0:s}'.format(parse.quote(came_from))
         else:
             url = '{0:s}/insufficient-privileges'.format(portal.absolute_url())
 
@@ -226,7 +224,8 @@ class InitialLoginPasswordChange(PasswordPanel):
             name='reset_passwd'
         )
     def action_reset_passwd(self, action):
-        super(InitialLoginPasswordChange, self).action_reset_passwd(self, action)
+        super(InitialLoginPasswordChange, self).action_reset_passwd(
+            self, action)
         if not action.form.widgets.errors:
             self.request.response.redirect(self.context.portal_url())
 
