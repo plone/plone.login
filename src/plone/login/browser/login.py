@@ -143,7 +143,7 @@ class LoginForm(form.EditForm):
             self.force_password_change()
 
         came_from = data.get('came_from', None)
-        self.redirect_after_login(came_from)
+        self.redirect_after_login(came_from, is_initial_login)
 
     def handle_initial_login(self):
         handler = queryMultiAdapter((self.context, self.request),
@@ -159,11 +159,11 @@ class LoginForm(form.EditForm):
             handler()
         return
 
-    def redirect_after_login(self, came_from=None):
+    def redirect_after_login(self, came_from=None, is_initial_login=False):
         adapter = queryMultiAdapter((self.context, self.request),
                                     IRedirectAfterLogin)
         if adapter:
-            came_from = adapter(came_from)
+            came_from = adapter(came_from, is_initial_login)
         else:
             if not came_from:
                 came_from = self.context.portal_url()
