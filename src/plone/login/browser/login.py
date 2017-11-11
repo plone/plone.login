@@ -164,11 +164,8 @@ class LoginForm(form.EditForm):
                                     IRedirectAfterLogin)
         if adapter:
             came_from = adapter(came_from, is_initial_login)
-        else:
-            if not came_from:
-                portal_state = getMultiAdapter((self.context, self.request),
-                                               name='plone_portal_state')
-                came_from = portal_state.portal_url()
+        if not came_from:
+            came_from = self.context.absolute_url()
 
         self.request.response.redirect(came_from)
 
