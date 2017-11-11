@@ -6,7 +6,7 @@ from Products.statusmessages.interfaces import IStatusMessage
 from plone.login import MessageFactory as _
 from zope.component import getMultiAdapter
 from zope.interface import Interface
-from zope.interface import implements
+from zope.interface import implementer
 
 
 class ILoggedOutView(Interface):
@@ -38,9 +38,8 @@ class LogoutView(BrowserView):
         self.request.response.redirect(target_url)
 
 
+@implementer(ILoggedOutView)
 class LoggedOutView(BrowserView):
-
-    implements(ILoggedOutView)
 
     def __call__(self):
         portal_state = getMultiAdapter(
