@@ -124,21 +124,21 @@ class LoginForm(form.EditForm):
                 ), 'error')
             return
 
-        membership_tool.loginUser(self.request)
-
-        IStatusMessage(self.request).addStatusMessage(_(
-            u'you_are_now_logged_in',
-            default=u'Welcome! You are now logged in.'), 'info')
-
         member = membership_tool.getAuthenticatedMember()
+        must_change_password = member.getProperty('must_change_password', 0)
         login_time = member.getProperty('login_time', '2000/01/01')
         if not isinstance(login_time, DateTime):
             login_time = DateTime(login_time)
         is_initial_login = login_time == DateTime('2000/01/01')
+
+        membership_tool.loginUser(self.request)
+        IStatusMessage(self.request).addStatusMessage(_(
+            u'you_are_now_logged_in',
+            default=u'Welcome! You are now logged in.'), 'info')
+
         if is_initial_login:
             self.handle_initial_login()
 
-        must_change_password = member.getProperty('must_change_password', 0)
         if must_change_password:
             self.force_password_change()
 
