@@ -11,30 +11,62 @@ Build Status
 plone.login
 ===========
 
-Updating Plone's login framework 1 mockup at a time
+A modernized drop-in replacement for the portal_skins-based login.
 
-Customize templates
--------------------
 
-The templates for any ``plone.login`` from may be customized because they're
-based on ``plone.z3cform.templates.FormTemplateFactory``.  This allows users
-to customize the templates on their own themelayer without customizing form
-and formwrapper classes and reregister them through zcml. Example::
+Installation
+------------
+
+Install ploneconf.site by adding it to your buildout::
+
+    [buildout]
+
+    ...
+
+    eggs =
+        plone.login
+
+and then running ``bin/buildout``. Install it as usual in /prefs_install_products_form
+
+
+Compatibility
+-------------
+
+plone.login is tested to work with Plone 5.1.
+It should work with Plone 5.0 as well but is not yet tested.
+
+
+Customizing templates
+---------------------
+
+The templates for any ``plone.login`` can be customized because they're
+based on ``plone.z3cform.templates.FormTemplateFactory``. This allows users
+to customize the templates in their own packages without customizing the form
+or formwrapper classes and having to reregister them through zcml.
+
+Example of a file `adapters.py` in a package `your.addon`::
 
     # -*- coding: utf-8 -*-
     from plone.login.interfaces import ILoginForm
     from plone.z3cform.templates import FormTemplateFactory
-    from your.theme.interfaces import IYourThemeLayer
+    from your.addon.interfaces import IYourAddonLayer
+
+    import os
+
 
     loginform_templatefactory = FormTemplateFactory(
-        template_path('/path/to/your/login_form.pt'),
+        os.path.join(os.path.dirname(__file__), 'templates/login.pt'),
         form=ILoginForm,
-        request=IYourThemeLayer
+        request=IYourAddonLayer,
     )
 
-Then register the adapter through ZCML::
+Then register that adapter in your `configure.zcml`::
 
-    <adapter factory=".templates.loginform_templatefactory" />
+    <adapter factory="your.addon.adapters.loginform_templatefactory" />
+
+Not you custom template in `templates/login.pt` will be used.
+
+Please note that the login-templates cannot be customized with `z3c.jbot`.
 
 
 Customize where to redirect after login
@@ -43,34 +75,45 @@ Customize where to redirect after login
 You can customize the location the user will be redirected to after successfuly
 logging in to the site.
 
-Just write an adapter as follows::
+Just write an adapter as follows
 
-    from zope.interface import implements
+..  code-block:: python
+
     from plone.login.interfaces import IRedirectAfterLogin
-    ...
-    ...
-    ...
-    class AfterLoginAdapter(object):
+    from plone.login.interfaces import IInitialLogin
+    from Products.CMFPlone.utils import safe_unicode
+    from zope.interface import implementer
+    from plone import api
 
-        implements(IRedirectAfterLogin)
+
+    @implementer(IRedirectAfterLogin)
+    class RedirectAfterLoginAdapter(object):
 
         def __init__(self, context, request):
             self.context = context
             self.request = request
 
-        def __call__(self, came_from=None):
-            # Your logic here
-            return "http://plone.org"
-
+        def __call__(self, came_from=None, is_initial_login=False):
+            if 'Reviewer' in api.user.get_roles():
+                api.portal.show_message(
+                    u'Get to work!', self.request)
+                came_from = self.context.portal_url() + '/@@full_review_list'
+            else:
+                user = api.user.get_current()
+                fullname = safe_unicode(user.getProperty('fullname')
+                api.portal.show_message(
+                    u'Nice to see you again, {0}!'.format(fullname), self.request)
+            if not came_from:
+                came_from = self.context.portal_url()
+            return came_from
 
 Then register the adapter through ZCML::
 
     <adapter
-        factory=".adapter.AfterLoginAdapter"
+        factory="your.addon.adapters.RedirectAfterLoginAdapter"
         for="OFS.interfaces.ITraversable
              zope.publisher.interfaces.IRequest"
         />
-
 
 As you can see, this adapter adapts context and request, so modify these
 according to your needs.
