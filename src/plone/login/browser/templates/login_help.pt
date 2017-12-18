@@ -31,8 +31,10 @@
 
     </form>
 
-    <div class="footer">
-      <p class="trouble">Need more help? <a href="contact-info">Contact an admin.</a></p>
+    <div class="footer"
+         tal:define="portal_state context/@@plone_portal_state;
+                     portal_url portal_state/portal_url">
+      <p class="trouble">Need more help? <a tal:attributes="href string:${portal_url}/contact-info" href="contact-info">Contact an admin.</a></p>
     </div>
   </div>
 
