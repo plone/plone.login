@@ -100,7 +100,7 @@ Just write an adapter as follows
                 came_from = self.context.portal_url() + '/@@full_review_list'
             else:
                 user = api.user.get_current()
-                fullname = safe_unicode(user.getProperty('fullname')
+                fullname = safe_unicode(user.getProperty('fullname'))
                 api.portal.show_message(
                     u'Nice to see you again, {0}!'.format(fullname), self.request)
             if not came_from:
