@@ -103,7 +103,7 @@ class LoginForm(form.EditForm):
 
         if self.use_email_as_login():
             self.widgets[fieldname_name].label = _(u'label_email',
-                                                   default=u'E-mail')
+                                                   default=u'Email')
         self.widgets['came_from'].mode = HIDDEN_MODE
         self.widgets['came_from'].value = self.get_came_from()
 
