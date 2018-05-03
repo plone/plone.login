@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
+from plone.login import MessageFactory as _
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import transaction_note
 from Products.Five.browser import BrowserView
 from Products.statusmessages.interfaces import IStatusMessage
-from plone.login import MessageFactory as _
 from zope.component import getMultiAdapter
-from zope.interface import Interface
 from zope.interface import implementer
+from zope.interface import Interface
 
 
 class ILoggedOutView(Interface):
@@ -30,11 +30,13 @@ class LogoutView(BrowserView):
         pprops = getToolByName(self.context, 'portal_properties')
         site_properties = pprops.site_properties
         external_logout_url = site_properties.getProperty(
-            'external_logout_url')
+            'external_logout_url'
+        )
         if external_logout_url:
             target_url = '{0:s}?next={1:s}'.format(
-                external_logout_url, target_url)
-
+                external_logout_url,
+                target_url,
+            )
         self.request.response.redirect(target_url)
 
 
@@ -43,14 +45,21 @@ class LoggedOutView(BrowserView):
 
     def __call__(self):
         portal_state = getMultiAdapter(
-            (self.context, self.request), name='plone_portal_state')
-
+            (self.context, self.request),
+            name='plone_portal_state',
+        )
         if portal_state.anonymous():
-            IStatusMessage(self.request).addStatusMessage(
-                _(u'statusmessage_logged_out', default=u'You have been '
-                  u'logged out.'), 'info')
-
+            IStatusMessage(
+                self.request
+            ).addStatusMessage(
+                _(
+                    u'statusmessage_logged_out',
+                    default=u'You have been logged out.'
+                ),
+                'info',
+            )
             self.request.response.redirect(
-                portal_state.navigation_root_url())
-        else:
-            return self.index()
+                portal_state.navigation_root_url()
+            )
+            return
+        return self.index()

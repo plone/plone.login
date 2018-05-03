@@ -63,14 +63,20 @@ class ILoginHelpFormSchema(Interface):
 
     reset_password = schema.TextLine(
         title=_(u'label_pwreset_username', default=u'Username'),
-        description=_(u'help_pwreset_username', default=u'Enter your username '
-                      u'or email and we’ll send you a password reset link.'),
+        description=_(
+            u'help_pwreset_username',
+            default=u'Enter your username '
+                    u'or email and we’ll send you a password reset link.',
+        ),
         required=True,
     )
 
     recover_username = Email(
         title=_(u'label_pwreset_email', default=u'Email'),
-        description=_(u'help_pwreset_email', default=u'Enter your email and '
-                      u'we’ll send you your username.'),
+        description=_(
+            u'help_pwreset_email',
+            default=u'Enter your email and '
+                    u'we’ll send you your username.',
+        ),
         required=True,
     )

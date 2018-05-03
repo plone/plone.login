@@ -2,7 +2,6 @@
 from DateTime import DateTime
 from plone.app.users.browser.passwordpanel import PasswordPanel
 from plone.login import MessageFactory as _
-from plone.login.browser.login_help import template_path
 from plone.login.interfaces import IForcePasswordChange
 from plone.login.interfaces import IInitialLogin
 from plone.login.interfaces import ILoginForm
@@ -25,6 +24,30 @@ from zope.component import getMultiAdapter
 from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.interface import implementer
+
+import os
+
+
+# TODO: Scale down this list now that we've removed a lot of
+# templates.
+LOGIN_TEMPLATE_IDS = [
+    'login',
+    'login_success',
+    'login_password',
+    'login_failed',
+    'login_form',
+    'logged_in',
+    'logout',
+    'logged-out',
+    'registered',
+    'mail_password',
+    'mail_password_form',
+    'register',
+    'require_login',
+    'member_search_results',
+    'pwreset_finish',
+    'localhost',
+]
 
 
 @implementer(ILoginForm)
@@ -77,27 +100,8 @@ class LoginForm(form.EditForm):
             url_tool = getToolByName(self.context, 'portal_url')
             if url_tool.isURLInPortal(came_from):
                 came_from_id = parse.urlparse(came_from)[2].split('/')[-1]
-                # TODO: Scale down this list now that we've removed a lot of
-                # templates.
-                login_template_ids = ['login',
-                                      'login_success',
-                                      'login_password',
-                                      'login_failed',
-                                      'login_form',
-                                      'logged_in',
-                                      'logout',
-                                      'logged-out',
-                                      'registered',
-                                      'mail_password',
-                                      'mail_password_form',
-                                      'register',
-                                      'require_login',
-                                      'member_search_results',
-                                      'pwreset_finish',
-                                      'localhost']
-                if came_from_id not in login_template_ids:
+                if came_from_id not in LOGIN_TEMPLATE_IDS:
                     return came_from
-        return None
 
     def updateActions(self):
         super(LoginForm, self).updateActions()
@@ -110,18 +114,25 @@ class LoginForm(form.EditForm):
             self.status = self.formErrorsMessage
             return
         membership_tool = getToolByName(self.context, 'portal_membership')
+        status_msg = IStatusMessage(self.request)
         if membership_tool.isAnonymousUser():
             self.request.response.expireCookie('__ac', path='/')
             if self.use_email_as_login():
-                IStatusMessage(self.request).addStatusMessage(_(
-                    u'Login failed. Both email address and password are case '
-                    u'sensitive, check that caps lock is not enabled.'
-                ), 'error')
+                status_msg.addStatusMessage(
+                    _(
+                        u'Login failed. Both email address and password are '
+                        u'case sensitive, check that caps lock is not enabled.'
+                    ),
+                    'error',
+                )
             else:
-                IStatusMessage(self.request).addStatusMessage(_(
-                    u'Login failed. Both login name and password are case '
-                    u'sensitive, check that caps lock is not enabled.'
-                ), 'error')
+                status_msg.addStatusMessage(
+                    _(
+                        u'Login failed. Both login name and password are case '
+                        u'sensitive, check that caps lock is not enabled.'
+                    ),
+                    'error',
+                )
             return
 
         member = membership_tool.getAuthenticatedMember()
@@ -132,9 +143,13 @@ class LoginForm(form.EditForm):
         is_initial_login = login_time == DateTime('2000/01/01')
 
         membership_tool.loginUser(self.request)
-        IStatusMessage(self.request).addStatusMessage(_(
-            u'you_are_now_logged_in',
-            default=u'Welcome! You are now logged in.'), 'info')
+        status_msg.addStatusMessage(
+            _(
+                u'you_are_now_logged_in',
+                default=u'Welcome! You are now logged in.',
+            ),
+            'info'
+        )
 
         if is_initial_login:
             self.handle_initial_login()
@@ -146,18 +161,20 @@ class LoginForm(form.EditForm):
         self.redirect_after_login(came_from, is_initial_login)
 
     def handle_initial_login(self):
-        handler = queryMultiAdapter((self.context, self.request),
-                                    IInitialLogin)
+        handler = queryMultiAdapter(
+            (self.context, self.request),
+            IInitialLogin,
+        )
         if handler:
             handler()
-        return
 
     def force_password_change(self):
-        handler = queryMultiAdapter((self.context, self.request),
-                                    IForcePasswordChange)
+        handler = queryMultiAdapter(
+            (self.context, self.request),
+            IForcePasswordChange,
+        )
         if handler:
             handler()
-        return
 
     def redirect_after_login(self, came_from=None, is_initial_login=False):
         adapter = queryMultiAdapter((self.context, self.request),
@@ -187,15 +204,18 @@ class LoginFormView(layout.FormWrapper):
 
 
 wrapped_login_template = FormTemplateFactory(
-    template_path('login.pt'),
-    form=ILoginForm)
+    os.path.join(os.path.dirname(__file__), 'templates', 'login.pt'),
+    form=ILoginForm,
+)
 
 
 class RequireLoginView(BrowserView):
 
     def __call__(self):
-        portal_state = getMultiAdapter((self.context, self.request),
-                                       name='plone_portal_state')
+        portal_state = getMultiAdapter(
+            (self.context, self.request),
+            name='plone_portal_state',
+        )
         portal = portal_state.portal()
         if portal_state.anonymous():
             url = '{0:s}/login'.format(portal.absolute_url())
@@ -216,12 +236,13 @@ class InsufficientPrivilegesView(BrowserView):
 
 class InitialLoginPasswordChange(PasswordPanel):
     template = ViewPageTemplateFile(
-        'templates/initial_login_password_change.pt')
+        'templates/initial_login_password_change.pt',
+    )
 
     @button.buttonAndHandler(
-            _(u'label_change_password', default=u'Change Password'),
-            name='reset_passwd'
-        )
+        _(u'label_change_password', default=u'Change Password'),
+        name='reset_passwd',
+    )
     def action_reset_passwd(self, action):
         super(InitialLoginPasswordChange, self).action_reset_passwd(
             self, action)
@@ -231,12 +252,13 @@ class InitialLoginPasswordChange(PasswordPanel):
 
 class ForcedPasswordChange(PasswordPanel):
     template = ViewPageTemplateFile(
-        'templates/forced_password_change.pt')
+        'templates/forced_password_change.pt',
+    )
 
     @button.buttonAndHandler(
-            _(u'label_change_password', default=u'Change Password'),
-            name='reset_passwd'
-        )
+        _(u'label_change_password', default=u'Change Password'),
+        name='reset_passwd',
+    )
     def action_reset_passwd(self, action):
         super(ForcedPasswordChange, self).action_reset_passwd(self, action)
         if not action.form.widgets.errors:
