@@ -13,7 +13,8 @@ from Products.CMFPlone.interfaces.controlpanel import IMailSchema
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
-from smtplib import SMTPException, SMTPRecipientsRefused
+from smtplib import SMTPException
+from smtplib import SMTPRecipientsRefused
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
@@ -23,6 +24,7 @@ from zope.interface import implementer
 
 import logging
 import os
+
 
 SEND_USERNAME_TEMPLATE = u"""From: {encoded_mail_sender}
 To: {email}
@@ -43,9 +45,6 @@ With kind regards,
 {email_from_name}"""
 
 log = logging.getLogger(__name__)
-
-template_path = lambda p: os.path.join(  # noqa: E731
-    os.path.dirname(__file__), 'templates', p)
 
 
 class RequestResetPassword(form.Form):
@@ -227,5 +226,6 @@ class LoginHelpFormView(layout.FormWrapper):
 
 
 wrapped_loginhelp_template = FormTemplateFactory(
-    template_path('login_help.pt'),
-    form=ILoginHelpForm)
+    os.path.join(os.path.dirname(__file__), 'templates', 'login_help.pt'),
+    form=ILoginHelpForm,
+)

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone.login.testing import PLONE_LOGIN_INTEGRATION_TESTING
 from zope.component import getMultiAdapter
+
 import unittest
 
 

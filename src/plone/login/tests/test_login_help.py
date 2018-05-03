@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from plone import api
+from plone.login.browser.login_help import RequestResetPassword
+from plone.login.browser.login_help import RequestUsername
 from plone.login.testing import PLONE_LOGIN_FUNCTIONAL_TESTING
 from plone.login.testing import PLONE_LOGIN_INTEGRATION_TESTING
 from plone.testing.z2 import Browser
 from zope.component import getMultiAdapter
-from plone.login.browser.login_help import RequestResetPassword
-from plone.login.browser.login_help import RequestUsername
-import unittest
+
 import transaction
+import unittest
 
 
 class TestLoginHelp(unittest.TestCase):
