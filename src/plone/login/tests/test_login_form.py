@@ -25,14 +25,15 @@ class TestLoginForm(unittest.TestCase):
         alsoProvides(self.request, IPloneFormLayer)
 
     def test_login_view(self):
-        view = getMultiAdapter((self.portal, self.request),
-                               name='login')
+        view = getMultiAdapter((self.portal, self.request), name='login')
         self.assertTrue(view())
 
     def _setup_authenticator_request(self):
         self.request.set('REQUEST_METHOD', 'POST')
-        authenticator = getMultiAdapter((self.portal, self.request),
-                                        name=u'authenticator')
+        authenticator = getMultiAdapter(
+            (self.portal, self.request),
+            name=u'authenticator'
+        )
         html = authenticator.authenticator()
         token = re.search('value="(.*)"', html).groups()[0]
         self.request.set('_authenticator', token)
@@ -44,13 +45,14 @@ class TestLoginForm(unittest.TestCase):
         self.request['form.widgets.came_from'] = [u'']
         form = self.portal.restrictedTraverse(FORM_ID)
         form.update()
-
-        data, errors = form.form_instance.extractData()
+        data, errors = form.extractData()
         self.assertEqual(len(errors), 0)
 
     def test_failsafe_login_form(self):
-        view = getMultiAdapter((self.portal, self.request),
-                               name='failsafe_login_form')
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name='failsafe_login'
+        )
         html = view()
         self.assertNotIn('main-container', html)
 
@@ -59,8 +61,7 @@ class TestLoginForm(unittest.TestCase):
         self.request['__ac_name'] = u'test'
         self.request['__ac_password'] = u'secret'
         self.request['form.widgets.came_from'] = [u'']
-        form = self.portal.restrictedTraverse('failsafe_login_form')
+        form = self.portal.restrictedTraverse('failsafe_login')
         form.update()
-
         data, errors = form.extractData()
         self.assertEqual(len(errors), 0)
