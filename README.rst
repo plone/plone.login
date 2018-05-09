@@ -32,48 +32,20 @@ and then running ``bin/buildout``. Install it as usual in /prefs_install_product
 Compatibility
 -------------
 
-plone.login is tested to work with Plone 5.1.
+``plone.login`` is tested to work with Plone 5.1.
 It should work with Plone 5.0 as well but is not yet tested.
 
 
 Customizing templates
 ---------------------
 
-The templates for any ``plone.login`` can be customized because they're
-based on ``plone.z3cform.templates.FormTemplateFactory``. This allows users
-to customize the templates in their own packages without customizing the form
-or formwrapper classes and having to reregister them through zcml.
-
-Example of a file `adapters.py` in a package `your.addon`::
-
-    # -*- coding: utf-8 -*-
-    from plone.login.interfaces import ILoginForm
-    from plone.z3cform.templates import FormTemplateFactory
-    from your.addon.interfaces import IYourAddonLayer
-
-    import os
-
-
-    loginform_templatefactory = FormTemplateFactory(
-        os.path.join(os.path.dirname(__file__), 'templates/login.pt'),
-        form=ILoginForm,
-        request=IYourAddonLayer,
-    )
-
-Then register that adapter in your `configure.zcml`::
-
-    <adapter factory="your.addon.adapters.loginform_templatefactory" />
-
-Not you custom template in `templates/login.pt` will be used.
-
-Please note that the login-templates cannot be customized with `z3c.jbot`.
-
+The templates for any ``plone.login`` can be customized because they're simple browser-views.
+Use `z3c.jbot <https://pypi.org/project/z3c.jbot/>`_ to apply your own overides.
 
 Customize where to redirect after login
 ---------------------------------------
 
-You can customize the location the user will be redirected to after successfuly
-logging in to the site.
+You can customize the location the user will be redirected to after successfuly logging in to the site.
 
 Just write an adapter as follows
 
@@ -115,5 +87,4 @@ Then register the adapter through ZCML::
              zope.publisher.interfaces.IRequest"
         />
 
-As you can see, this adapter adapts context and request, so modify these
-according to your needs.
+As you can see, this adapter adapts context and request, so modify these according to your needs.

@@ -5,8 +5,6 @@ from plone.login import MessageFactory as _
 from plone.login.interfaces import ILoginHelpForm
 from plone.login.interfaces import ILoginHelpFormSchema
 from plone.registry.interfaces import IRegistry
-from plone.z3cform import layout
-from plone.z3cform.templates import FormTemplateFactory
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.CMFPlone.interfaces.controlpanel import IMailSchema
@@ -23,7 +21,6 @@ from zope.component.hooks import getSite
 from zope.interface import implementer
 
 import logging
-import os
 
 
 SEND_USERNAME_TEMPLATE = u"""From: {encoded_mail_sender}
@@ -59,12 +56,15 @@ class RequestResetPassword(form.Form):
     def updateWidgets(self):
         super(RequestResetPassword, self).updateWidgets()
         if self.use_email_as_login():
-            self.widgets['reset_password'].label = _(u'label_email',
-                                                     default=u'Email')
+            self.widgets['reset_password'].label = _(
+                u'label_email',
+                default=u'Email'
+            )
 
     @button.buttonAndHandler(
         _(u'button_pwreset_reset_password', default=u'Reset your password'),
-        name='reset')
+        name='reset'
+    )
     def handleResetPassword(self, action):
         data, errors = self.extractData()
         if errors:
@@ -104,7 +104,8 @@ class RequestUsername(form.Form):
 
     @button.buttonAndHandler(
         _(u'button_pwreset_get_username', default='Get your username'),
-        name='get_username')
+        name='get_username'
+    )
     def handleGetUsername(self, action):
         data, errors = self.extractData()
         if errors:
@@ -130,8 +131,10 @@ class RequestUsername(form.Form):
         # Because of this we always act as if that an email has been sent.
         # Instead we log the error-message.
         IStatusMessage(self.request).addStatusMessage(
-            _(u'statusmessage_pwreset_username_mail_sent', default=u'An '
-              u'email has been sent with your username.'), 'info')
+            _(u'statusmessage_pwreset_username_mail_sent',
+                default=u'An email has been sent with your username.'),
+            'info'
+        )
 
     def send_username(self, portal, userinfo):
         registry = getUtility(IRegistry)
@@ -191,6 +194,9 @@ class LoginHelpForm(form.EditForm):
 
     ignoreContext = True
 
+    def render(self):
+        return self.index()
+
     def can_reset_password(self):
         # TODO: Actually check that the site allows reseting password
         return True
@@ -219,13 +225,3 @@ class LoginHelpForm(form.EditForm):
         security_settings = registry.forInterface(
             ISecuritySchema, prefix='plone')
         return security_settings.use_email_as_login
-
-
-class LoginHelpFormView(layout.FormWrapper):
-    form = LoginHelpForm
-
-
-wrapped_loginhelp_template = FormTemplateFactory(
-    os.path.join(os.path.dirname(__file__), 'templates', 'login_help.pt'),
-    form=ILoginHelpForm,
-)

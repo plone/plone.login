@@ -8,12 +8,9 @@ from plone.login.interfaces import ILoginForm
 from plone.login.interfaces import ILoginFormSchema
 from plone.login.interfaces import IRedirectAfterLogin
 from plone.registry.interfaces import IRegistry
-from plone.z3cform import layout
-from plone.z3cform.templates import FormTemplateFactory
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.Five.browser import BrowserView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from six.moves.urllib import parse
 from z3c.form import button
@@ -25,28 +22,26 @@ from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.interface import implementer
 
-import os
-
 
 # TODO: Scale down this list now that we've removed a lot of
 # templates.
 LOGIN_TEMPLATE_IDS = [
+    'localhost',
+    'logged-out',
+    'logged_in',
     'login',
-    'login_success',
-    'login_password',
     'login_failed',
     'login_form',
-    'logged_in',
+    'login_password',
+    'login_success',
     'logout',
-    'logged-out',
-    'registered',
     'mail_password',
     'mail_password_form',
-    'register',
-    'require_login',
     'member_search_results',
     'pwreset_finish',
-    'localhost',
+    'register',
+    'registered',
+    'require_login',
 ]
 
 
@@ -61,6 +56,9 @@ class LoginForm(form.EditForm):
 
     ignoreContext = True
     prefix = ''
+
+    def render(self):
+        return self.index()
 
     def _get_auth(self):
         try:
@@ -177,8 +175,10 @@ class LoginForm(form.EditForm):
             handler()
 
     def redirect_after_login(self, came_from=None, is_initial_login=False):
-        adapter = queryMultiAdapter((self.context, self.request),
-                                    IRedirectAfterLogin)
+        adapter = queryMultiAdapter(
+            (self.context, self.request),
+            IRedirectAfterLogin
+        )
         if adapter:
             came_from = adapter(came_from, is_initial_login)
         if not came_from:
@@ -189,24 +189,18 @@ class LoginForm(form.EditForm):
     def self_registration_enabled(self):
         registry = queryUtility(IRegistry)
         security_settings = registry.forInterface(
-            ISecuritySchema, prefix='plone')
+            ISecuritySchema,
+            prefix='plone'
+        )
         return security_settings.enable_self_reg
 
     def use_email_as_login(self):
         registry = queryUtility(IRegistry)
         security_settings = registry.forInterface(
-            ISecuritySchema, prefix='plone')
+            ISecuritySchema,
+            prefix='plone'
+        )
         return security_settings.use_email_as_login
-
-
-class LoginFormView(layout.FormWrapper):
-    form = LoginForm
-
-
-wrapped_login_template = FormTemplateFactory(
-    os.path.join(os.path.dirname(__file__), 'templates', 'login.pt'),
-    form=ILoginForm,
-)
 
 
 class RequireLoginView(BrowserView):
@@ -235,9 +229,9 @@ class InsufficientPrivilegesView(BrowserView):
 
 
 class InitialLoginPasswordChange(PasswordPanel):
-    template = ViewPageTemplateFile(
-        'templates/initial_login_password_change.pt',
-    )
+
+    def render(self):
+        return self.index()
 
     @button.buttonAndHandler(
         _(u'label_change_password', default=u'Change Password'),
@@ -251,9 +245,9 @@ class InitialLoginPasswordChange(PasswordPanel):
 
 
 class ForcedPasswordChange(PasswordPanel):
-    template = ViewPageTemplateFile(
-        'templates/forced_password_change.pt',
-    )
+
+    def render(self):
+        return self.index()
 
     @button.buttonAndHandler(
         _(u'label_change_password', default=u'Change Password'),

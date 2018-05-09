@@ -14,31 +14,51 @@
         template="templates/insufficient_privileges.pt"
         />
 
+
+    <!-- LOGIN: form with plone page around, can be rendered in modal -->
     <browser:page
         name="login"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
-        class=".login.LoginFormView"
-        template="templates/form_wrapper.pt"
+        class=".login.LoginForm"
+        template="templates/login.pt"
         />
 
+    <!-- LOGIN: fail safe, simplified and unstyled form -->
+    <browser:page
+        name="failsafe_login"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        permission="zope.Public"
+        class=".login.LoginForm"
+        template="templates/login_failsafe.pt"
+        />
+
+    <!-- LOGIN: BBB name, same as 'login' do not use them to refer to the login -->
     <browser:page
         name="login_form"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
-        class=".login.LoginFormView"
-        template="templates/form_wrapper.pt"
+        class=".login.LoginForm"
+        template="templates/login.pt"
         />
 
+    <!-- LOGIN: BBB name, same as 'failsafe_login' do not use it any longer-->
     <browser:page
         name="failsafe_login_form"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
         class=".login.LoginForm"
-        template="templates/form_wrapper.pt"
+        template="templates/login_failsafe.pt"
         />
 
-    <adapter factory=".login.wrapped_login_template" />
+    <browser:page
+        name="login-help"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        permission="zope.Public"
+        class=".login_help.LoginHelpForm"
+        template="templates/login_help.pt"
+        />
+
 
     <browser:page
         name="logout"
@@ -56,17 +76,6 @@
         class=".logout.LoggedOutView"
         />
 
-
-    <browser:page
-        name="login-help"
-        for="plone.app.layout.navigation.interfaces.INavigationRoot"
-        permission="zope.Public"
-        class=".login_help.LoginHelpFormView"
-        template="templates/form_wrapper.pt"
-        />
-
-    <adapter factory=".login_help.wrapped_loginhelp_template" />
-
     <browser:page
         name="require_login"
         for="*"
@@ -79,6 +88,7 @@
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         class=".login.InitialLoginPasswordChange"
         permission="cmf.SetOwnPassword"
+        template="templates/initial_login_password_change.pt"
         />
 
     <browser:page
@@ -86,6 +96,7 @@
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         class=".login.ForcedPasswordChange"
         permission="cmf.SetOwnPassword"
+        template="templates/forced_password_change.pt"
         />
 
 </configure>
