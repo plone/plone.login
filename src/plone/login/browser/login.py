@@ -58,7 +58,23 @@ class LoginForm(form.EditForm):
     prefix = ''
 
     def render(self):
-        return self.index()
+        registry = queryUtility(IRegistry)
+        ext_login_url = registry['plone.external_login_url']
+        if not ext_login_url:
+            # normal login
+            return self.index()
+        #  Handle login on this portal where login is external
+        url = ext_login_url
+        next_ = self.request.get('next', None)
+        portal_url = getToolByName(self.context, 'portal_url')
+        if next_ is not None and not portal_url.isURLInPortal(next_):
+            next_ = None
+        if next_:
+            url = '{0}?next={1}'.format(url, next_)
+        came_from = self.request.get('came_from')
+        if came_from:
+            url = '{0}&came_from={1}'.format(url, came_from)
+        self.request.response.redirect(url)
 
     def _get_auth(self):
         try:
@@ -201,6 +217,12 @@ class LoginForm(form.EditForm):
             prefix='plone'
         )
         return security_settings.use_email_as_login
+
+
+class FailsafeLoginForm(LoginForm):
+
+    def render(self):
+        return self.index()
 
 
 class RequireLoginView(BrowserView):
