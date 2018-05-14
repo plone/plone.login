@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from plone.login import MessageFactory as _
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import transaction_note
 from Products.Five.browser import BrowserView
 from Products.statusmessages.interfaces import IStatusMessage
 from zope.component import getMultiAdapter
+from zope.component import queryUtility
 from zope.interface import implementer
 from zope.interface import Interface
 
@@ -20,23 +22,17 @@ class LogoutView(BrowserView):
         mt.logoutUser(self.request)
         transaction_note('Logged out')
         # Handle external logout requests from other portals
-        next = self.request.get('next', None)
+        next_ = self.request.get('next', None)
         portal_url = getToolByName(self.context, 'portal_url')
-        if next is not None and portal_url.isURLInPortal(next):
-            target_url = next
+        if next_ is not None and portal_url.isURLInPortal(next_):
+            target_url = next_
         else:
             target_url = self.request.URL1 + '/logged-out'
 
-        pprops = getToolByName(self.context, 'portal_properties')
-        site_properties = pprops.site_properties
-        external_logout_url = site_properties.getProperty(
-            'external_logout_url'
-        )
+        registry = queryUtility(IRegistry)
+        external_logout_url = registry['plone.external_logout_url']
         if external_logout_url:
-            target_url = '{0:s}?next={1:s}'.format(
-                external_logout_url,
-                target_url,
-            )
+            target_url = external_logout_url
         self.request.response.redirect(target_url)
 
 

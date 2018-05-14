@@ -29,7 +29,7 @@
         name="failsafe_login"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
-        class=".login.LoginForm"
+        class=".login.FailsafeLoginForm"
         template="templates/login_failsafe.pt"
         />
 
@@ -47,7 +47,7 @@
         name="failsafe_login_form"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         permission="zope.Public"
-        class=".login.LoginForm"
+        class=".login.FailsafeLoginForm"
         template="templates/login_failsafe.pt"
         />
 

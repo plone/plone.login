@@ -65,3 +65,38 @@ class TestLoginForm(unittest.TestCase):
         form.update()
         data, errors = form.extractData()
         self.assertEqual(len(errors), 0)
+
+    def test_login_external(self):
+        registry = self.layer['portal'].portal_registry
+        registry['plone.external_login_url'] = 'http://testurl/extlogin'
+        form = self.portal.restrictedTraverse('login')
+        form()
+        self.assertEqual(
+            registry['plone.external_login_url'],
+            form.request.response.getHeader('Location'),
+        )
+
+    def test_login_external_with_params(self):
+        registry = self.layer['portal'].portal_registry
+        registry['plone.external_login_url'] = 'http://testurl/extlogin'
+        self.request['came_from'] = 'foo'
+        self.request['next'] = 'bar'
+        form = self.portal.restrictedTraverse('login')
+        form()
+        self.assertIn(
+            'came_from=foo',
+            form.request.response.getHeader('Location'),
+        )
+        self.assertIn(
+            'next=bar',
+            form.request.response.getHeader('Location'),
+        )
+
+    def test_failsafe_login_external(self):
+        registry = self.layer['portal'].portal_registry
+        registry['plone.external_login_url'] = 'http://testurl/extlogin'
+        form = self.portal.restrictedTraverse('failsafe_login')
+        html = form()
+        self.assertIsNotNone(html)
+        self.assertEqual(None, form.request.response.getHeader('Location'))
+        self.assertNotIn('main-container', html)
