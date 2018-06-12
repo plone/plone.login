@@ -37,14 +37,14 @@
              tal:define="portal_state context/@@plone_portal_state;
                          portal_url portal_state/portal_url">
           <p class="trouble">
-            Need more help?
+            <span i18n:translate="need_more_help" tal:omit-tag="">Need more help?</span>
             <a tal:attributes="href string:${portal_url}/contact-info"
-               href="contact-info">Contact an admin.</a>
+               href="contact-info" i18n:translate="contact_an_admin">Contact an admin.</a>
           </p>
           <p class="go_to_login">
-            Go to
-            <a tal:attributes="href string:${portal_url}/login"
-               href="login">login.</a>
+            <span i18n:translate="go_to_login" tal:omit-tag="">Go to</span>
+            <a tal:attributes="href string:${portal_url}/login" class="pat-plone-modal"
+               i18n:translate="to_login_view" href="login">login</a>.
           </p>
         </div>
       </div>

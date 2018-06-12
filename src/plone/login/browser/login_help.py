@@ -19,11 +19,12 @@ from z3c.form import form
 from zope.component import getUtility
 from zope.component.hooks import getSite
 from zope.interface import implementer
+from zope.i18n import translate
 
 import logging
 
 
-SEND_USERNAME_TEMPLATE = u"""From: {encoded_mail_sender}
+SEND_USERNAME_TEMPLATE = _(u"mailtemplate_username_info", default=u"""From: {encoded_mail_sender}
 To: {email}
 Subject: Your username for {portal_url}
 Content-Type: text/plain
@@ -39,7 +40,7 @@ With kind regards,
 
 --
 
-{email_from_name}"""
+{email_from_name}""")
 
 log = logging.getLogger(__name__)
 
@@ -139,8 +140,12 @@ class RequestUsername(form.Form):
     def send_username(self, portal, userinfo):
         registry = getUtility(IRegistry)
         encoding = registry.get('plone.email_charset', 'utf-8')
+        translated_template = translate(
+            SEND_USERNAME_TEMPLATE,
+            context=self.request,
+        )
 
-        mail_text = SEND_USERNAME_TEMPLATE.format(
+        mail_text = translated_template.format(
             email=userinfo['email'],
             portal_url=portal.absolute_url(),
             fullname=userinfo['title'],

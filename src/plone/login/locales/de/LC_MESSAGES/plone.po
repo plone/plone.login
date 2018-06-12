@@ -1,0 +1,236 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2018-06-12 14:14+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: Peter Holzer <peter.holzer@agitator.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: de\n"
+"Language-Name: Deutsch\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+"X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
+"Language: de\n"
+
+#: ../browser/templates/logged_out.pt:29
+msgid "${text_logged_out_link} and click 'Cancel' when prompted with an authentication prompt."
+msgstr "${text_logged_out_link} und klicken Sie 'Abbrechen', wenn Sie aufgefordert werden, sich anzumelden."
+
+#: ../browser/templates/login.pt:16
+#: ../browser/templates/login_failsafe.pt:15
+msgid "Error"
+msgstr "Fehler"
+
+#: ../browser/login.py:129
+msgid "Log in"
+msgstr "Anmelden"
+
+#: ../browser/login.py:141
+msgid "Login failed. Both email address and password are case sensitive, check that caps lock is not enabled."
+msgstr "Anmeldung fehlgeschlagen. Sowohl bei der E-Mail-Adresse als auch beim Passwort wird Groß- und Kleinschreibung berücksichtigt. Stellen Sie sicher, dass die Feststelltaste nicht eingerastet ist."
+
+#: ../browser/login.py:149
+msgid "Login failed. Both login name and password are case sensitive, check that caps lock is not enabled."
+msgstr "Anmeldung fehlgeschlagen. Sowohl bei Benutzername als auch beim Passwort wird zwischen Groß- und Kleinschreibung unterschieden. Stellen Sie sicher, dass die Feststelltaste nicht aktiviert ist."
+
+#: ../browser/login_help.py:169
+msgid "Recipient address rejected by server."
+msgstr "Empfänger verweigerte die Annahme von diesem Server."
+
+#: ../browser/templates/logged_out.pt:29
+msgid "Visit this link"
+msgstr "Diesen Verweis besuchen"
+
+#. Default: "Get your username"
+#: ../browser/login_help.py:106
+msgid "button_pwreset_get_username"
+msgstr "Benutzernamen zusenden"
+
+#. Default: "Reset your password"
+#: ../browser/login_help.py:65
+msgid "button_pwreset_reset_password"
+msgstr "Passwort zurücksetzen"
+
+#. Default: "Contact an admin."
+#: ../browser/templates/login_help.pt:41
+msgid "contact_an_admin"
+msgstr "Hier können Sie den Website-Verantwortlichen kontaktieren."
+
+#. Default: "Before you start exploring, you need to change your original password. This ensures that the password you received via email cannot be used in a malicious manner."
+#: ../browser/templates/initial_login_password_change.pt:19
+msgid "description_change_initial_password"
+msgstr "Bevor Sie weitermachen, sollten Sie Ihr Passwort ändern. So verhindern Sie, dass jemand Ihr Passwort, das wir Ihnen unverschlüsselt zugeschickt haben, missbräuchlich benutzen kann."
+
+#. Default: "Before you continue, you need to change your password."
+#: ../browser/templates/forced_password_change.pt:15
+msgid "description_forced_password_change"
+msgstr "Sie müssen Ihr Passwort ändern bevor Sie fortfahren können."
+
+#. Default: "This is the first time that you've logged in to ${here}."
+#: ../browser/templates/initial_login_password_change.pt:17
+msgid "description_logged_in"
+msgstr "Dies ist das erste Mal, dass Sie sich an der Website ${here} angemeldet haben."
+
+#. Default: "You do not have sufficient privileges to view this page. If you believe you are receiving this message in error, contact the ${site_admin}."
+#: ../browser/templates/insufficient_privileges.pt:26
+msgid "description_no_privileges_for_page"
+msgstr "Sie haben unzureichende Berechtigungen um diese Seite anzuzeigen. Wenn Sie meinen diese Meldung fehlerhafterweise angezeigt zu bekommen, kontaktieren Sie bitte den ${site_admin}."
+
+#. Default: "You are logged in via HTTP authentication (i.e. the Zope Management Interface). In order to log out, you must:"
+#: ../browser/templates/logged_out.pt:22
+msgid "description_quit_to_log_out"
+msgstr "Sie sind per HTTP-Authentifikation angemeldet (über das \"Zope Management Interface\"). Um sich abzumelden, müssen Sie folgendes tun:"
+
+#. Default: "Cookies are not enabled. You must enable cookies before you can log in."
+#: ../browser/templates/login.pt:19
+#: ../browser/templates/login_failsafe.pt:18
+msgid "enable_cookies_message_before_login"
+msgstr "Die Verwendung von Cookies ist nicht erlaubt. Sie müssen Cookies erlauben, bevor Sie sich anmelden können."
+
+#. Default: "Get help"
+#: ../browser/templates/login.pt:88
+msgid "footer_login_link_get_help"
+msgstr "Hier finden Sie Unterstützung"
+
+#. Default: "Sign up here &raquo;"
+#: ../browser/templates/login.pt:92
+msgid "footer_login_link_signup"
+msgstr "Hier geht es zur Registrierung"
+
+#. Default: "Go to"
+#: ../browser/templates/login_help.pt:45
+msgid "go_to_login"
+msgstr "Zur"
+
+#. Default: "Time to change your password!"
+#: ../browser/templates/forced_password_change.pt:9
+msgid "heading_change_password"
+msgstr "Es ist an der Zeit ihr Passwort zu ändern!"
+
+#. Default: "Need Help?"
+#: ../browser/login_help.py:193
+msgid "heading_login_form_help"
+msgstr "Passwort zurücksetzen"
+
+#. Default: "Insufficient Privileges"
+#: ../browser/templates/insufficient_privileges.pt:18
+msgid "heading_no_privileges"
+msgstr "Unzureichende Berechtigungen"
+
+#. Default: "Still logged in as a Zope user"
+#: ../browser/templates/logged_out.pt:19
+msgid "heading_quit_to_log_out"
+msgstr "Sie sind noch als Zope-Benutzer angemeldet. Schließen Sie Ihren Browser, um sich abzumelden."
+
+#. Default: "Welcome!"
+#: ../browser/templates/initial_login_password_change.pt:9
+msgid "heading_welcome"
+msgstr "Willkommen!"
+
+#. Default: "Enter your email and we’ll send you your username."
+#: ../interfaces.py:76
+msgid "help_pwreset_email"
+msgstr "Geben Sie ihre E-Mail an und wir schicken den Benutzernamen zu."
+
+#. Default: "Enter your username or email and we’ll send you a password reset link."
+#: ../interfaces.py:66
+msgid "help_pwreset_username"
+msgstr "Geben Sie ihren Benutzernamen oder ihre E-Mail an und wir schicken einen Link um das Passwort neu setzen zu können."
+
+#. Default: "Change Password"
+#: ../browser/login.py:264
+msgid "label_change_password"
+msgstr "Passwort ändern"
+
+#. Default: "Email"
+#: ../browser/login.py:105
+#: ../browser/login_help.py:59
+msgid "label_email"
+msgstr "E-Mail"
+
+#. Default: "Log in"
+#: ../browser/login.py:56
+#: ../interfaces.py:26
+msgid "label_log_in"
+msgstr "Anmelden"
+
+#. Default: "Login Name"
+#: ../interfaces.py:42
+msgid "label_login_name"
+msgstr "Benutzername"
+
+#. Default: "Password"
+#: ../interfaces.py:30
+msgid "label_password"
+msgstr "Passwort"
+
+#. Default: "Email"
+#: ../interfaces.py:75
+msgid "label_pwreset_email"
+msgstr "E-Mail"
+
+#. Default: "Username"
+#: ../interfaces.py:65
+msgid "label_pwreset_username"
+msgstr "Benutzername oder E-Mail"
+
+#. Default: "site administration"
+#: ../browser/templates/insufficient_privileges.pt:26
+msgid "label_site_administration"
+msgstr "Verantwortlichen für die Website"
+
+#. Default: "From: {encoded_mail_sender}\nTo: {email}\nSubject: Your username for {portal_url}\nContent-Type: text/plain\nPrecedence: bulk\n\nDear {fullname},\n\nYou requested to be reminded of your username for {portal_url}.\nYour username is: {login}\n\n\nWith kind regards,\n\n--\n\n{email_from_name}"
+#: ../browser/login_help.py:26
+msgid "mailtemplate_username_info"
+msgstr "From: {encoded_mail_sender}\nTo: {email}\nSubject: Ihr Benutzername für {portal_url}\nContent-Type: text/plain\nPrecedence: bulk\n\nHallo {fullname},\n\nInformation zum Benutzernamen auf {portal_url} wurden angeforder.\nDer Benutzername lautet: {login}\n\n\nMit freundlichen Grüssen,\n\n--\n\n{email_from_name}"
+
+#. Default: "Need an account?"
+#: ../browser/templates/login.pt:91
+msgid "need_an_account"
+msgstr "Brauchen Sie ein Benutzerkonto?"
+
+#. Default: "Need more help?"
+#: ../browser/templates/login_help.pt:40
+msgid "need_more_help"
+msgstr "Brauchen Sie Hilfe?"
+
+#. Default: "You have been logged out."
+#: ../browser/logout.py:51
+msgid "statusmessage_logged_out"
+msgstr "Sie haben sich abgemeldet."
+
+#. Default: "An email has been sent with instructions on how to reset your password."
+#: ../browser/login_help.py:85
+msgid "statusmessage_pwreset_password_mail_sent"
+msgstr "Ein E-Mail mit einer Anleitung um das Passwort zurückzusetzen wurde verschickt."
+
+#. Default: "An email has been sent with your username."
+#: ../browser/login_help.py:134
+msgid "statusmessage_pwreset_username_mail_sent"
+msgstr "Ein E-Mail mit ihrem Benutzernamen wurde verschickt."
+
+#. Default: "Required"
+#: ../browser/templates/login.pt:42
+#: ../browser/templates/login_failsafe.pt:41
+#: ../browser/templates/subform_render.pt:29
+msgid "title_required"
+msgstr "Erforderlich"
+
+#. Default: "login"
+#: ../browser/templates/login_help.pt:46
+msgid "to_login_view"
+msgstr "Anmeldung"
+
+#. Default: "Trouble logging in?"
+#: ../browser/templates/login.pt:87
+msgid "trouble_logging_in"
+msgstr "Probleme beim anmelden?"
+
+#. Default: "Welcome! You are now logged in."
+#: ../browser/login.py:166
+msgid "you_are_now_logged_in"
+msgstr "Willkommen! Sie sind jetzt angemeldet."
