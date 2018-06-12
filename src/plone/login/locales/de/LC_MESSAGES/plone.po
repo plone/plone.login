@@ -144,7 +144,7 @@ msgstr "Geben Sie ihren Benutzernamen oder ihre E-Mail an und wir schicken einen
 #. Default: "Change Password"
 #: ../browser/login.py:264
 msgid "label_change_password"
-msgstr "Passwort ändern""
+msgstr "Passwort ändern"
 
 #. Default: "Email"
 #: ../browser/login.py:105
@@ -181,7 +181,7 @@ msgstr "Benutzername oder E-Mail"
 #. Default: "site administration"
 #: ../browser/templates/insufficient_privileges.pt:26
 msgid "label_site_administration"
-msgstr "Verantwortlichen für die Website""
+msgstr "Verantwortlichen für die Website"
 
 #. Default: "From: {encoded_mail_sender}\nTo: {email}\nSubject: Your username for {portal_url}\nContent-Type: text/plain\nPrecedence: bulk\n\nDear {fullname},\n\nYou requested to be reminded of your username for {portal_url}.\nYour username is: {login}\n\n\nWith kind regards,\n\n--\n\n{email_from_name}"
 #: ../browser/login_help.py:26
