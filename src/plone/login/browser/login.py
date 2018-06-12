@@ -39,6 +39,7 @@ LOGIN_TEMPLATE_IDS = [
     'mail_password_form',
     'member_search_results',
     'pwreset_finish',
+    'passwordreset',
     'register',
     'registered',
     'require_login',
@@ -110,12 +111,16 @@ class LoginForm(form.EditForm):
         came_from = self.request.get('came_from', None)
         if not came_from:
             came_from = self.request.get('HTTP_REFERER', None)
-        if came_from:
-            url_tool = getToolByName(self.context, 'portal_url')
-            if url_tool.isURLInPortal(came_from):
-                came_from_id = parse.urlparse(came_from)[2].split('/')[-1]
-                if came_from_id not in LOGIN_TEMPLATE_IDS:
-                    return came_from
+            if not came_from:
+                return
+        url_tool = getToolByName(self.context, 'portal_url')
+        if not url_tool.isURLInPortal(came_from):
+            return
+        came_from_path = parse.urlparse(came_from)[2]
+        for login_template_id in LOGIN_TEMPLATE_IDS:
+            if login_template_id in came_from_path:
+                return
+        return came_from
 
     def updateActions(self):
         super(LoginForm, self).updateActions()
