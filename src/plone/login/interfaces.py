@@ -23,7 +23,7 @@ class ILogin(Interface):
     """ Login form schema """
 
     login = schema.TextLine(
-        title=_(u'label_login', default=u'Login'),
+        title=_(u'label_log_in', default=u'Log in'),
     )
 
     password = schema.Password(

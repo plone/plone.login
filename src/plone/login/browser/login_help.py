@@ -23,7 +23,7 @@ from zope.interface import implementer
 import logging
 
 
-SEND_USERNAME_TEMPLATE = u"""From: {encoded_mail_sender}
+SEND_USERNAME_TEMPLATE = _(u"mailtemplate_username_info", default=u"""From: {encoded_mail_sender}
 To: {email}
 Subject: Your username for {portal_url}
 Content-Type: text/plain
@@ -39,7 +39,7 @@ With kind regards,
 
 --
 
-{email_from_name}"""
+{email_from_name}""")
 
 log = logging.getLogger(__name__)
 

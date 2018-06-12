@@ -21,20 +21,6 @@
       </span>
   </div>
 
-  <div id="login-warnings">
-    <div class="alert" tal:condition="python:request.form.get('error', False)">
-      <h4 i18n:translate="heading_login_uhoh">Uh oh!</h4>
-      <p>
-        <tal:block i18n:translate="message_login_failed_incorrect_username_or_password">
-          Looks like your username or password was incorrect.
-        </tal:block><br /><tal:block i18n:translate="message_login_failed_getting_help">
-          Please try again or <tal:link i18n:name="link_get_help"><a href="@@login-help" i18n:translate="link_login_failed_getting_help">
-          get some help remembering here
-        </a></tal:link>.</tal:block>
-      </p>
-    </div>
-  </div>
-
     <form action="." method="post"
           tal:attributes="action view/action; enctype view/enctype">
 
