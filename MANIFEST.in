@@ -1,0 +1,14 @@
+include *.py
+include *.rst
+include *.txt
+include .coveragerc
+include buildout.cfg
+recursive-include docs *.GPL
+recursive-include docs *.jpg
+recursive-include docs *.txt
+recursive-include src *.po
+recursive-include src *.pot
+recursive-include src *.pt
+recursive-include src *.sh
+recursive-include src *.xml
+recursive-include src *.zcml
